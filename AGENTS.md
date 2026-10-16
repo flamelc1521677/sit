@@ -1,5 +1,7 @@
 # 接口自动化维护规则
 
+- 用户已要求将密码、状态、日志和证件图片备份到 GitHub；以 backups/ 中的加密包保存，解密密钥仅放本机被忽略的 .secrets/，不提交明文密码和解密密钥。恢复工具只输出新 ZIP，不覆盖现有运行状态。
+
 - 新增用户固定使用 config/user_creation.json 中 ob4-mx 的员工 WhatsApp（配置 56 / 15666226611 / mx-1wp）。占用手机号前先校验配置归属和启用状态，禁止自动切换其他员工。历史 latest_user 仍按其原始 employeeLine 回查，不因新增配置变化而改写。
 
 - `common/database.py` 是 SIT MySQL 的公共连接入口，密码只能来自 `SIT_DB_PASSWORD`，不得写入脚本、运行配置或日志。

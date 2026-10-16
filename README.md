@@ -1,5 +1,7 @@
 # OFFSAAS 接口自动化测试
 
+密码、本地状态、日志和固定证件图片现已提供加密备份，见 `backups/README.md`。原始文件仍忽略上传；解密密钥仅保存在本机 `.secrets/`。
+
 在 VS Code 中打开 api-tests 文件夹，按场景编号选择运行入口。
 
 ## 从 GitHub 获取项目

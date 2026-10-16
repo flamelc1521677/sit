@@ -9,3 +9,5 @@ artifacts/
 *.pem
 *.key
 assets/identity_front.png
+.secrets/
+*.decrypted.zip
