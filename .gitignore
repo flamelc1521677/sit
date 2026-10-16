@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+artifacts/
+.state/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+assets/identity_front.png

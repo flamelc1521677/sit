@@ -1,0 +1,8 @@
+{
+  "expectedAmount": "2200",
+  "reasons": {
+    "pass": "AutoCodeXtesting-pass",
+    "reject": "AutoCodeXtesting-reject",
+    "close": "AutoCodeXtesting"
+  }
+}

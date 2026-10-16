@@ -1,0 +1,318 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "00 · 完整流程 / 新增用户 → 身份证 → 银行卡",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    {
+      "name": "01 · SSO 登录",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/01_login/test_sso_login.py",
+        "-v",
+        "-s",
+        "--tb=short"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    {
+      "name": "02 · 用户管理 / 新增用户",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/02_user_management/test_add_user.py",
+        "-v",
+        "-s",
+        "--tb=short"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    {
+      "name": "03 · 个人信息 / 身份证 OCR 与保存",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "-v",
+        "-s",
+        "--tb=short"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    {
+      "name": "04 · 本地验证 / 手机号、证件日期与银行卡",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/04_local_checks",
+        "-v",
+        "--tb=short"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    {
+      "name": "05 · 借款申请 / 先试算后提交",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/05_loan_application/test_start_loan.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    {
+      "name": "06 · 完整借款流程 / 新增用户 → 资料 → 试算 → 提交",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    {
+      "name": "07.1 · 人审 / 通过（正向）",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/07_payout_approval/test_payout_approval.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "APPROVAL_ACTION": "pass",
+        "APPROVER_USERNAME": "ob5-mx"
+      }
+    },
+    {
+      "name": "07.2 · 人审 / 拒绝",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/07_payout_approval/test_payout_approval.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "APPROVAL_ACTION": "reject",
+        "APPROVER_USERNAME": "ob5-mx"
+      }
+    },
+    {
+      "name": "07.3 · 人审 / 退回信审",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/07_payout_approval/test_payout_approval.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "APPROVAL_ACTION": "close",
+        "APPROVER_USERNAME": "ob5-mx"
+      }
+    },
+    {
+      "name": "08 · 放款审批 / 放款成功",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/08_disbursement/test_payout_success.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    {
+      "name": "09 · 正向全流程 / 新增 → 资料 → 借款 → 人审通过 → 放款成功",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/08_disbursement/test_payout_success.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "APPROVAL_ACTION": "pass",
+        "APPROVAL_ID": "",
+        "APPROVER_USERNAME": "ob5-mx"
+      }
+    },
+    {
+      "name": "10 · 复借 / 指定用户 → 试算 → 提交一次",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/05_loan_application/test_start_loan.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "LOAN_REPEAT_USER_ID": "${input:repeatLoanUserId}",
+        "LOAN_REPEAT_REQUEST_ID": "${input:repeatLoanRequestId}"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "repeatLoanUserId",
+      "type": "promptString",
+      "description": "复借目标用户 ID，必须与最新用户一致",
+      "default": "862"
+    },
+    {
+      "id": "repeatLoanRequestId",
+      "type": "promptString",
+      "description": "本次复借唯一标识；重复运行请保留原值，防止重复申请",
+      "default": "user862-repeat-20261016-01"
+    }
+  ]
+}

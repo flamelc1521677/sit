@@ -1,0 +1,6 @@
+pytest>=8,<10
+requests>=2.32,<3
+cryptography>=44
+ddddocr>=1.5,<2
+PyMySQL>=1.1,<2
+tzdata>=2025.2
