@@ -1,0 +1,30 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=969，phone=0658900229
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750127，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0027；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 31.01s ==============================

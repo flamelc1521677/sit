@@ -2,6 +2,35 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "TH 本次执行 · 新增1人 → 逾期5天 · 20261027",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "program": "${workspaceFolder}/thailand/run_full_flow.py",
+      "args": [
+        "--run-id",
+        "th_overdue5_20261027_01",
+        "--overdue-days",
+        "5"
+      ]
+    },
+    {
       "name": "00 · 完整流程 / 新增用户 → 身份证 → 银行卡",
       "type": "debugpy",
       "request": "launch",
@@ -21,7 +50,9 @@
       "justMyCode": false,
       "env": {
         "PYTHONIOENCODING": "utf-8",
-        "PYTHONUNBUFFERED": "1"
+        "PYTHONUNBUFFERED": "1",
+        "LOAN_TARGET_PHONE": "",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
     },
     {
@@ -42,7 +73,8 @@
       "justMyCode": false,
       "env": {
         "PYTHONIOENCODING": "utf-8",
-        "PYTHONUNBUFFERED": "1"
+        "PYTHONUNBUFFERED": "1",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
     },
     {
@@ -63,7 +95,9 @@
       "justMyCode": false,
       "env": {
         "PYTHONIOENCODING": "utf-8",
-        "PYTHONUNBUFFERED": "1"
+        "PYTHONUNBUFFERED": "1",
+        "LOAN_TARGET_PHONE": "",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
     },
     {
@@ -84,7 +118,8 @@
       "justMyCode": false,
       "env": {
         "PYTHONIOENCODING": "utf-8",
-        "PYTHONUNBUFFERED": "1"
+        "PYTHONUNBUFFERED": "1",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
     },
     {
@@ -104,7 +139,8 @@
       "justMyCode": false,
       "env": {
         "PYTHONIOENCODING": "utf-8",
-        "PYTHONUNBUFFERED": "1"
+        "PYTHONUNBUFFERED": "1",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
     },
     {
@@ -126,7 +162,8 @@
       "justMyCode": false,
       "env": {
         "PYTHONIOENCODING": "utf-8",
-        "PYTHONUNBUFFERED": "1"
+        "PYTHONUNBUFFERED": "1",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
     },
     {
@@ -150,7 +187,38 @@
       "justMyCode": false,
       "env": {
         "PYTHONIOENCODING": "utf-8",
-        "PYTHONUNBUFFERED": "1"
+        "PYTHONUNBUFFERED": "1",
+        "LOAN_TARGET_PHONE": "",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      }
+    },
+    {
+      "name": "06.1 · 6000元发起借款 / 新增 → 资料 → 试算提交（不人审、不放款）",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "LOAN_TARGET_PHONE": "",
+        "LOAN_CONFIG_FILE": "${workspaceFolder}/config/loan_6000_3periods.json",
+        "SSO_CREDENTIAL_SOURCE": "local",
+        "LOAN_REPEAT_USER_ID": "",
+        "LOAN_REPEAT_REQUEST_ID": ""
       }
     },
     {
@@ -174,7 +242,8 @@
         "PYTHONIOENCODING": "utf-8",
         "PYTHONUNBUFFERED": "1",
         "APPROVAL_ACTION": "pass",
-        "APPROVER_USERNAME": "ob5-mx"
+        "APPROVER_USERNAME": "ob5-mx",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
     },
     {
@@ -198,7 +267,8 @@
         "PYTHONIOENCODING": "utf-8",
         "PYTHONUNBUFFERED": "1",
         "APPROVAL_ACTION": "reject",
-        "APPROVER_USERNAME": "ob5-mx"
+        "APPROVER_USERNAME": "ob5-mx",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
     },
     {
@@ -222,7 +292,8 @@
         "PYTHONIOENCODING": "utf-8",
         "PYTHONUNBUFFERED": "1",
         "APPROVAL_ACTION": "close",
-        "APPROVER_USERNAME": "ob5-mx"
+        "APPROVER_USERNAME": "ob5-mx",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
     },
     {
@@ -244,7 +315,8 @@
       "justMyCode": false,
       "env": {
         "PYTHONIOENCODING": "utf-8",
-        "PYTHONUNBUFFERED": "1"
+        "PYTHONUNBUFFERED": "1",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
     },
     {
@@ -273,8 +345,106 @@
         "PYTHONUNBUFFERED": "1",
         "APPROVAL_ACTION": "pass",
         "APPROVAL_ID": "",
-        "APPROVER_USERNAME": "ob5-mx"
+        "APPROVER_USERNAME": "ob5-mx",
+        "LOAN_TARGET_PHONE": "",
+        "SSO_CREDENTIAL_SOURCE": "local"
       }
+    },
+    {
+      "name": "09.1 · 6000元三期 / 新增 → 资料 → 借款 → 人审通过 → 放款成功",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/08_disbursement/test_payout_success.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "APPROVAL_ACTION": "pass",
+        "APPROVAL_ID": "",
+        "APPROVER_USERNAME": "ob5-mx",
+        "LOAN_TARGET_PHONE": "",
+        "LOAN_CONFIG_FILE": "${workspaceFolder}/config/loan_6000_3periods.json",
+        "APPROVAL_EXPECTED_AMOUNT": "6000",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      }
+    },
+    {
+      "name": "09.2 · 人审通过止步 / 新增 → 资料 → 借款 → 人审通过（不放款）",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "APPROVAL_ACTION": "pass",
+        "APPROVAL_ID": "",
+        "APPROVER_USERNAME": "ob5-mx",
+        "LOAN_TARGET_PHONE": "",
+        "LOAN_CONFIG_FILE": "${workspaceFolder}/config/loan_6000_3periods.json",
+        "APPROVAL_EXPECTED_AMOUNT": "6000",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      }
+    },
+    {
+      "name": "09.3 · 批量新增 / 资料 → 借款 → 人审通过（不放款）",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "--count",
+        "${input:approvedUnpaidCount}",
+        "--batch-id",
+        "${input:approvedUnpaidBatchId}",
+        "--loan-config",
+        "config/loan_6000_3periods.json"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "APPROVAL_ACTION": "pass",
+        "APPROVAL_ID": "",
+        "APPROVER_USERNAME": "ob5-mx",
+        "LOAN_TARGET_PHONE": "",
+        "LOAN_CONFIG_FILE": "${workspaceFolder}/config/loan_6000_3periods.json",
+        "APPROVAL_EXPECTED_AMOUNT": "6000",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "program": "${workspaceFolder}/tools/run_approved_unpaid_batch.py"
     },
     {
       "name": "10 · 复借 / 指定用户 → 试算 → 提交一次",
@@ -297,22 +467,1464 @@
         "PYTHONIOENCODING": "utf-8",
         "PYTHONUNBUFFERED": "1",
         "LOAN_REPEAT_USER_ID": "${input:repeatLoanUserId}",
-        "LOAN_REPEAT_REQUEST_ID": "${input:repeatLoanRequestId}"
+        "LOAN_REPEAT_REQUEST_ID": "${input:repeatLoanRequestId}",
+        "SSO_CREDENTIAL_SOURCE": "local",
+        "LOAN_TARGET_PHONE": "${input:repeatLoanPhone}",
+        "LOAN_CONFIG_FILE": "${workspaceFolder}/config/loan_application.json"
       }
+    },
+    {
+      "name": "10.1 · 6000元复借 / 指定用户 → 试算提交 → 人审通过（不放款）",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "LOAN_REPEAT_USER_ID": "${input:repeatLoanUserId}",
+        "LOAN_REPEAT_REQUEST_ID": "${input:repeatLoanRequestId}",
+        "SSO_CREDENTIAL_SOURCE": "local",
+        "LOAN_TARGET_PHONE": "${input:repeatLoanPhone}",
+        "LOAN_CONFIG_FILE": "${workspaceFolder}/config/loan_6000_3periods.json",
+        "APPROVAL_ACTION": "pass",
+        "APPROVAL_ID": "",
+        "APPROVAL_EXPECTED_AMOUNT": "6000"
+      }
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/11_prealert/test_generate_prealert.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "PREALERT_PHONE": "${input:prealertPhone}",
+        "PREALERT_CONTRACT_ID": "",
+        "PREALERT_PERIOD": "",
+        "PREALERT_DAYS": "",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "name": "11 · 预提醒 / 指定手机号 → 跟随当前任务账龄"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/11_prealert/test_generate_prealert.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "PREALERT_PHONE": "${input:prealertPhone}",
+        "PREALERT_CONTRACT_ID": "",
+        "PREALERT_PERIOD": "",
+        "PREALERT_DAYS": "0",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "name": "11.0 · 预提醒 / T0（修改任务参数为 0）"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/11_prealert/test_generate_prealert.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "PREALERT_PHONE": "${input:prealertPhone}",
+        "PREALERT_CONTRACT_ID": "",
+        "PREALERT_PERIOD": "",
+        "PREALERT_DAYS": "1",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "name": "11.1 · 预提醒 / T-1（修改任务参数为 1）"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/11_prealert/test_generate_prealert.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "PREALERT_PHONE": "${input:prealertPhone}",
+        "PREALERT_CONTRACT_ID": "",
+        "PREALERT_PERIOD": "",
+        "PREALERT_DAYS": "2",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "name": "11.2 · 预提醒 / T-2（修改任务参数为 2）"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/12_prealert_assignment/test_assign_prealert.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "PREALERT_ORDER_ID": "${input:prealertAssignmentId}",
+        "PREALERT_ASSIGN_PHONE": "",
+        "PREALERT_ASSIGN_CONTRACT_ID": "",
+        "PREALERT_ASSIGN_PERIOD": "",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "name": "12 · 预提醒分单 / 指定订单 → 精准转交 ob4-mx"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/12_prealert_assignment/test_assign_prealert.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "PREALERT_ORDER_ID": "",
+        "PREALERT_ASSIGN_PHONE": "${input:prealertAssignmentPhone}",
+        "PREALERT_ASSIGN_CONTRACT_ID": "",
+        "PREALERT_ASSIGN_PERIOD": "",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "name": "12.1 · 预提醒分单 / 指定手机号 → 精准转交 ob4-mx"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/13_overdue/test_generate_overdue.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "OVERDUE_ORDER_ID": "${input:overdueOrderId}",
+        "OVERDUE_CONTRACT_ID": "",
+        "OVERDUE_PERIOD": "",
+        "OVERDUE_MODE": "create",
+        "OVERDUE_DRY_RUN": "1",
+        "OVERDUE_DAYS": "${input:overdueDays}",
+        "OVERDUE_PENALTY_DAYS": "1",
+        "OVERDUE_EXPECTED_GRADE": "",
+        "OVERDUE_EXPECTED_DAILY_PENALTY": "",
+        "OVERDUE_REQUEST_ID": "",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "name": "13 · 逾期 / 只读预检（不写库、不执行任务）"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/13_overdue/test_generate_overdue.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "OVERDUE_ORDER_ID": "${input:overdueOrderId}",
+        "OVERDUE_CONTRACT_ID": "",
+        "OVERDUE_PERIOD": "",
+        "OVERDUE_MODE": "create",
+        "OVERDUE_DRY_RUN": "0",
+        "OVERDUE_DAYS": "${input:overdueDays}",
+        "OVERDUE_PENALTY_DAYS": "1",
+        "OVERDUE_EXPECTED_GRADE": "",
+        "OVERDUE_EXPECTED_DAILY_PENALTY": "",
+        "OVERDUE_REQUEST_ID": "${input:overdueRequestId}",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "name": "13.1 · 逾期 / 生成逾期订单及罚息"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/13_overdue/test_generate_overdue.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "OVERDUE_ORDER_ID": "${input:overdueOrderId}",
+        "OVERDUE_CONTRACT_ID": "",
+        "OVERDUE_PERIOD": "",
+        "OVERDUE_MODE": "penalty_only",
+        "OVERDUE_DRY_RUN": "0",
+        "OVERDUE_DAYS": "",
+        "OVERDUE_PENALTY_DAYS": "${input:overduePenaltyDays}",
+        "OVERDUE_EXPECTED_GRADE": "",
+        "OVERDUE_EXPECTED_DAILY_PENALTY": "",
+        "OVERDUE_REQUEST_ID": "${input:overdueRequestId}",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "name": "13.2 · 逾期 / 已逾期订单追加罚息"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/13_overdue/test_verify_existing_overdue.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "VERIFY_OVERDUE_REQUEST_ID": "${input:overdueRequestId}",
+        "VERIFY_OVERDUE_DAYS": "${input:overdueDays}",
+        "VERIFY_OVERDUE_PRINCIPAL": "${input:verifyOverduePrincipal}",
+        "VERIFY_OVERDUE_PENALTY": "${input:verifyOverduePenalty}",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      },
+      "name": "13.3 · 逾期 / 三期订单只读结果核验"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/14_overdue_days/test_update_overdue_days.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "name": "14 · 更新逾期天数 / 只读预检",
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "UPDATE_OVERDUE_COLLECTION_ID": "${input:updateOverdueCollectionId}",
+        "UPDATE_OVERDUE_CONTRACT_ID": "",
+        "UPDATE_OVERDUE_PERIOD": "",
+        "UPDATE_OVERDUE_DAYS": "${input:updateOverdueDays}",
+        "UPDATE_OVERDUE_DRY_RUN": "1",
+        "UPDATE_OVERDUE_REQUEST_ID": "",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      }
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/14_overdue_days/test_update_overdue_days.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "name": "14.1 · 更新逾期天数 / 指定订单 → 逾期 X 天",
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "UPDATE_OVERDUE_COLLECTION_ID": "${input:updateOverdueCollectionId}",
+        "UPDATE_OVERDUE_CONTRACT_ID": "",
+        "UPDATE_OVERDUE_PERIOD": "",
+        "UPDATE_OVERDUE_DAYS": "${input:updateOverdueDays}",
+        "UPDATE_OVERDUE_DRY_RUN": "0",
+        "UPDATE_OVERDUE_REQUEST_ID": "${input:updateOverdueRequestId}",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      }
+    },
+    {
+      "name": "15 · 催收手工分单 / 只读预检",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/15_collection_assignment/test_assign_collection.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "COLLECTION_ORDER_ID": "${input:collectionOrderId}",
+        "COLLECTION_CONTRACT_ID": "",
+        "COLLECTION_PERIOD": "",
+        "COLLECTION_DRY_RUN": "1",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      }
+    },
+    {
+      "name": "15.1 · 催收手工分单 / 单笔转交 ob4-mx",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "tests/15_collection_assignment/test_assign_collection.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "COLLECTION_ORDER_ID": "${input:collectionOrderId}",
+        "COLLECTION_CONTRACT_ID": "",
+        "COLLECTION_PERIOD": "",
+        "COLLECTION_DRY_RUN": "0",
+        "SSO_CREDENTIAL_SOURCE": "local"
+      }
+    },
+    {
+      "name": "TH 00 · 泰国 / 登录 → 新增用户",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/01_login/test_th_login.py",
+        "thailand/tests/02_user_management/test_th_add_user.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      }
+    },
+    {
+      "name": "TH 01 · 泰国 / SSO 登录",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/01_login/test_th_login.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      }
+    },
+    {
+      "name": "TH 02 · 泰国 / 用户管理 / 新增用户",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/02_user_management/test_th_add_user.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      }
+    },
+    {
+      "name": "TH 03 · 泰国 / 身份证OCR → KBANK银行卡",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/03_identity_verification/test_th_profile.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      }
+    },
+    {
+      "name": "TH 05 · 泰国 / 试算 → 提交借款",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/05_loan_application/test_th_loan.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      }
+    },
+    {
+      "name": "TH 07 · 泰国 / chengzi人审通过",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/07_payout_approval/test_th_review.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "${input:thPhone}",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      }
+    },
+    {
+      "name": "TH 08 · 泰国 / 放款成功",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/08_disbursement/test_th_payout.py",
+        "-v",
+        "-s",
+        "--tb=short",
+        "-x"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "${input:thPhone}",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      }
+    },
+    {
+      "name": "TH 09 · 泰国 / 新增 → OCR → KBANK → 借款 → 人审通过 → 放款成功",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/thailand/run_full_flow.py",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "args": [
+        "--run-id",
+        "${input:thaiFullFlowRunId}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      }
+    },
+    {
+      "name": "TH 07.2 · 泰国 / 人审拒绝",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "${input:thPhone}",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_APPROVAL_ACTION": "reject",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "module": "pytest",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/07_payout_approval/test_th_review_alternative.py",
+        "-v",
+        "-s",
+        "-x"
+      ]
+    },
+    {
+      "name": "TH 07.3 · 泰国 / 退回信审",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "${input:thPhone}",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_APPROVAL_ACTION": "close",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "module": "pytest",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/07_payout_approval/test_th_review_alternative.py",
+        "-v",
+        "-s",
+        "-x"
+      ]
+    },
+    {
+      "name": "TH 09.1 · 泰国 / 新增 → 资料（不借款）",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "program": "${workspaceFolder}/thailand/run_full_flow.py",
+      "args": [
+        "--run-id",
+        "${input:thaiFullFlowRunId}",
+        "--stop-after",
+        "profile"
+      ]
+    },
+    {
+      "name": "TH 09.2 · 泰国 / 新增 → 提交借款（不人审）",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "program": "${workspaceFolder}/thailand/run_full_flow.py",
+      "args": [
+        "--run-id",
+        "${input:thaiFullFlowRunId}",
+        "--stop-after",
+        "submission"
+      ]
+    },
+    {
+      "name": "TH 09.3 · 泰国 / 新增 → 人审通过（不放款）",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "program": "${workspaceFolder}/thailand/run_full_flow.py",
+      "args": [
+        "--run-id",
+        "${input:thaiFullFlowRunId}",
+        "--stop-after",
+        "review"
+      ]
+    },
+    {
+      "name": "TH 09.4 · 泰国 / 批量新增并选择停止点",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "program": "${workspaceFolder}/thailand/run_batch.py",
+      "args": [
+        "--batch-id",
+        "${input:thaiFullFlowRunId}",
+        "--count",
+        "${input:thBatchCount}",
+        "--stop-after",
+        "${input:thBatchStop}"
+      ]
+    },
+    {
+      "name": "TH 10 · 泰国 / 指定用户复借（只提交）",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "${input:thPhone}",
+        "TH_REPEAT_USER_ID": "${input:thUserId}",
+        "TH_REPEAT_REQUEST_ID": "${input:thRequestId}",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "module": "pytest",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/10_repeat_loan/test_th_repeat_loan.py",
+        "-v",
+        "-s",
+        "-x"
+      ]
+    },
+    {
+      "name": "TH 11 · 泰国 / 生成预提醒T0、T-1、T-2",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_PREALERT_PHONE": "${input:thPhone}",
+        "TH_PREALERT_CONTRACT_ID": "${input:thContract}",
+        "TH_PREALERT_PERIOD": "${input:thPeriod}",
+        "TH_PREALERT_DAYS": "${input:thPrealertDays}",
+        "TH_PREALERT_DRY_RUN": "${input:thDryRun}",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "module": "pytest",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/11_prealert/test_th_generate_prealert.py",
+        "-v",
+        "-s",
+        "-x"
+      ]
+    },
+    {
+      "name": "TH 12 · 泰国 / 预提醒转交OB5",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_PREALERT_ORDER_ID": "${input:thPrealertId}",
+        "TH_PREALERT_ASSIGN_CONTRACT_ID": "${input:thContract}",
+        "TH_PREALERT_ASSIGN_PERIOD": "${input:thPeriod}",
+        "TH_PREALERT_ASSIGN_PHONE": "",
+        "TH_PREALERT_ASSIGN_DRY_RUN": "${input:thDryRun}",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "module": "pytest",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/12_prealert_assignment/test_th_assign_prealert.py",
+        "-v",
+        "-s",
+        "-x"
+      ]
+    },
+    {
+      "name": "TH 13 · 泰国 / 生成逾期X天及罚息",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_OVERDUE_ORDER_ID": "${input:thPrealertId}",
+        "TH_OVERDUE_CONTRACT_ID": "${input:thContract}",
+        "TH_OVERDUE_PERIOD": "${input:thPeriod}",
+        "TH_OVERDUE_REQUEST_ID": "${input:thRequestId}",
+        "TH_OVERDUE_DRY_RUN": "${input:thDryRun}",
+        "TH_OVERDUE_EXPECTED_GRADE": "",
+        "TH_OVERDUE_EXPECTED_DAILY_PENALTY": "",
+        "TH_OVERDUE_MODE": "create",
+        "TH_OVERDUE_DAYS": "${input:thOverdueDays}",
+        "TH_OVERDUE_PENALTY_DAYS": "1",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "module": "pytest",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/13_overdue/test_th_generate_overdue.py",
+        "-v",
+        "-s",
+        "-x"
+      ]
+    },
+    {
+      "name": "TH 13.2 · 泰国 / 已逾期单追加罚息",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_OVERDUE_ORDER_ID": "${input:thPrealertId}",
+        "TH_OVERDUE_CONTRACT_ID": "${input:thContract}",
+        "TH_OVERDUE_PERIOD": "${input:thPeriod}",
+        "TH_OVERDUE_REQUEST_ID": "${input:thRequestId}",
+        "TH_OVERDUE_DRY_RUN": "${input:thDryRun}",
+        "TH_OVERDUE_EXPECTED_GRADE": "",
+        "TH_OVERDUE_EXPECTED_DAILY_PENALTY": "",
+        "TH_OVERDUE_MODE": "penalty_only",
+        "TH_OVERDUE_DAYS": "",
+        "TH_OVERDUE_PENALTY_DAYS": "${input:thPenaltyRounds}",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "module": "pytest",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/13_overdue/test_th_generate_overdue.py",
+        "-v",
+        "-s",
+        "-x"
+      ]
+    },
+    {
+      "name": "TH 14 · 泰国 / 更新已有逾期单天数",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_UPDATE_OVERDUE_COLLECTION_ID": "${input:thCollectionId}",
+        "TH_UPDATE_OVERDUE_CONTRACT_ID": "${input:thContract}",
+        "TH_UPDATE_OVERDUE_PERIOD": "${input:thPeriod}",
+        "TH_UPDATE_OVERDUE_DAYS": "${input:thOverdueDays}",
+        "TH_UPDATE_OVERDUE_REQUEST_ID": "${input:thRequestId}",
+        "TH_UPDATE_OVERDUE_DRY_RUN": "${input:thDryRun}",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "module": "pytest",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/14_overdue_days/test_th_update_overdue_days.py",
+        "-v",
+        "-s",
+        "-x"
+      ]
+    },
+    {
+      "name": "TH 15 · 泰国 / 催收单转交OB5",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_COLLECTION_ORDER_ID": "${input:thCollectionId}",
+        "TH_COLLECTION_CONTRACT_ID": "${input:thContract}",
+        "TH_COLLECTION_PERIOD": "${input:thPeriod}",
+        "TH_COLLECTION_DRY_RUN": "${input:thDryRun}",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "module": "pytest",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/15_collection_assignment/test_th_assign_collection.py",
+        "-v",
+        "-s",
+        "-x"
+      ]
+    },
+    {
+      "name": "TH 16 · 泰国 / 只读校验人审通过且未放款",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "${input:thPhone}",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "module": "pytest",
+      "args": [
+        "-c",
+        "thailand/pytest.ini",
+        "thailand/tests/16_approved_unpaid/test_th_approved_unpaid.py",
+        "-v",
+        "-s",
+        "-x"
+      ]
+    },
+    {
+      "name": "TH 17 · 泰国 / 已放款合同 → 逾期单（只读预检）",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "program": "${workspaceFolder}/thailand/run_to_overdue.py",
+      "args": [
+        "--phone",
+        "${input:thPhone}",
+        "--contract",
+        "${input:thContract}",
+        "--period",
+        "${input:thPeriod}",
+        "--days",
+        "${input:thOverdueDays}"
+      ]
+    },
+    {
+      "name": "TH 17.1 · 泰国 / 已放款合同 → 逾期单（实际执行）",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "program": "${workspaceFolder}/thailand/run_to_overdue.py",
+      "args": [
+        "--phone",
+        "${input:thPhone}",
+        "--contract",
+        "${input:thContract}",
+        "--period",
+        "${input:thPeriod}",
+        "--days",
+        "${input:thOverdueDays}",
+        "--request-id",
+        "${input:thRequestId}",
+        "--execute"
+      ]
+    },
+    {
+      "name": "TH 18 · 泰国 / 新增 → 放款 → 预提醒分单 → 逾期及催收分单（实际执行）",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUNBUFFERED": "1",
+        "TH_CREDENTIAL_SOURCE": "local",
+        "SSO_CAPTCHA_MODE": "ocr",
+        "TH_TARGET_PHONE": "",
+        "TH_REPEAT_USER_ID": "",
+        "TH_REPEAT_REQUEST_ID": "",
+        "TH_FLOW_USER_ID": "",
+        "TH_FLOW_USER_UUID": "",
+        "TH_FLOW_RUN_ID": ""
+      },
+      "program": "${workspaceFolder}/thailand/run_full_flow.py",
+      "args": [
+        "--run-id",
+        "${input:thaiFullFlowRunId}",
+        "--overdue-days",
+        "${input:thOverdueDays}"
+      ]
     }
   ],
   "inputs": [
     {
       "id": "repeatLoanUserId",
       "type": "promptString",
-      "description": "复借目标用户 ID，必须与最新用户一致",
-      "default": "862"
+      "description": "复借目标用户ID，必须与输入手机号对应的用户一致",
+      "default": ""
     },
     {
       "id": "repeatLoanRequestId",
       "type": "promptString",
       "description": "本次复借唯一标识；重复运行请保留原值，防止重复申请",
-      "default": "user862-repeat-20261016-01"
+      "default": ""
+    },
+    {
+      "id": "prealertPhone",
+      "type": "promptString",
+      "description": "请输入符合条件的已放款用户手机号（10 位，保留前导 0）",
+      "default": ""
+    },
+    {
+      "id": "prealertAssignmentId",
+      "type": "promptString",
+      "description": "输入单笔预提醒订单 ID；接收人和部门固定为 ob4-mx",
+      "default": ""
+    },
+    {
+      "id": "prealertAssignmentPhone",
+      "type": "promptString",
+      "description": "输入已有唯一有效预提醒的用户手机号（10位）；多笔时请改用订单 ID",
+      "default": ""
+    },
+    {
+      "id": "overdueOrderId",
+      "type": "promptString",
+      "description": "输入已生成预提醒且已分单的预提醒订单 ID",
+      "default": ""
+    },
+    {
+      "id": "overdueDays",
+      "type": "promptString",
+      "description": "逾期天数，按服务端业务日期倒推（1=昨天）",
+      "default": "1"
+    },
+    {
+      "id": "overduePenaltyDays",
+      "type": "promptString",
+      "description": "仅13.2追加罚息使用：本次新增计息任务轮数；不保证一轮等于一天，未增长时停止",
+      "default": "1"
+    },
+    {
+      "id": "overdueRequestId",
+      "type": "promptString",
+      "description": "本次唯一请求标识；失败后重跑保持同一值，禁止换标识绕过保护",
+      "default": ""
+    },
+    {
+      "id": "updateOverdueCollectionId",
+      "type": "promptString",
+      "description": "已有逾期催收单 ID（不是预提醒 ID）；只操作单笔、最早未还期次",
+      "default": ""
+    },
+    {
+      "id": "updateOverdueDays",
+      "type": "promptString",
+      "description": "目标逾期天数，按服务器业务日期倒推；本场景不补算罚息",
+      "default": "2"
+    },
+    {
+      "id": "updateOverdueRequestId",
+      "type": "promptString",
+      "description": "本次更新唯一标识；重跑保持原值，禁止换标识绕过未知结果",
+      "default": ""
+    },
+    {
+      "id": "collectionOrderId",
+      "type": "promptString",
+      "description": "输入单笔逾期催收记录 ID（不是预提醒 ID，也不是 REM 业务单号）；接收人固定 ob4-mx",
+      "default": ""
+    },
+    {
+      "id": "verifyOverduePrincipal",
+      "type": "promptString",
+      "description": "已有三期订单的本金合计（只读核验，不会申请新借款）",
+      "default": ""
+    },
+    {
+      "id": "verifyOverduePenalty",
+      "type": "promptString",
+      "description": "当前预期罚息总额（只读核验，不会生成罚息）",
+      "default": ""
+    },
+    {
+      "id": "approvedUnpaidCount",
+      "type": "promptString",
+      "description": "新增用户数量（1～20），每位止步于人审通过，不执行放款",
+      "default": "5"
+    },
+    {
+      "id": "approvedUnpaidBatchId",
+      "type": "promptString",
+      "description": "本批次唯一标识，仅使用字母数字下划线或短横线；已有批次禁止重复创建",
+      "default": ""
+    },
+    {
+      "id": "repeatLoanPhone",
+      "type": "promptString",
+      "description": "复借用户手机号（10位），不会新增用户；必须与目标用户ID一致",
+      "default": ""
+    },
+    {
+      "id": "thaiFullFlowRunId",
+      "type": "promptString",
+      "description": "泰国本次全流程唯一标识，如 th_full_20261027_01；已有或未完成运行不能重建用户",
+      "default": ""
+    },
+    {
+      "id": "thPhone",
+      "type": "promptString",
+      "description": "泰国目标手机号（10位）；复借/预提醒必须填写，审批及放款留空时仅使用最新泰国用户",
+      "default": ""
+    },
+    {
+      "id": "thUserId",
+      "type": "promptString",
+      "description": "泰国目标用户ID，仅复借使用",
+      "default": ""
+    },
+    {
+      "id": "thRequestId",
+      "type": "promptString",
+      "description": "本次唯一业务标识；实际执行必须填写，已有未知结果禁止换标识重跑",
+      "default": ""
+    },
+    {
+      "id": "thContract",
+      "type": "promptString",
+      "description": "泰国合同号；同手机号多合同必须填写",
+      "default": ""
+    },
+    {
+      "id": "thPeriod",
+      "type": "promptString",
+      "description": "目标期次，只支持最早未还期次",
+      "default": "1"
+    },
+    {
+      "id": "thPrealertId",
+      "type": "promptString",
+      "description": "泰国预提醒记录ID；按合同+期次定位可留空",
+      "default": ""
+    },
+    {
+      "id": "thCollectionId",
+      "type": "promptString",
+      "description": "泰国催收记录ID；按合同+期次定位可留空",
+      "default": ""
+    },
+    {
+      "id": "thPrealertDays",
+      "type": "promptString",
+      "description": "预提醒提前天数0/1/2，留空跟随当前任务参数",
+      "default": ""
+    },
+    {
+      "id": "thOverdueDays",
+      "type": "promptString",
+      "description": "目标逾期天数（按泰国服务器日期）",
+      "default": "1"
+    },
+    {
+      "id": "thPenaltyRounds",
+      "type": "promptString",
+      "description": "追加罚息任务轮数，不能等同于逾期天数；默认1",
+      "default": "1"
+    },
+    {
+      "id": "thBatchCount",
+      "type": "promptString",
+      "description": "泰国批量新增人数（1～20）",
+      "default": "5"
+    },
+    {
+      "id": "thDryRun",
+      "type": "pickString",
+      "description": "1=只读预检；0=实际改期/执行任务/转交",
+      "options": [
+        "1",
+        "0"
+      ],
+      "default": "1"
+    },
+    {
+      "id": "thBatchStop",
+      "type": "pickString",
+      "description": "泰国批次停止点：profile资料、submission借款提交、review人审通过未放款、payout放款成功",
+      "options": [
+        "profile",
+        "submission",
+        "review",
+        "payout"
+      ],
+      "default": "review"
     }
   ]
 }

@@ -1,0 +1,34 @@
+{
+  "0650100001": {
+    "status": "occupied_existing",
+    "phone": "0650100001",
+    "existing_user_ids": [
+      172554
+    ],
+    "create_request_sent": false
+  },
+  "0650100002": {
+    "status": "db_verified",
+    "phone": "0650100002",
+    "country": "TH",
+    "employeeLine": "ob516772222",
+    "code": 0,
+    "msg": "线下用户建档成功。",
+    "user_id": 172555,
+    "uuid": "a776cf3018e64c82ac1507f862a51f70",
+    "appOwnership": "supma",
+    "reconciled_readonly": true
+  },
+  "0650100003": {
+    "status": "db_verified",
+    "phone": "0650100003",
+    "country": "TH",
+    "employeeLine": "ob516772222",
+    "flow_run_id": "th_overdue5_20261027_01",
+    "code": 0,
+    "msg": "线下用户建档成功。",
+    "user_id": 172556,
+    "uuid": "0bb3ad71542340b6bfbc2c85a0e7115c",
+    "appOwnership": "supma"
+  }
+}

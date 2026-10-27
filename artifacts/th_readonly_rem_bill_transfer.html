@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title>手动分单</title>
+	<link rel="shortcut icon" href="logo2.png">
+	<link href="/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="/css/font-awesome.min.css" rel="stylesheet"/>
+	<!-- bootstrap-table 表格插件样式 -->
+	<link href="/ajax/libs/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+	<link href="/css/animate.css" rel="stylesheet"/>
+	<link href="/css/style.css" rel="stylesheet"/>
+	<link href="/ruoyi/css/ry-ui.css?v=4.1.2" rel="stylesheet"/>
+
+    
+	<link href="/ajax/libs/datapicker/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+
+    
+	<link href="/ajax/libs/select2/select2.min.css" rel="stylesheet"/>
+	<link href="/ajax/libs/select2/select2-bootstrap.css" rel="stylesheet"/>
+
+    
+	<link href="/ajax/libs/bootstrap-select/bootstrap-select.css" rel="stylesheet"/>
+
+    
+	<link href="/ruoyi/css/inner-detail.css" rel="stylesheet"/>
+
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-distributeOrTransferBills-add" autocomplete="off">
+        <div class="form-group">
+            <label class="col-sm-3 control-label" required="required">分配方式</label>
+            <div class="col-sm-8">
+                <label class="radio-box"> <input  type="radio"  name="distributionMode"  value="1" required/> <span>精准分配</span></label>
+                <label class="radio-box"> <input  type="radio"  name="distributionMode"  value="2" required/> <span>顺序分配</span></label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">催收部</label>
+            <div class="col-sm-8">
+                <!--                <select name="deptIdList" id="deptIdList" class="form-control noselect2 selectpicker"-->
+                <!--                        th:with="deptIdList=${deptIdList}"-->
+                <!--                        data-actions-box="true" data-live-search="true"-->
+                <!--                        th:data-none-selected-text="#{common.choose}" multiple required>-->
+                <!--                    <option th:each="dept : ${deptIdList}" th:text="${dept.deptName}" th:value="${dept.deptId}"></option>-->
+                <!--                </select>-->
+                <!-- 仍然保留原来的 name 和 id，使用 <input> 显示已选部门 -->
+                <input type="text"
+                       id="deptSelect"
+                       name="deptSelect"
+                       class="form-control noselect2"
+                       placeholder="请选择部门"
+                       onclick="selectMultiDeptTree()"
+                       required>
+
+                <!-- 隐藏的 <select> 用于传递数据 -->
+                <select name="deptIdList" id="deptIdList" multiple required style="display: none;">
+                    <!-- 选中的部门值将动态插入到这里 -->
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-8">
+                <input type="hidden" name="isFilter" value="">
+                <label style="font-size: 15px">
+                    <input id="isFilter" name="isFilter"  type="checkbox" value="1">过滤今日未打卡人员</input></label>
+                <label style="font-size: 15px;margin-left: 10px">
+                    <input id="isFilter2" name="isFilter"  type="checkbox" value="2">过滤今日不分单人员</input></label>
+                <label style="font-size: 15px;margin-left: 20px">
+                    <input id="isFilter3" name="isFilter"  type="checkbox" value="3">只分配能力最高档人员</input></label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">催收人员</label>
+            <div class="col-sm-8">
+                <select name="ownerDictList" id="ownerDictList" class="form-control noselect2 selectpicker"
+                        data-actions-box="true" data-live-search="true"
+                        data-none-selected-text="请选择" multiple required>
+                </select>
+            </div>
+        </div>
+        <div id="hiddenText">
+            <input type="hidden" id="userName" name="userName" value=""/>
+            <input type="hidden" id ="opType" name="opType" value="2"/>
+            <input type="hidden" id ="id" name="id" value=""/>
+        </div>
+    </form>
+</div>
+
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<!--jQuery国际化插件-->
+	<script src="/js/jquery.i18n.properties.min.js"></script>
+	<script>
+		//获取应用路径
+		var ROOT = "";
+
+		//获取默认语言
+		var LANG_COUNTRY = "zh_CN";
+		var lang = "zh";
+		// 表单日期组件语言：laydate 仅内置 cn/en，扩展 es/th；datetimepicker 默认识别 zh-cn/en/es/th
+		var LAYDATE_LANG = (LANG_COUNTRY === 'zh_CN' || lang === 'zh') ? 'cn'
+				: (LANG_COUNTRY === 'es_MX' || lang === 'es') ? 'es'
+				: (LANG_COUNTRY === 'th_TH' || lang === 'th') ? 'th'
+				: 'en';
+		var DATETIMEPICKER_LANG = (LANG_COUNTRY === 'zh_CN' || lang === 'zh') ? 'zh-cn'
+				: (LANG_COUNTRY === 'es_MX' || lang === 'es') ? 'es'
+				: (LANG_COUNTRY === 'th_TH' || lang === 'th') ? 'th'
+				: 'en';
+		//当前国家主力聊天工具名（泰国=Line 墨西哥=WhatsApp），页面展示用
+		var IM_NAME = "Line";
+		//全站日期时间控件（含查询条件/编辑表单）的“今天/现在”按商户国家当前时间取，而非客户端电脑时区。
+		//下发商户国家当前墙钟串，算出与本机时间的毫秒差，供已打补丁的 laydate 读取（默认 0=不改，无上下文时≈0）。
+		try {
+			var __cn = "2026-10-27 15:24:32";
+			var __m = (__cn || '').match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);
+			if (__m) {
+				window.__laydateNowOffsetMs__ = new Date(+__m[1], +__m[2] - 1, +__m[3], +__m[4], +__m[5], +__m[6]).getTime() - Date.now();
+			}
+		} catch (e) {}
+        var isCatchData = [{"searchValue":null,"createBy":"admin","createTime":"2024-01-01 19:34:14","createTimeStr":"2024-01-02 02:34:14","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":23543,"dictSort":1,"dictLabel":"\u56FD\u9645\u5316\u6587\u4EF6\u662F\u5426\u5F00\u542F\u7F13\u5B58","dictLabelTh":"t\u1EC7p qu\u1ED1c t\u1EBF h\u00F3a c\u00F3 b\u1EADt b\u1ED9 nh\u1EDB \u0111\u1EC7m hay ch\u01B0a","dictLabelEs":"Si se habilita cach\u00E9 para archivos de internacionalizaci\u00F3n","dictLabelVi":"C\u00F3 b\u1EADt b\u1ED9 nh\u1EDB \u0111\u1EC7m t\u1EC7p qu\u1ED1c t\u1EBF h\u00F3a hay kh\u00F4ng","dictValue":"true","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"sys_is_catch_static","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u56FD\u9645\u5316\u6587\u4EF6\u662F\u5426\u5F00\u542F\u7F13\u5B58","default":true}];
+        var isCatchFlag = true;
+        if (isCatchData[0].dictValue == 'false'){
+            isCatchFlag = false;
+        }
+		//初始化i18n插件
+		$.i18n.properties({
+			path: ROOT + '/i18n/',//这里表示访问路径
+			name: 'messages',//文件名开头
+			language: LANG_COUNTRY,//文件名语言 例如th_TH
+			mode: 'map',//默认值
+            cache: isCatchFlag //是否开启浏览器缓存
+		});
+
+		//初始化i18n函数
+		function i18n(msgKey) {
+			try {
+				var msg = $.i18n.prop(msgKey);
+				//员工 Line 文案里的聊天工具名按当前国家展示（与后端 CountryAwareMessageSource 同一白名单）
+				if (IM_NAME && IM_NAME !== 'Line' && typeof msgKey === 'string' && typeof msg === 'string'
+						&& (msgKey.indexOf('offadmin.profile.line') === 0
+							|| msgKey.indexOf('offadmin.user.employeeLine') === 0
+							|| msgKey.indexOf('offadmin.msg.offlineAddEmployeeLine') === 0)) {
+					msg = msg.replace(/\bLine\b/g, IM_NAME);
+				}
+				return msg;
+			} catch (e) {
+				console.error(e);
+				return msgKey;
+			}
+		}
+	</script>
+	<!-- bootstrap-table 表格插件 -->
+	<script src="/ajax/libs/bootstrap-table/bootstrap-table.min.js?v=20200727"></script>
+	<script src="/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+	<script>
+		// 按后台当前语言覆盖表格组件内置提示，仅影响分页、工具栏和空数据等展示文案。
+		(function () {
+			function formatMessage(messageKey, values) {
+				var message = i18n(messageKey);
+				$.each(values || [], function (index, value) {
+					message = message.replace(new RegExp('\\{' + index + '\\}', 'g'), value);
+				});
+				return message;
+			}
+
+			$.extend($.fn.bootstrapTable.defaults, {
+				formatLoadingMessage: function () {
+					return i18n('ui.bootstrapTable.loading');
+				},
+				formatRecordsPerPage: function (pageNumber) {
+					return formatMessage('ui.bootstrapTable.recordsPerPage', [pageNumber]);
+				},
+				formatShowingRows: function (pageFrom, pageTo, totalRows, totalNotFiltered) {
+					if (totalNotFiltered !== undefined && totalNotFiltered > totalRows) {
+						return formatMessage('ui.bootstrapTable.showingFilteredRows',
+								[pageFrom, pageTo, totalRows, totalNotFiltered]);
+					}
+					return formatMessage('ui.bootstrapTable.showingRows', [pageFrom, pageTo, totalRows]);
+				},
+				formatSRPaginationPreText: function () {
+					return i18n('ui.bootstrapTable.previousPage');
+				},
+				formatSRPaginationPageText: function (page) {
+					return formatMessage('ui.bootstrapTable.page', [page]);
+				},
+				formatSRPaginationNextText: function () {
+					return i18n('ui.bootstrapTable.nextPage');
+				},
+				formatDetailPagination: function (totalRows) {
+					return formatMessage('ui.bootstrapTable.detailPagination', [totalRows]);
+				},
+				formatClearSearch: function () {
+					return i18n('ui.bootstrapTable.clearSearch');
+				},
+				formatSearch: function () {
+					return i18n('ui.bootstrapTable.search');
+				},
+				formatNoMatches: function () {
+					return i18n('ui.bootstrapTable.noMatches');
+				},
+				formatPaginationSwitch: function () {
+					return i18n('ui.bootstrapTable.paginationSwitch');
+				},
+				formatPaginationSwitchDown: function () {
+					return i18n('ui.bootstrapTable.paginationShow');
+				},
+				formatPaginationSwitchUp: function () {
+					return i18n('ui.bootstrapTable.paginationHide');
+				},
+				formatRefresh: function () {
+					return i18n('ui.bootstrapTable.refresh');
+				},
+				formatToggle: function () {
+					return i18n('ui.bootstrapTable.toggle');
+				},
+				formatToggleOn: function () {
+					return i18n('ui.bootstrapTable.cardViewShow');
+				},
+				formatToggleOff: function () {
+					return i18n('ui.bootstrapTable.cardViewHide');
+				},
+				formatColumns: function () {
+					return i18n('ui.bootstrapTable.columns');
+				},
+				formatColumnsToggleAll: function () {
+					return i18n('ui.bootstrapTable.toggleAll');
+				},
+				formatFullscreen: function () {
+					return i18n('ui.bootstrapTable.fullscreen');
+				},
+				formatAllRows: function () {
+					return i18n('ui.bootstrapTable.allRows');
+				},
+				formatAutoRefresh: function () {
+					return i18n('ui.bootstrapTable.autoRefresh');
+				},
+				formatExport: function () {
+					return i18n('ui.bootstrapTable.export');
+				},
+				formatJumpTo: function () {
+					return i18n('ui.bootstrapTable.jumpTo');
+				},
+				formatAdvancedSearch: function () {
+					return i18n('ui.bootstrapTable.advancedSearch');
+				},
+				formatAdvancedCloseButton: function () {
+					return i18n('ui.bootstrapTable.close');
+				},
+				formatFilterControlSwitch: function () {
+					return i18n('ui.bootstrapTable.filterSwitch');
+				},
+				formatFilterControlSwitchHide: function () {
+					return i18n('ui.bootstrapTable.filterHide');
+				},
+				formatFilterControlSwitchShow: function () {
+					return i18n('ui.bootstrapTable.filterShow');
+				}
+			});
+		})();
+	</script>
+	<script src="/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/columns/bootstrap-table-fixed-columns.min.js?v=20200727"></script>
+	<!-- jquery-validate 表单验证插件 -->
+	<script src="/ajax/libs/validate/jquery.validate.min.js"></script>
+	<script src="/ajax/libs/validate/messages_zh.min.js"></script>
+	<script src="/ajax/libs/validate/jquery.validate.extend.js"></script>
+	<script>
+		// 校验插件默认加载中文包，这里按当前后台语言覆盖为对应国际化文案。
+		$.extend($.validator.messages, {
+			required: i18n("validation.required"),
+			remote: i18n("validation.remote"),
+			email: i18n("validation.email"),
+			url: i18n("validation.url"),
+			date: i18n("validation.date"),
+			dateISO: i18n("validation.dateISO"),
+			number: i18n("validation.number"),
+			digits: i18n("validation.digits"),
+			equalTo: i18n("validation.equalTo"),
+			maxlength: $.validator.format(i18n("validation.maxlength")),
+			minlength: $.validator.format(i18n("validation.minlength")),
+			rangelength: $.validator.format(i18n("validation.rangelength")),
+			range: $.validator.format(i18n("validation.range")),
+			max: $.validator.format(i18n("validation.max")),
+			min: $.validator.format(i18n("validation.min")),
+			step: $.validator.format(i18n("validation.step"))
+		});
+	</script>
+	<!-- jquery-validate 表单树插件 -->
+	<script src="/ajax/libs/bootstrap-treetable/bootstrap-treetable.js"></script>
+	<!-- jquery-export 表格导出插件 -->
+	<script src="/ajax/libs/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/export/tableExport.js"></script>
+	<!-- 遮罩层 -->
+	<script src="/ajax/libs/blockUI/jquery.blockUI.js"></script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"></script>
+	<script src="/ajax/libs/layer/layer.min.js"></script>
+	<script src="/ajax/libs/layui/layui.js"></script>
+	<script>
+		// 全站 laydate 面板默认语言跟随后台会话（含直接 render、未传 lang 的页面）
+		(function () {
+			if (!window.layui || typeof LAYDATE_LANG === 'undefined') {
+				return;
+			}
+			layui.use('laydate', function () {
+				layui.laydate.set({ lang: LAYDATE_LANG });
+			});
+		})();
+	</script>
+	<script src="/ruoyi/js/common.js?v=4.1.1"></script>
+	<script src="/ruoyi/js/ry-ui.js?v=4.1.3"></script>
+	<script> var ctx = "\/"; </script>
+	<script src="/ruoyi/js/saas-customer-profile.js?v=20250918"></script>
+
+
+	<script src="/ajax/libs//datapicker/bootstrap-datetimepicker.min.js"></script>
+	<script>
+		// 跟随后台语言，避免组件默认 zh-cn 导致西语/泰语界面仍显示中文日期面板。
+		(function ($) {
+			if (!$ || !$.fn || !$.fn.datetimepicker) {
+				return;
+			}
+			var dates = $.fn.datetimepicker.dates;
+			dates.es = {
+				days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+				daysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+				daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'],
+				months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+				monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+				meridiem: ['am', 'pm'],
+				today: 'Hoy',
+				clear: 'Limpiar',
+				weekStart: 1
+			};
+			dates.th = {
+				days: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'],
+				daysShort: ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.', 'อา.'],
+				daysMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส', 'อา'],
+				months: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
+				monthsShort: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+				meridiem: ['am', 'pm'],
+				today: 'วันนี้',
+				clear: 'ล้าง',
+				weekStart: 0
+			};
+			$.fn.datetimepicker.defaults = $.fn.datetimepicker.defaults || {};
+			$.fn.datetimepicker.defaults.language = typeof DATETIMEPICKER_LANG !== 'undefined' ? DATETIMEPICKER_LANG : 'en';
+		})(window.jQuery);
+	</script>
+
+
+	<script src="/ajax/libs/select2/select2.min.js"></script>
+
+
+	<script src="/ajax/libs/bootstrap-select/bootstrap-select.js"></script>
+
+<script>
+    var prefix = ctx + "loan/remindBill";
+    var remindBillVo = {"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":null,"modifyTime":null,"userId":null,"applyRemark":null,"city":null,"contractId":null,"contractIdList":null,"customerId":null,"email":null,"gender":null,"name":null,"overdueDate":null,"overdueDateStr":null,"startDate":null,"endDate":null,"startDayNum":null,"endDayNum":null,"ownerName":null,"period":null,"phoneNum":null,"mobileEncrypt":null,"srcChnTeam":null,"productId":null,"overdueAmount":null,"remindBillId":null,"mobile1":null,"remindEndDate":null,"gradeChangeDate":null,"gradeChangeDateStr":null,"gradeChangeDateStrEnd":null,"remFinishStartDate":null,"remFinishEndDate":null,"remindGrade":null,"remindStartDate":null,"remStartDate":null,"remEndDate":null,"remindStatus":null,"repayDay":null,"systemOrg":null,"channelId":null,"deptId":null,"importFlag":null,"submitAadhaarNum":null,"automaticSingleRuleId":null,"isOption":null,"isExpiration":null,"noSameDay":null,"noSameDayEnd":null,"deductStatus":null,"monthTotal":null,"monthTotalStart":null,"monthTotalEnd":null,"delayType":null,"breaksAuditStatus":null,"overdueDays":null,"overdueDaysList":null,"listType":"5","remindCodeCuurentUser":null,"userIdList":null,"applyId":null,"remindStatusList":null,"actualDeductAmount":null,"exportType":null,"remindGradeList":null,"srcChnTeamList":null,"delayTypeList":null,"deptList":null,"caseStatusList":null,"promisePayList":null,"caseStatus":null,"caseTime":null,"lastFollowTimeStr":null,"commitmentTime":null,"commitmentTimeStr":null,"dailyRecordNum":null,"caseRounds":null,"caseStartDate":null,"caseEndDate":null,"caseAssistantPermission":null,"gradeStartDate":null,"gradeEndDate":null,"applyStartTime":null,"applyEndTime":null,"reducePenalty":null,"oldLateChargeActual":null,"monthlyPaymentOrigin":null,"repaidAmount":null,"applyExemptionAmount":null,"remainingAmount":null,"contractStatus":null,"merchantId":null,"merchantIdList":null,"ownerNameList":null,"srcChnTypeList":null,"srcChnType":null,"srcChnTypeName":null,"srcChnTeamName":null,"remindGradeName":null,"remindStatusName":null,"deptIdName":null,"ownerUserName":null,"caseStatusName":null,"isLockName":null,"delayTypeName":null,"breaksAuditStatusName":null,"amountPaid":null,"lastCallTime":null,"remindEndDateStr":null,"searchParam":null,"beginPage":null,"endPage":null,"acCase":null,"isLock":0,"lockTime":null,"orderType":null,"applicationType":null,"minAmount":null,"maxAmount":null,"joinDebtOrderMark":null,"joinDebtOrderMarkList":null,"ivrTouchStateList":null,"recentCallResult":null,"recentCallType":null,"ivrConnectTimeStr":null,"ivrConnectTime":null,"orderSeg":null,"orderModelLvl":null,"orderSegList":null,"orderModelLvlList":null};
+    var records = [{"searchValue":null,"createBy":null,"createTime":"2026-10-27 06:00:17","createTimeStr":"2026-10-27 13:00:17","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"7de2059b05df45c8a55866c3312deb86","modifyTime":"2026-10-27T14:00:17.000+08:00","applyRemark":null,"city":null,"contractId":"C1320261024094351PC5Lk","customerId":null,"email":"M98M4TfhT3cUbIanb3iOGXjpHCV4SFkWGwFk4OEyW\/k=","gender":"","name":"\u0E19\u0E32\u0E22 \u0E08\u0E31\u0E01\u0E23\u0E01\u0E24\u0E29\u0E13\u0E4C \u0E2A\u0E31\u0E21\u0E1E\u0E31\u0E19\u0E18\u0E32\u0E23\u0E31\u0E01\u0E29\u0E4C","overdueDate":"2026-10-26","ownerName":null,"period":1,"phoneNum":"DyGcKihdNaQyC5jGeO92wUk5c5NEwaoR7lfmEqJu764=","productId":"001400","remindBillId":"REM20261027TNnlxc87","remindEndDate":null,"remindGrade":"353241","remindStartDate":"2026-10-27","remindStatus":"0","repayDay":0,"systemOrg":"1","channelId":"show-000201","importFlag":null,"submitAadhaarNum":"x5jI7Jj4CmiX1f1iajgoq9pRZjXOwwan1r\/BURYDNkM=","automaticSingleRuleId":null,"deptId":11791,"regionalDivisionId":null,"userId":null,"overdueDays":"2","caseId":null,"caseStatus":null,"overdueAmount":2666.67,"singleTime":null,"merchantId":"11784","gradeChangeDate":"2026-10-26","singlgTime":null,"originOwnerName":null,"lastFollowTime":null,"promisePayCase":null,"commitmentTime":null,"dailyRecordNum":null,"userGrade":null,"amountPaid":0.00,"isLock":1,"lockTime":null,"orderType":null,"delayType":"0","srcChnType":"1965","srcChnTeam":"1215","idCardEncrypt":null,"emailEncrypt":null,"applyId":null,"originMerchantId":null,"abTest":null,"channel":null,"terminalType":null,"isMandatory":null,"orderCollectionFlag":null,"riskIdenAb":null,"riskIdenLowInterest":null,"orderSeg":null,"orderModelLvl":null}];
+    var regionalDivisionId = 11785;
+    var paramsData = "";
+    for (var Key in remindBillVo) {
+        if (Key != 'params' && remindBillVo[Key] != null)
+            paramsData += Key + "=" + remindBillVo[Key] +"&";
+    }
+    if(paramsData!=null && paramsData!=''){
+        paramsData =  paramsData.substring(0,paramsData.lastIndexOf("&"));
+    }
+    $("#form-distributeOrTransferBills-add").validate({
+        focusCleanup: true
+    });
+    //根据催收部层级查询催收人员
+    $(function () {
+        $("#deptIdList").change(function () {
+            selectUser();
+        });
+
+        $("#isFilter").on('change', function (event) {
+            selectUser();
+        })
+
+        $("#isFilter2").on('change', function (event) {
+            selectUser();
+        })
+
+        $("#isFilter3").on('change', function (event) {
+            selectUser();
+        })
+    });
+
+    function selectUser() {
+        var collectionDept = "";
+        if($('#deptIdList').selectpicker('val')!=null){
+            collectionDept=$('#deptIdList').selectpicker('val').toString();
+        }
+        var filterParam = [];
+        $('input[type="checkbox"]:checked').each(function() {
+            filterParam.push($(this).val());
+        });
+        console.log("-------" + filterParam.toString());
+        var config = {
+            url: prefix + "/selectUsersByDeptList",
+            type: "post",
+            dataType: "json",
+            data: {"depts":collectionDept,"filterParam":filterParam.toString()},
+            success: function (result) {
+                $("#ownerDictList").empty();
+                var  html= "";
+                for (var i = 0; i < result.length; i++) {
+                    // console.log(result[i].userId+"---"+result[i].userName);
+                    html += "<option value='" + result[i].userId + "'>" + result[i].loginName + "</option>";
+                }
+                $("#ownerDictList").append(html);
+                $("#ownerDictList").selectpicker('refresh');
+                $("#ownerDictList").selectpicker('render');
+            }
+        };
+        $.ajax(config)
+    }
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            var userNameStr = '';
+            var chooseOwnerList = $("#ownerDictList option:selected").text().split(",");
+            $("#ownerDictList option:selected").each(function () {
+                userNameStr += $(this).val() + "-" + $(this).text() + ",";
+            });
+            userNameStr = userNameStr.substring(0,userNameStr.lastIndexOf(","));
+            $("#userName").val(userNameStr);
+            var distributionMode = $("input[name='distributionMode']:checked").val();
+            var ids = "";
+            if(distributionMode == 1){
+                if ($.common.isEmpty(records)) {
+                    $.modal.alertWarning(i18n("common.selectedOne"));
+                    return;
+                }
+                if(!records){
+                    $.modal.alertWarning(i18n("loan.collectionList.Please.select.the.order.first"));
+                    return;
+                }
+                for (var i = 0; i < records.length; i++) {
+                    var record = records[i];
+                    var remindStatus = record.remindStatus;
+                    if(remindStatus == 2  || remindStatus == 3){
+                        $.modal.alertWarning(i18n("loan.collectionList.Collection.and.outsourcing.orders.cannot.be.separated"));
+                        return;
+                    }
+                    ids += record.id;
+                    if (i != records.length - 1) ids += ',';
+                }
+                if(userNameStr.split(',').length>1){
+                    $.modal.alertWarning(i18n("loan.collectionList.descriptionTwo"));
+                    return;
+                }
+            }else{
+                // var records = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
+                if(records){
+                    for (var i = 0; i < records.length; i++) {
+                        var record = records[i];
+                        var remindStatus = record.remindStatus;
+                        if(remindStatus == 2  || remindStatus == 3){
+                            $.modal.alertWarning(i18n("loan.collectionList.Collection.and.outsourcing.orders.cannot.be.separated"));
+                            return;
+                        }
+                        ids += record.id;
+                        if (i != records.length - 1) ids += ',';
+                    }
+                }
+            }
+            $("#id").val(ids);
+            //$.operate.saveModal(prefix + "/updateDistributeOrTransferBills", $("#form-distributeOrTransferBills-add").serialize() + "&" + paramsData);
+            $.ajax({
+                url: prefix + "/updateDistributeOrTransferBills",
+                type: "post",
+                dataType: "json",
+                data: $("#form-distributeOrTransferBills-add").serialize() + "&" + paramsData,
+                beforeSend: function () {
+                    $.modal.loading(i18n("common.progressData"));
+                },
+                success: function(result) {
+                    if (result.code == web_status.SUCCESS) {
+                        parent.layer.open({
+                            type: 1,
+                            title: '',
+                            area: ['400px', '300px'],
+                            btn: [i18n("loan.common.copy"), i18n("loan.common.close")],
+                            closeBtn: 0,
+                            content: `
+                                <div style="
+                                    max-height:260px;
+                                    overflow-y:auto;
+                                    padding:15px;
+                                    word-break:break-all;
+                                    line-height:1.8;
+                                ">
+                                    ${result.msg}
+                                </div>
+                            `,
+                            yes: function(index){
+                                copyText(result.msg);
+                            },
+                            btn2: function(index){
+                                parent.layer.closeAll();
+                            }
+                        });
+
+                    } else if (result.code == web_status.WARNING) {
+                        $.modal.alertWarning(result.msg)
+                        $.modal.closeLoading();
+                    } else {
+                        $.modal.alertError(result.msg);
+                        $.modal.closeLoading();
+                    }
+                }
+            })
+        }
+    }
+
+    function copyText(text) {
+        text = text.lastIndexOf('：') !== -1 ? text.slice(text.lastIndexOf('：') + 1) : text;
+        if(!text){
+            return;
+        }
+        const tempTextarea = document.createElement('textarea');
+        tempTextarea.value = text;
+        tempTextarea.style.position = 'fixed';
+        document.body.appendChild(tempTextarea);
+        tempTextarea.focus();
+        tempTextarea.select();
+        try {
+            const successful = document.execCommand('copy');
+            const msg = 'OK！';
+            layer.msg(msg, {
+                icon: successful ? 1 : 2
+            });
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+            $.modal.msgError('copy failed');
+        }
+        document.body.removeChild(tempTextarea);
+    }
+
+    // 弹出树形菜单的结构
+    function selectMultiDeptTree() {
+        var url = ctx + "system/dept/selectMultiDeptTree?deptId=" + regionalDivisionId;
+        var checkIds = $("#deptIdList").val();
+        if (checkIds) {
+            url = url + "&checkDeptIds=" + checkIds;
+        }
+        var options = {
+            title: i18n('common.selectDept'),
+            width: "380",
+            url: url,
+            callBack: function (index, layero) {
+                var tree = layero.find("iframe")[0].contentWindow.$._tree;
+                // 设置回调函数逻辑
+                var selectedNodes = tree.getCheckedNodes(true);
+                var selectedIds = [];
+                var selectedNames = [];
+
+                // 遍历所有选中的节点，筛选出子节点
+                for (var i = 0; i < selectedNodes.length; i++) {
+                    if (!selectedNodes[i].isParent) { // 只处理子节点
+                        selectedIds.push(selectedNodes[i].id);
+                        selectedNames.push(selectedNodes[i].name);
+                    }
+                }
+
+                // 动态插入 <option> 元素（如果没有插入）
+                selectedIds.forEach(function(id) {
+                    // 如果选项不存在，插入新的选项
+                    if ($("#deptIdList option[value='" + id + "']").length === 0) {
+            $("#deptIdList").append('<option value="' + id + '" selected>'
+                + i18n("ui.departmentWithId").replace("{0}", id) + '</option>');
+                    }
+                });
+                // 设置选中的值，并刷新 selectpicker
+                $("#deptIdList").val(selectedIds).trigger("change").selectpicker('refresh');
+                // 隐藏按钮
+                $("#deptIdList").next(".dropdown-toggle").hide();
+                $("#deptSelect").val(selectedNames.join(","));
+
+                // 关闭当前弹出层
+                layer.close(index);
+            }
+        };
+
+        $.modal.openOptions(options);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title>放款审批详情</title>
+	<link rel="shortcut icon" href="logo2.png">
+	<link href="/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="/css/font-awesome.min.css" rel="stylesheet"/>
+	<!-- bootstrap-table 表格插件样式 -->
+	<link href="/ajax/libs/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+	<link href="/css/animate.css" rel="stylesheet"/>
+	<link href="/css/style.css" rel="stylesheet"/>
+	<link href="/ruoyi/css/ry-ui.css?v=4.1.2" rel="stylesheet"/>
+
+    <link href="/css/debt-analysis.css?v=2026073013" rel="stylesheet"/>
+    
+    <style>
+        html,
+        body {
+            min-height: 100%;
+            background: #fff;
+        }
+
+        body {
+            padding-bottom: 72px;
+            color: #333;
+        }
+
+        .approval-detail {
+            padding: 8px 6px 92px;
+        }
+
+        .approval-section {
+            margin-bottom: 12px;
+        }
+
+        .approval-detail > .approval-section {
+            display: none;
+        }
+
+        .approval-title {
+            margin: 0 0 4px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .approval-customer-tags {
+            margin: 0 0 12px;
+            padding: 10px 12px;
+            border: 1px solid #e7eaec;
+            background: #fafafa;
+        }
+
+        .approval-customer-tags .label {
+            margin-left: 8px;
+        }
+
+        .approval-table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .approval-table th,
+        .approval-table td {
+            height: 30px;
+            padding: 5px 8px;
+            border: 1px solid #9d9d9d;
+            word-break: break-word;
+            vertical-align: middle;
+        }
+
+        .approval-table th {
+            width: 110px;
+            background: #fafafa;
+            text-align: right;
+            font-weight: 400;
+        }
+
+        .approval-image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .approval-image-box {
+            height: 190px;
+            border: 1px solid #9d9d9d;
+            background: #f7f7f7;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .approval-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        .approval-image-empty {
+            line-height: 190px;
+            color: #999;
+        }
+
+        .approval-image-caption {
+            margin: 4px 0 0;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .approval-extra-info {
+            border: 1px solid #e7eaec;
+            border-bottom: 0;
+            font-size: 13px;
+        }
+
+        .approval-extra-info-group {
+            border-bottom: 1px solid #e7eaec;
+        }
+
+        .approval-extra-info-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 34px;
+            padding: 7px 10px;
+            background: #f8f9fb;
+            font-weight: 700;
+        }
+
+        .approval-extra-info-count {
+            min-width: 34px;
+            padding: 1px 7px;
+            border: 1px solid #d9ecff;
+            border-radius: 10px;
+            color: #409eff;
+            font-size: 12px;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        .approval-extra-info-row {
+            display: flex;
+            align-items: center;
+            min-height: 31px;
+            padding: 5px 10px;
+            border-top: 1px solid #eef1f5;
+        }
+
+        .approval-extra-info-icon {
+            width: 18px;
+            color: #666;
+            text-align: center;
+        }
+
+        .approval-extra-info-icon-text {
+            color: #67c23a;
+        }
+
+        .approval-extra-info-icon-image {
+            color: #409eff;
+        }
+
+        .approval-extra-info-icon-file {
+            color: #909399;
+        }
+
+        .approval-extra-info-name {
+            flex: 1;
+            padding: 0 8px;
+            word-break: break-word;
+        }
+
+        .approval-extra-info-actions {
+            min-width: 92px;
+            text-align: right;
+            white-space: nowrap;
+            font-size: 12px;
+        }
+
+        .approval-extra-info-actions a {
+            margin-left: 10px;
+            color: #337ab7;
+        }
+
+        .approval-extra-info-empty {
+            padding: 14px 10px;
+            border: 1px solid #e7eaec;
+            color: #999;
+            text-align: center;
+        }
+
+        .approval-todo {
+            color: #b94a48;
+        }
+
+        .approval-loan-amount {
+            color: #f71616;
+            font-weight: 700;
+        }
+
+        .approval-loan-bank-cards {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding-top: 4px;
+        }
+
+        .approval-loan-bank-card {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 8px 4px 0;
+            padding: 4px 10px;
+            border: 1px solid #e5e6eb;
+            border-radius: 3px;
+            background: #f7f8fa;
+            white-space: nowrap;
+        }
+
+        .approval-loan-bank-card-name {
+            margin-right: 8px;
+            color: #666;
+        }
+
+        .approval-loan-bank-card-no {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .approval-loan-bank-card-warning {
+            margin-left: 8px;
+            padding: 1px 6px;
+            border: 1px solid #f0ad4e;
+            border-radius: 3px;
+            color: #f0ad4e;
+            background: #fffaf2;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .approval-footer {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            min-height: 56px;
+            padding: 10px 30px;
+            background: #fff;
+            border-top: 1px solid #e7eaec;
+            z-index: 20;
+        }
+
+        .approval-status {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            min-height: 34px;
+            color: #666;
+        }
+
+        .approval-status-label {
+            color: #666;
+        }
+
+        .approval-status-value {
+            display: inline-block;
+            min-width: 52px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: 700;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .approval-status-pass {
+            background: #5fc43a;
+        }
+
+        .approval-status-reject {
+            background: #f71616;
+        }
+
+        .approval-action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .approval-reject-label {
+            color: #f71616;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .approval-reject-input {
+            width: 260px;
+            height: 32px;
+            padding: 5px 10px;
+            border: 1px solid #dcdfe6;
+            border-radius: 3px;
+        }
+
+        .approval-input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .approval-reason-display {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-width: 100%;
+        }
+
+        .approval-btn {
+            width: 74px;
+            height: 34px;
+            border: 0;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .approval-btn-reject {
+            background: #f71616;
+        }
+
+        .approval-btn-close {
+            background: #f39c12;
+        }
+
+        .approval-btn-pass {
+            background: #5fc43a;
+        }
+
+        .approval-plan-table {
+            width: auto;
+            min-width: 290px;
+            table-layout: auto;
+        }
+
+        .approval-plan-table th,
+        .approval-plan-table td {
+            width: auto;
+            min-width: 90px;
+            text-align: center;
+        }
+
+        .approval-tabs-wrap {
+            margin-bottom: 12px;
+        }
+
+        .approval-tabs-wrap .nav-tabs > li > a {
+            padding: 8px 14px;
+        }
+
+        .approval-tab-content {
+            padding: 12px 0 0;
+        }
+
+        /* 共债表格使用浮动栅格，清除浮动以保留底部留白，避免分页被审批栏遮挡。 */
+        .approval-tab-content::after {
+            display: table;
+            clear: both;
+            content: "";
+        }
+
+        .other-platform-state {
+            padding: 36px 12px;
+            color: #999;
+            text-align: center;
+        }
+
+        .other-platform-account {
+            margin-bottom: 12px;
+            padding: 14px 18px;
+            border: 1px solid #e7eaec;
+            background: #fff;
+            word-break: break-all;
+        }
+
+        .other-platform-account-label {
+            margin-right: 14px;
+            color: #888;
+        }
+
+        .other-platform-images {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .other-platform-card {
+            padding: 16px;
+            border: 1px solid #e7eaec;
+            background: #fff;
+        }
+
+        .other-platform-card-title {
+            margin-bottom: 10px;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .other-platform-image-box {
+            height: 230px;
+            border: 1px dashed #d9d9d9;
+            background: #f8f9fb;
+            text-align: center;
+        }
+
+        .other-platform-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .other-platform-image-empty {
+            line-height: 230px;
+            color: #aaa;
+        }
+
+        .approval-debt-badge {
+            display: inline-block;
+            min-width: 22px;
+            margin-left: 4px;
+            padding: 1px 6px;
+            border-radius: 10px;
+            background: #f0f2f5;
+            color: #666;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: center;
+        }
+
+        .approval-debt-table-wrap .fixed-table-body {
+            overflow-x: auto;
+        }
+
+        .approval-debt-table-wrap .bootstrap-table .table {
+            table-layout: auto;
+            width: max-content !important;
+            min-width: 100%;
+        }
+
+        .approval-debt-table-wrap .bootstrap-table .table > thead > tr > th,
+        .approval-debt-table-wrap .bootstrap-table .table > tbody > tr > td,
+        .approval-debt-table-wrap .bootstrap-table .table > thead > tr > th .th-inner {
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .approval-nowrap-cell {
+            min-width: 76px;
+            white-space: nowrap;
+        }
+
+        .approval-date-cell {
+            min-width: 150px;
+            white-space: nowrap;
+        }
+
+        .approval-special-label-cell {
+            min-width: 160px;
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .approval-special-label-text {
+            display: block;
+            max-width: 210px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+<div class="approval-detail">
+    <div id="approvalDebtAnalysis" class="js-debt-analysis debt-analysis-panel" data-currency-unit="฿">
+        <div class="debt-analysis-header">客户共债分析</div>
+        <div class="debt-analysis-body">
+            <div class="debt-analysis-summary">
+                <div class="debt-analysis-chart-wrap">
+                    <div class="debt-analysis-chart"></div>
+                    <div class="debt-analysis-chart-placeholder"><strong>-</strong><span>-</span></div>
+                </div>
+                <div class="debt-analysis-legend"></div>
+            </div>
+            <div class="debt-analysis-metrics">
+                <div class="debt-analysis-metric"><span>过去3天放款金额</span><strong data-field="pastThreeDaysLoanAmount">-</strong></div>
+                <div class="debt-analysis-metric"><span>未来3天计划到期本金</span><strong data-field="futureThreeDaysDuePrincipal">-</strong></div>
+                <div class="debt-analysis-metric"><span>最大借款金额</span><strong data-field="maxContractAmount">-</strong></div>
+                <div class="debt-analysis-metric"><span>最长逾期天数</span><strong data-field="maxOverdueDays">-</strong></div>
+            </div>
+        </div>
+        <div class="debt-analysis-error" style="display:none"></div>
+    </div>
+    
+    
+    <div class="nav-tabs-custom approval-tabs-wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-loan-info" data-toggle="tab">借款信息</a></li>
+            <li><a href="#tab-application-info" data-toggle="tab">进件信息</a></li>
+            <li><a href="#tab-other-platform" data-toggle="tab">其他平台</a></li>
+            <li><a href="#tab-debt-a" data-toggle="tab">共债信息A <span class="approval-debt-badge" id="debtCountA">0</span></a></li>
+            <li><a href="#tab-debt-b" data-toggle="tab">共债信息B <span class="approval-debt-badge" id="debtCountB">0</span></a></li>
+            <li><a href="#tab-debt-c" data-toggle="tab">共债信息C <span class="approval-debt-badge" id="debtCountC">0</span></a></li>
+            <li><a href="#tab-debt-d" data-toggle="tab">共债信息D <span class="approval-debt-badge" id="debtCountD">0</span></a></li>
+        </ul>
+        <div class="tab-content approval-tab-content">
+            <div class="tab-pane active" id="tab-loan-info"></div>
+            <div class="tab-pane" id="tab-application-info"></div>
+            <div class="tab-pane" id="tab-other-platform">
+                <div id="approvalOtherPlatformState" class="other-platform-state">正在加载其他平台资料...</div>
+                <div id="approvalOtherPlatformContent" style="display:none">
+                    <div class="other-platform-account">
+                        <span class="other-platform-account-label">FB 账号</span>
+                        <span id="approvalOtherPlatformFacebook">-</span>
+                    </div>
+                    <div class="other-platform-images">
+                        <div class="other-platform-card">
+                            <div class="other-platform-card-title">人脸照片</div>
+                            <div class="other-platform-image-box">
+                                <img id="approvalOtherPlatformFace" alt="" style="display:none">
+                                <span id="approvalOtherPlatformFaceEmpty" class="other-platform-image-empty">暂无数据</span>
+                            </div>
+                        </div>
+                        <div class="other-platform-card">
+                            <div class="other-platform-card-title">身份证正面照片</div>
+                            <div class="other-platform-image-box">
+                                <img id="approvalOtherPlatformIdFront" alt="" style="display:none">
+                                <span id="approvalOtherPlatformIdFrontEmpty" class="other-platform-image-empty">暂无数据</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-debt-a">
+                <div class="col-sm-12 select-table table-striped approval-debt-table-wrap" style="padding: 0;">
+                    <table id="debtTableA"></table>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-debt-b">
+                <div class="col-sm-12 select-table table-striped approval-debt-table-wrap" style="padding: 0;">
+                    <table id="debtTableB"></table>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-debt-c">
+                <div class="col-sm-12 select-table table-striped approval-debt-table-wrap" style="padding: 0;">
+                    <table id="debtTableC"></table>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-debt-d">
+                <div class="col-sm-12 select-table table-striped approval-debt-table-wrap" style="padding: 0;">
+                    <table id="debtTableD"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="approval-section approval-application-section">
+        <h4 class="approval-title">用户基本信息</h4>
+        <table class="approval-table">
+            <tr>
+                <th>姓名</th>
+                <td>นาย ชาติชาย เบเชชา</td>
+                <th>员工 Line</th>
+                <td>lcline1-ob516772222</td>
+                <th>小名</th>
+                <td></td>
+                <th>
+                    Facebook
+                    
+                    <span>
+    
+</span>
+                    
+                </th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>手机号</th>
+                <td>
+                    <span class="approval-mobile" data-phone="C70roubGegadmNIC0SV2J1Z1SR9KKT16zKBNtt0lbGc=">065****002</span>
+                    <i class="fa fa-clone" style="margin-left:5px;cursor:pointer;"
+                       title="复制明文"
+                       onclick="PhoneCopyButtons.copyPlain(encodeURIComponent($(this).siblings('.approval-mobile').attr('data-phone')))"></i>
+                    <i class="fa fa-clone" style="margin-left:5px;cursor:pointer;"
+                       title="复制密文"
+                       onclick="PhoneCopyButtons.copyEncrypted(encodeURIComponent($(this).siblings('.approval-mobile').attr('data-phone')))"></i>
+                </td>
+                <th>订单编号</th>
+                <td>24996094</td>
+                <th>Line</th>
+                <td></td>
+                <th></th>
+                <td id="approvalContactEmail"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="approval-section approval-application-section">
+        <h4 class="approval-title">紧急联系人信息</h4>
+        <table class="approval-table">
+            
+            <tr>
+                <td colspan="8">暂无联系人信息</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="approval-section approval-application-section">
+        <h4 class="approval-title">身份认证信息</h4>
+        <div class="approval-image-grid">
+            <div>
+                <div class="approval-image-box">
+                    <img src="https://thsit-static-resource.obs.ap-southeast-3.myhuaweicloud.com:443/0b676f600fea496e9629e723abda586e.jpg?AccessKeyId=HPUAFADOCYQO9VKTUCOT&amp;Expires=1800864696&amp;x-image-process=image%2Fwatermark%2Ctext_Y2hlbmd6aQ%3D%3D%2Csize_15%2Cshadow_20%2Cfill_1%2Ctype_ZHJvaWRzYW5zZmFsbGJhY2s%2Crotate_315&amp;Signature=P2hh%2B4tj62vjzdNNjtbUFuYa5po%3D" onclick="previewImage(this.src)" />
+                    
+                </div>
+                <div class="approval-image-caption">身份证卡正面</div>
+            </div>
+            <div>
+                <div class="approval-image-box">
+                    
+                    <span class="approval-image-empty">暂无图片</span>
+                </div>
+                <div class="approval-image-caption">手持身份证</div>
+            </div>
+            <div>
+                <div class="approval-image-box">
+                    
+                    <span class="approval-image-empty">暂无图片</span>
+                </div>
+                <div class="approval-image-caption">人脸照片</div>
+            </div>
+        </div>
+        <table class="approval-table" style="margin-top: 10px;">
+            <tr>
+                <th>全名</th>
+                <td>นาย ชาติชาย เบเชชา</td>
+                <th>名字</th>
+                <td>Mr. Chatchai</td>
+                <th>姓氏</th>
+                <td>Bechecha</td>
+                <th>性别</th>
+                <td class="gender-label">-</td>
+            </tr>
+            <tr>
+                <th>住址</th>
+                <td>แม่สลองนอกแม่ฟ้าหลวงแม่สลองนอก</td>
+                <th>生日</th>
+                <td>6 เม.ย. 2008</td>
+                <th>发卡日期</th>
+                <td>19 พ.ย. 2561</td>
+                <th>证件过期日</th>
+                <td>5 เม.ย. 2018</td>
+            </tr>
+            <tr>
+                <th>宗教</th>
+                <td>คริส์</td>
+                <th>证件号</th>
+                <td>mj****8U=</td>
+                <th></th>
+                <td></td>
+                <th></th>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="approval-section approval-application-section">
+        <h4 class="approval-title">银行卡信息</h4>
+        <table class="approval-table">
+            <tr>
+                <th>银行卡1</th>
+                <td>银行名 <span class="bank-name" data-bank-id="KBANK">KBANK</span></td>
+                <th>卡号</th>
+                <td colspan="3">
+                    <span>102519931001</span>
+                    <span class="approval-loan-bank-card-warning">用户未验证</span>
+                </td>
+                <th></th>
+                <td></td>
+            </tr>
+            
+        </table>
+    </div>
+
+    <div class="approval-section approval-application-section">
+        <h4 class="approval-title">附加信息</h4>
+        <div class="approval-extra-info-empty">暂无附加信息</div>
+        
+    </div>
+
+    <div class="approval-section approval-loan-section">
+        <h4 class="approval-title">借款信息</h4>
+        <table class="approval-table">
+            <tr>
+                <th>产品期数</th>
+                <td>3</td>
+                <th>每期天数</th>
+                <td>7</td>
+                <th>借款金额</th>
+                <td class="approval-loan-amount">3500.00</td>
+                <th>到手金额</th>
+                <td>3465.00</td>
+            </tr>
+            <tr>
+                <th>总利息</th>
+                <td>100.00</td>
+                <th>服务费比例</th>
+                <td>1%</td>
+                <th>罚息</th>
+                <td>0.00</td>
+                <th>税</th>
+                <td>0.00</td>
+            </tr>
+            <tr>
+                <th>借款银行卡</th>
+                <td colspan="7">
+                    <div class="approval-loan-bank-cards">
+                        <span class="approval-loan-bank-card">
+                            <span class="approval-loan-bank-card-name">(KBANK)ธนาคารกสิกรไทย</span>
+                            <span class="approval-loan-bank-card-no">102519931001</span>
+                            <span class="approval-loan-bank-card-warning">用户未验证</span>
+                        </span>
+                    </div>
+                    
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="approval-section approval-loan-section">
+        <h4 class="approval-title">还款计划</h4>
+        <table class="approval-table approval-plan-table">
+            <thead>
+            <tr>
+                <th>期次</th>
+                <th>到期日</th>
+                <th>还款金额</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>2026-11-03</td>
+                <td>1200.00</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2026-11-10</td>
+                <td>1200.00</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2026-11-17</td>
+                <td>1200.00</td>
+            </tr>
+            
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="approval-footer">
+    <input type="hidden" id="approvalId" value="eb7abfa7fd544f69bf02c705f7c90a66">
+    <div class="approval-status">
+        <span class="approval-status-label">审批结果：</span>
+        <span class="approval-status-value  approval-status-pass">通过</span>
+        <span>审批原因：</span>
+        <!-- 原因随 SaaS 界面语言切换；无西语译文的历史记录保留原文。 -->
+        <span class="approval-reason-display">AutoCodeXtesting-pass</span>
+        
+    </div>
+    
+</div>
+
+
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<!--jQuery国际化插件-->
+	<script src="/js/jquery.i18n.properties.min.js"></script>
+	<script>
+		//获取应用路径
+		var ROOT = "";
+
+		//获取默认语言
+		var LANG_COUNTRY = "zh_CN";
+		var lang = "zh";
+		// 表单日期组件语言：laydate 仅内置 cn/en，扩展 es/th；datetimepicker 默认识别 zh-cn/en/es/th
+		var LAYDATE_LANG = (LANG_COUNTRY === 'zh_CN' || lang === 'zh') ? 'cn'
+				: (LANG_COUNTRY === 'es_MX' || lang === 'es') ? 'es'
+				: (LANG_COUNTRY === 'th_TH' || lang === 'th') ? 'th'
+				: 'en';
+		var DATETIMEPICKER_LANG = (LANG_COUNTRY === 'zh_CN' || lang === 'zh') ? 'zh-cn'
+				: (LANG_COUNTRY === 'es_MX' || lang === 'es') ? 'es'
+				: (LANG_COUNTRY === 'th_TH' || lang === 'th') ? 'th'
+				: 'en';
+		//当前国家主力聊天工具名（泰国=Line 墨西哥=WhatsApp），页面展示用
+		var IM_NAME = "Line";
+		//全站日期时间控件（含查询条件/编辑表单）的“今天/现在”按商户国家当前时间取，而非客户端电脑时区。
+		//下发商户国家当前墙钟串，算出与本机时间的毫秒差，供已打补丁的 laydate 读取（默认 0=不改，无上下文时≈0）。
+		try {
+			var __cn = "2026-10-27 15:11:36";
+			var __m = (__cn || '').match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);
+			if (__m) {
+				window.__laydateNowOffsetMs__ = new Date(+__m[1], +__m[2] - 1, +__m[3], +__m[4], +__m[5], +__m[6]).getTime() - Date.now();
+			}
+		} catch (e) {}
+        var isCatchData = [{"searchValue":null,"createBy":"admin","createTime":"2024-01-01 19:34:14","createTimeStr":"2024-01-02 02:34:14","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":23543,"dictSort":1,"dictLabel":"\u56FD\u9645\u5316\u6587\u4EF6\u662F\u5426\u5F00\u542F\u7F13\u5B58","dictLabelTh":"t\u1EC7p qu\u1ED1c t\u1EBF h\u00F3a c\u00F3 b\u1EADt b\u1ED9 nh\u1EDB \u0111\u1EC7m hay ch\u01B0a","dictLabelEs":"Si se habilita cach\u00E9 para archivos de internacionalizaci\u00F3n","dictLabelVi":"C\u00F3 b\u1EADt b\u1ED9 nh\u1EDB \u0111\u1EC7m t\u1EC7p qu\u1ED1c t\u1EBF h\u00F3a hay kh\u00F4ng","dictValue":"true","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"sys_is_catch_static","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u56FD\u9645\u5316\u6587\u4EF6\u662F\u5426\u5F00\u542F\u7F13\u5B58","default":true}];
+        var isCatchFlag = true;
+        if (isCatchData[0].dictValue == 'false'){
+            isCatchFlag = false;
+        }
+		//初始化i18n插件
+		$.i18n.properties({
+			path: ROOT + '/i18n/',//这里表示访问路径
+			name: 'messages',//文件名开头
+			language: LANG_COUNTRY,//文件名语言 例如th_TH
+			mode: 'map',//默认值
+            cache: isCatchFlag //是否开启浏览器缓存
+		});
+
+		//初始化i18n函数
+		function i18n(msgKey) {
+			try {
+				var msg = $.i18n.prop(msgKey);
+				//员工 Line 文案里的聊天工具名按当前国家展示（与后端 CountryAwareMessageSource 同一白名单）
+				if (IM_NAME && IM_NAME !== 'Line' && typeof msgKey === 'string' && typeof msg === 'string'
+						&& (msgKey.indexOf('offadmin.profile.line') === 0
+							|| msgKey.indexOf('offadmin.user.employeeLine') === 0
+							|| msgKey.indexOf('offadmin.msg.offlineAddEmployeeLine') === 0)) {
+					msg = msg.replace(/\bLine\b/g, IM_NAME);
+				}
+				return msg;
+			} catch (e) {
+				console.error(e);
+				return msgKey;
+			}
+		}
+	</script>
+	<!-- bootstrap-table 表格插件 -->
+	<script src="/ajax/libs/bootstrap-table/bootstrap-table.min.js?v=20200727"></script>
+	<script src="/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+	<script>
+		// 按后台当前语言覆盖表格组件内置提示，仅影响分页、工具栏和空数据等展示文案。
+		(function () {
+			function formatMessage(messageKey, values) {
+				var message = i18n(messageKey);
+				$.each(values || [], function (index, value) {
+					message = message.replace(new RegExp('\\{' + index + '\\}', 'g'), value);
+				});
+				return message;
+			}
+
+			$.extend($.fn.bootstrapTable.defaults, {
+				formatLoadingMessage: function () {
+					return i18n('ui.bootstrapTable.loading');
+				},
+				formatRecordsPerPage: function (pageNumber) {
+					return formatMessage('ui.bootstrapTable.recordsPerPage', [pageNumber]);
+				},
+				formatShowingRows: function (pageFrom, pageTo, totalRows, totalNotFiltered) {
+					if (totalNotFiltered !== undefined && totalNotFiltered > totalRows) {
+						return formatMessage('ui.bootstrapTable.showingFilteredRows',
+								[pageFrom, pageTo, totalRows, totalNotFiltered]);
+					}
+					return formatMessage('ui.bootstrapTable.showingRows', [pageFrom, pageTo, totalRows]);
+				},
+				formatSRPaginationPreText: function () {
+					return i18n('ui.bootstrapTable.previousPage');
+				},
+				formatSRPaginationPageText: function (page) {
+					return formatMessage('ui.bootstrapTable.page', [page]);
+				},
+				formatSRPaginationNextText: function () {
+					return i18n('ui.bootstrapTable.nextPage');
+				},
+				formatDetailPagination: function (totalRows) {
+					return formatMessage('ui.bootstrapTable.detailPagination', [totalRows]);
+				},
+				formatClearSearch: function () {
+					return i18n('ui.bootstrapTable.clearSearch');
+				},
+				formatSearch: function () {
+					return i18n('ui.bootstrapTable.search');
+				},
+				formatNoMatches: function () {
+					return i18n('ui.bootstrapTable.noMatches');
+				},
+				formatPaginationSwitch: function () {
+					return i18n('ui.bootstrapTable.paginationSwitch');
+				},
+				formatPaginationSwitchDown: function () {
+					return i18n('ui.bootstrapTable.paginationShow');
+				},
+				formatPaginationSwitchUp: function () {
+					return i18n('ui.bootstrapTable.paginationHide');
+				},
+				formatRefresh: function () {
+					return i18n('ui.bootstrapTable.refresh');
+				},
+				formatToggle: function () {
+					return i18n('ui.bootstrapTable.toggle');
+				},
+				formatToggleOn: function () {
+					return i18n('ui.bootstrapTable.cardViewShow');
+				},
+				formatToggleOff: function () {
+					return i18n('ui.bootstrapTable.cardViewHide');
+				},
+				formatColumns: function () {
+					return i18n('ui.bootstrapTable.columns');
+				},
+				formatColumnsToggleAll: function () {
+					return i18n('ui.bootstrapTable.toggleAll');
+				},
+				formatFullscreen: function () {
+					return i18n('ui.bootstrapTable.fullscreen');
+				},
+				formatAllRows: function () {
+					return i18n('ui.bootstrapTable.allRows');
+				},
+				formatAutoRefresh: function () {
+					return i18n('ui.bootstrapTable.autoRefresh');
+				},
+				formatExport: function () {
+					return i18n('ui.bootstrapTable.export');
+				},
+				formatJumpTo: function () {
+					return i18n('ui.bootstrapTable.jumpTo');
+				},
+				formatAdvancedSearch: function () {
+					return i18n('ui.bootstrapTable.advancedSearch');
+				},
+				formatAdvancedCloseButton: function () {
+					return i18n('ui.bootstrapTable.close');
+				},
+				formatFilterControlSwitch: function () {
+					return i18n('ui.bootstrapTable.filterSwitch');
+				},
+				formatFilterControlSwitchHide: function () {
+					return i18n('ui.bootstrapTable.filterHide');
+				},
+				formatFilterControlSwitchShow: function () {
+					return i18n('ui.bootstrapTable.filterShow');
+				}
+			});
+		})();
+	</script>
+	<script src="/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/columns/bootstrap-table-fixed-columns.min.js?v=20200727"></script>
+	<!-- jquery-validate 表单验证插件 -->
+	<script src="/ajax/libs/validate/jquery.validate.min.js"></script>
+	<script src="/ajax/libs/validate/messages_zh.min.js"></script>
+	<script src="/ajax/libs/validate/jquery.validate.extend.js"></script>
+	<script>
+		// 校验插件默认加载中文包，这里按当前后台语言覆盖为对应国际化文案。
+		$.extend($.validator.messages, {
+			required: i18n("validation.required"),
+			remote: i18n("validation.remote"),
+			email: i18n("validation.email"),
+			url: i18n("validation.url"),
+			date: i18n("validation.date"),
+			dateISO: i18n("validation.dateISO"),
+			number: i18n("validation.number"),
+			digits: i18n("validation.digits"),
+			equalTo: i18n("validation.equalTo"),
+			maxlength: $.validator.format(i18n("validation.maxlength")),
+			minlength: $.validator.format(i18n("validation.minlength")),
+			rangelength: $.validator.format(i18n("validation.rangelength")),
+			range: $.validator.format(i18n("validation.range")),
+			max: $.validator.format(i18n("validation.max")),
+			min: $.validator.format(i18n("validation.min")),
+			step: $.validator.format(i18n("validation.step"))
+		});
+	</script>
+	<!-- jquery-validate 表单树插件 -->
+	<script src="/ajax/libs/bootstrap-treetable/bootstrap-treetable.js"></script>
+	<!-- jquery-export 表格导出插件 -->
+	<script src="/ajax/libs/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/export/tableExport.js"></script>
+	<!-- 遮罩层 -->
+	<script src="/ajax/libs/blockUI/jquery.blockUI.js"></script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"></script>
+	<script src="/ajax/libs/layer/layer.min.js"></script>
+	<script src="/ajax/libs/layui/layui.js"></script>
+	<script>
+		// 全站 laydate 面板默认语言跟随后台会话（含直接 render、未传 lang 的页面）
+		(function () {
+			if (!window.layui || typeof LAYDATE_LANG === 'undefined') {
+				return;
+			}
+			layui.use('laydate', function () {
+				layui.laydate.set({ lang: LAYDATE_LANG });
+			});
+		})();
+	</script>
+	<script src="/ruoyi/js/common.js?v=4.1.1"></script>
+	<script src="/ruoyi/js/ry-ui.js?v=4.1.3"></script>
+	<script> var ctx = "\/"; </script>
+	<script src="/ruoyi/js/saas-customer-profile.js?v=20250918"></script>
+
+
+    <script src="/js/facebook-friend.js?v=20260909-dialog"></script>
+
+
+	<script src="/ajax/libs/report/echarts/echarts-all.js"></script>
+
+
+	<script src="/ajax/libs/layui/layui.js"></script>
+
+<script src="/js/borrower/preExtraInfo.js"></script>
+<script src="/js/debt/debt-analysis.js?v=2026080301"></script>
+<script src="/js/debt/debt-financial-product.js?v=2026081901"></script>
+<script src="/js/phone-copy-buttons.js"></script>
+
+<script src="/js/contact-email.js?v=2026082801"></script>
+<script>
+    $(function () {
+        $('#approvalContactEmail').html(ContactEmailField.render('approval', null));
+        // 操作栏换行或历史原因较长时，预留实际高度，避免遮挡还款计划。
+        function resizeApprovalFooter() {
+            $('body').css('padding-bottom', $('.approval-footer').outerHeight() + 16);
+        }
+        resizeApprovalFooter();
+        $(window).on('resize', resizeApprovalFooter);
+    });
+    var prefix = ctx + "borrower/payoutApproval";
+    var bankCodeDatas = [{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"ABN","bankName":"(ABN)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E40\u0E2D\u0E1A\u0E35\u0E40\u0E2D\u0E47\u0E19 \u0E41\u0E2D\u0E21\u0E42\u0E23","minCardnoLen":3,"maxCardnoLen":25,"sort":9,"status":"0","hotFlag":1,"showFlag":0,"specialFlag":0},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"BAAC","bankName":"(BAAC)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E01\u0E32\u0E23\u0E40\u0E01\u0E29\u0E15\u0E23\u0E41\u0E25\u0E30\u0E2A\u0E2B\u0E01\u0E23\u0E13\u0E4C\u0E01\u0E32\u0E23\u0E40\u0E01\u0E29\u0E15\u0E23","minCardnoLen":3,"maxCardnoLen":25,"sort":8,"status":"0","hotFlag":1,"showFlag":0,"specialFlag":0},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"BAY","bankName":"(BAY)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E01\u0E23\u0E38\u0E07\u0E28\u0E23\u0E35\u0E2D\u0E22\u0E38\u0E18\u0E22\u0E32","minCardnoLen":3,"maxCardnoLen":25,"sort":7,"status":"0","hotFlag":1,"showFlag":0,"specialFlag":0},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"BBL","bankName":"(BBL)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E01\u0E23\u0E38\u0E07\u0E40\u0E17\u0E1E","minCardnoLen":3,"maxCardnoLen":25,"sort":6,"status":"0","hotFlag":1,"showFlag":0,"specialFlag":1},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"CIMB","bankName":"(CIMB)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E0B\u0E35\u0E44\u0E2D\u0E40\u0E2D\u0E47\u0E21\u0E1A\u0E35","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":1},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"CITI","bankName":"(CITI)\u0E2A\u0E21\u0E32\u0E04\u0E21\u0E41\u0E2B\u0E48\u0E07\u0E0A\u0E32\u0E15\u0E34\u0E0B\u0E34\u0E15\u0E35\u0E49\u0E41\u0E1A\u0E07\u0E01\u0E4C","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":1},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"GHB","bankName":"(GHB)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E2D\u0E32\u0E04\u0E32\u0E23\u0E2A\u0E07\u0E40\u0E04\u0E23\u0E32\u0E30\u0E2B\u0E4C","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"1","hotFlag":0,"showFlag":0,"specialFlag":1},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"GSB","bankName":"(GSB)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E2D\u0E2D\u0E21\u0E2A\u0E34\u0E19","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":1},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"IBANK","bankName":"(IBANK)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E2D\u0E34\u0E2A\u0E25\u0E32\u0E21\u0E41\u0E2B\u0E48\u0E07\u0E1B\u0E23\u0E30\u0E40\u0E17\u0E28\u0E44\u0E17\u0E22","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":0},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"KBANK","bankName":"(KBANK)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E01\u0E2A\u0E34\u0E01\u0E23\u0E44\u0E17\u0E22","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":1},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"KKP","bankName":"(KKP)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E40\u0E01\u0E35\u0E22\u0E23\u0E15\u0E34\u0E19\u0E32\u0E04\u0E34\u0E19","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":0},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"KTB","bankName":"(KTB)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E01\u0E23\u0E38\u0E07\u0E44\u0E17\u0E22","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":1},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"LHBANK","bankName":"(LHBANK)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E41\u0E25\u0E19\u0E14\u0E4C \u0E41\u0E2D\u0E19\u0E14\u0E4C \u0E40\u0E2E\u0E49\u0E32\u0E2A\u0E4C","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":0},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"MHCB","bankName":"(MHCB)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E21\u0E34\u0E0B\u0E39\u0E42\u0E2E","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":0},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"SCB","bankName":"(SCB)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E44\u0E17\u0E22\u0E1E\u0E32\u0E13\u0E34\u0E0A\u0E22\u0E4C","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":1},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"TISCO","bankName":"(TISCO)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E17\u0E34\u0E2A\u0E42\u0E01\u0E49","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":0},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"TTB","bankName":"(TTB)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E17\u0E35\u0E17\u0E35\u0E1A\u0E35","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":0},{"searchValue":null,"createBy":null,"createTime":null,"createTimeStr":null,"updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"id":"UOB","bankName":"(UOB)\u0E18\u0E19\u0E32\u0E04\u0E32\u0E23\u0E22\u0E39\u0E42\u0E2D\u0E1A\u0E35","minCardnoLen":3,"maxCardnoLen":25,"sort":5,"status":"0","hotFlag":0,"showFlag":0,"specialFlag":0}];
+    var contractStatusDatas = [{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:44:58","createTimeStr":"2020-04-27 13:44:58","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":452,"dictSort":0,"dictLabel":"\u672A\u751F\u6548","dictLabelTh":"ch\u01B0a c\u00F3 hi\u1EC7u qu\u1EA3","dictLabelEs":"No vigente","dictLabelVi":"Ch\u01B0a c\u00F3 hi\u1EC7u l\u1EF1c","dictValue":"0","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_contract_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u672A\u751F\u6548","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:00","createTimeStr":"2020-04-27 13:45:00","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":456,"dictSort":1,"dictLabel":"\u8FD8\u6B3E\u4E2D","dictLabelTh":"\u0110ang ho\u00E0n tr\u1EA3","dictLabelEs":"Pago en proceso","dictLabelVi":"\u0110ang tr\u1EA3 n\u1EE3","dictValue":"1","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_contract_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u8FD8\u6B3E\u4E2D","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-12-22 00:05:19","createTimeStr":"2020-12-22 07:05:19","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":1378,"dictSort":1,"dictLabel":"\u903E\u671F\u7ED3\u6E05","dictLabelTh":"qu\u00E1 h\u1EA1n thanh to\u00E1n h\u1EBFt","dictLabelEs":"Liquidaci\u00F3n en mora","dictLabelVi":"Thanh to\u00E1n h\u1EBFt khi qu\u00E1 h\u1EA1n","dictValue":"3-2","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_contract_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u903E\u671F\u7ED3\u6E05","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:03","createTimeStr":"2020-04-27 13:45:03","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":451,"dictSort":2,"dictLabel":"\u903E\u671F","dictLabelTh":"Qu\u00E1 h\u1EA1n","dictLabelEs":"Vencido","dictLabelVi":"Qu\u00E1 h\u1EA1n","dictValue":"2","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_contract_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u903E\u671F","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:05","createTimeStr":"2020-04-27 13:45:05","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":453,"dictSort":3,"dictLabel":"\u7ED3\u6E05","dictLabelTh":"thanh to\u00E1n h\u1EBFt ","dictLabelEs":"Liquidado","dictLabelVi":"T\u1EA5t to\u00E1n","dictValue":"3-1","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_contract_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u7ED3\u6E05","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:06","createTimeStr":"2020-04-27 13:45:06","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":454,"dictSort":4,"dictLabel":"\u5C55\u671F\u7ED3\u6E05","dictLabelTh":" gia h\u1EA1n thanh  to\u00E1n h\u1EBFt ","dictLabelEs":"Liquidado por pr\u00F3rroga","dictLabelVi":"T\u1EA5t to\u00E1n gia h\u1EA1n","dictValue":"3-3","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_contract_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u5C55\u671F\u7ED3\u6E05","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:07","createTimeStr":"2020-04-27 13:45:07","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":455,"dictSort":5,"dictLabel":"\u63D0\u524D\u8FD8\u6B3E\u5B8C\u6210","dictLabelTh":"Ho\u00E0n th\u00E0nh vi\u1EC7c tr\u1EA3 n\u1EE3 s\u1EDBm","dictLabelEs":"Pago anticipado completado","dictLabelVi":"Ho\u00E0n t\u1EA5t tr\u1EA3 n\u1EE3 s\u1EDBm","dictValue":"5-1","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_contract_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u63D0\u524D\u8FD8\u6B3E\u5B8C\u6210","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:08","createTimeStr":"2020-04-27 13:45:08","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":458,"dictSort":7,"dictLabel":"\u63D0\u524D\u8FD8\u6B3E\u4E2D","dictLabelTh":"\u0111ang tr\u1EA3 n\u1EE3 tr\u01B0\u1EDBc","dictLabelEs":"Pago anticipado en proceso","dictLabelVi":"\u0110ang tr\u1EA3 n\u1EE3 tr\u01B0\u1EDBc h\u1EA1n","dictValue":"1-1","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_contract_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u63D0\u524D\u8FD8\u6B3E\u4E2D","default":true}];
+    var delayTypeDatas = [{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:44:58","createTimeStr":"2020-04-27 13:44:58","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"\u590D\u501F","params":{},"dictCode":159,"dictSort":0,"dictLabel":"\u590D\u501F","dictLabelTh":"vay l\u1EA1i","dictLabelEs":"Pr\u00E9stamo recurrente","dictLabelVi":"Vay l\u1EA1i","dictValue":"0","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"borrower_borrower_delayType","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u590D\u501F","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:44:58","createTimeStr":"2020-04-27 13:44:58","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":160,"dictSort":1,"dictLabel":"\u9996\u501F","dictLabelTh":"Vay \u0111\u1EA7u","dictLabelEs":"Primer pr\u00E9stamo","dictLabelVi":"Vay l\u1EA7n \u0111\u1EA7u","dictValue":"1","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"borrower_borrower_delayType","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u9996\u501F","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:04","createTimeStr":"2020-04-27 13:45:04","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":161,"dictSort":2,"dictLabel":"\u9996\u501F\u5C55\u671F","dictLabelTh":"Gia h\u1EA1n vay \u0111\u1EA7u","dictLabelEs":"Pr\u00F3rroga de primer pr\u00E9stamo","dictLabelVi":"Gia h\u1EA1n vay l\u1EA7n \u0111\u1EA7u","dictValue":"2","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"borrower_borrower_delayType","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u9996\u501F\u5C55\u671F","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:05","createTimeStr":"2020-04-27 13:45:05","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":162,"dictSort":3,"dictLabel":"\u590D\u501F\u5C55\u671F","dictLabelTh":"Gia h\u1EA1n vay l\u1EA1i","dictLabelEs":"Pr\u00F3rroga de pr\u00E9stamo recurrente","dictLabelVi":"Gia h\u1EA1n vay l\u1EA1i","dictValue":"3","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"borrower_borrower_delayType","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u590D\u501F\u5C55\u671F","default":true}];
+    var specialLabels = [{"searchValue":null,"createBy":"admin","createTime":"2024-05-20 11:56:07","createTimeStr":"2024-05-20 18:56:07","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":24624,"dictSort":1,"dictLabel":"\u975E\u5F3A\u5236\u653E\u6B3E","dictLabelTh":"\u975E\u5F3A\u5236\u653E\u6B3E","dictLabelEs":"Desembolso no forzado","dictLabelVi":"Gi\u1EA3i ng\u00E2n kh\u00F4ng b\u1EAFt bu\u1ED9c","dictValue":"0","value1":"","value2":"\u975E\u5F3A\u5236\u653E\u6B3E","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u975E\u5F3A\u5236\u653E\u6B3E","default":true},{"searchValue":null,"createBy":"admin","createTime":"2024-05-20 11:56:30","createTimeStr":"2024-05-20 18:56:30","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":24625,"dictSort":2,"dictLabel":"\u5F3A\u5236\u653E\u6B3E","dictLabelTh":"\u5F3A\u5236\u653E\u6B3E","dictLabelEs":"Desembolso forzado","dictLabelVi":"Gi\u1EA3i ng\u00E2n b\u1EAFt bu\u1ED9c","dictValue":"1","value1":"","value2":"\u5F3A\u5236\u653E\u6B3E","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u5F3A\u5236\u653E\u6B3E","default":true},{"searchValue":null,"createBy":"admin","createTime":"2024-05-20 11:56:42","createTimeStr":"2024-05-20 18:56:42","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":24626,"dictSort":3,"dictLabel":"\u6B63\u5E38\u50AC\u6536","dictLabelTh":"\u6B63\u5E38\u50AC\u6536","dictLabelEs":"Cobranza normal","dictLabelVi":"Thu h\u1ED3i n\u1EE3 b\u00ECnh th\u01B0\u1EDDng","dictValue":"2","value1":"","value2":"\u6B63\u5E38\u50AC\u653611","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u6B63\u5E38\u50AC\u6536","default":true},{"searchValue":null,"createBy":"admin","createTime":"2024-05-20 11:57:14","createTimeStr":"2024-05-20 18:57:14","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":24627,"dictSort":4,"dictLabel":"\u8F7B\u50AC","dictLabelTh":"\u8F7B\u50AC","dictLabelEs":"Cobranza ligera","dictLabelVi":"Nh\u1EAFc n\u1EE3 nh\u1EB9","dictValue":"3","value1":"","value2":"\u8F7B\u50AC","value3":"\u8F7B\u50ACNh\u1EB9 nh\u00E0ng th\u00FAc gi\u1EE5c","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u8F7B\u50AC","default":true},{"searchValue":null,"createBy":"admin","createTime":"2024-07-14 22:43:33","createTimeStr":"2024-07-15 05:43:33","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"value1:  \u7EC8\u7AEF\u7C7B\u578B-\u8BA2\u5355\u7C7B\u578B-\u8BC4\u7EA7  \r\n(\u7EC8\u7AEF\u7C7B\u578B :1,\u5B89\u5353  2,ios       \u8BA2\u5355\u7C7B\u578B: 1,\u9996\u501F 0,\u590D\u501F   \r\n \u8BC4\u7EA7: ios\u9996\u501F\u8BC4\u7EA7:A1-A6,ios\u590D\u501F\u8BC4\u7EA7:1-6,\u5B89\u5353\u9996\u501F\u8BC4\u7EA7:A1-A4,\u5B89\u5353\u590D\u501F\u8BC4\u7EA7:1-6)","params":{},"dictCode":244715,"dictSort":5,"dictLabel":"A","dictLabelTh":"A","dictLabelEs":"A","dictLabelVi":"A","dictValue":"A","value1":"2-1-A1,2-1-A2,2-0-1,2-0-2,2-0-3,1-1-A1,1-0-1,1-0-2","value2":"A","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"A","default":true},{"searchValue":null,"createBy":"admin","createTime":"2024-07-14 22:43:43","createTimeStr":"2024-07-15 05:43:43","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"value1:  \u7EC8\u7AEF\u7C7B\u578B-\u8BA2\u5355\u7C7B\u578B-\u8BC4\u7EA7  \r\n(\u7EC8\u7AEF\u7C7B\u578B :1,\u5B89\u5353  2,ios       \u8BA2\u5355\u7C7B\u578B: 1,\u9996\u501F 0,\u590D\u501F   \r\n \u8BC4\u7EA7: ios\u9996\u501F\u8BC4\u7EA7:A1-A6,ios\u590D\u501F\u8BC4\u7EA7:1-6,\u5B89\u5353\u9996\u501F\u8BC4\u7EA7:A1-A4,\u5B89\u5353\u590D\u501F\u8BC4\u7EA7:1-6)","params":{},"dictCode":244714,"dictSort":6,"dictLabel":"B","dictLabelTh":"B","dictLabelEs":"B","dictLabelVi":"B","dictValue":"B","value1":"2-1-A3,2-1-A4,2-0-4,2-0-5,1-1-A2,1-0-3,1-0-4","value2":"B","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"B","default":true},{"searchValue":null,"createBy":"admin","createTime":"2024-07-14 22:43:54","createTimeStr":"2024-07-15 05:43:54","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"value1:  \u7EC8\u7AEF\u7C7B\u578B-\u8BA2\u5355\u7C7B\u578B-\u8BC4\u7EA7  \r\n(\u7EC8\u7AEF\u7C7B\u578B :1,\u5B89\u5353  2,ios       \u8BA2\u5355\u7C7B\u578B: 1,\u9996\u501F 0,\u590D\u501F   \r\n \u8BC4\u7EA7: ios\u9996\u501F\u8BC4\u7EA7:A1-A6,ios\u590D\u501F\u8BC4\u7EA7:1-6,\u5B89\u5353\u9996\u501F\u8BC4\u7EA7:A1-A4,\u5B89\u5353\u590D\u501F\u8BC4\u7EA7:1-6)","params":{},"dictCode":244713,"dictSort":7,"dictLabel":"C","dictLabelTh":"C","dictLabelEs":"C","dictLabelVi":"C","dictValue":"C","value1":"2-1-A5,2-1-A6,2-0-6,1-1-A3,1-1-A4,1-0-5,1-0-6","value2":"C","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"C","default":true},{"searchValue":null,"createBy":"admin","createTime":"2024-08-27 02:23:47","createTimeStr":"2024-08-27 09:23:47","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":244903,"dictSort":10,"dictLabel":"\u98CE\u63A7\u4F4E\u606F0","dictLabelTh":"\u98CE\u63A7\u4F4E\u606F0","dictLabelEs":"Control de riesgo bajo inter\u00E9s 0","dictLabelVi":"Ki\u1EC3m so\u00E1t r\u1EE7i ro l\u00E3i su\u1EA5t th\u1EA5p 0","dictValue":"6","value1":"","value2":"\u98CE\u63A7\u4F4E\u606F0-1","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u98CE\u63A7\u4F4E\u606F0","default":true},{"searchValue":null,"createBy":"admin","createTime":"2024-08-27 02:24:39","createTimeStr":"2024-08-27 09:24:39","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":244904,"dictSort":11,"dictLabel":"\u98CE\u63A7\u4F4E\u606F1","dictLabelTh":"\u98CE\u63A7\u4F4E\u606F1","dictLabelEs":"Control de riesgo bajo inter\u00E9s 1","dictLabelVi":"Ki\u1EC3m so\u00E1t r\u1EE7i ro l\u00E3i su\u1EA5t th\u1EA5p 1","dictValue":"7","value1":"","value2":"\u98CE\u63A7\u4F4E\u606F1","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u98CE\u63A7\u4F4E\u606F1","default":true},{"searchValue":null,"createBy":"admin","createTime":"2024-09-06 00:44:46","createTimeStr":"2024-09-06 07:44:46","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":244925,"dictSort":11,"dictLabel":"\u5171\u503A\u6807\u8BC6","dictLabelTh":"\u5171\u503A\u6807\u8BC6","dictLabelEs":"Indicador de deuda compartida","dictLabelVi":"D\u1EA5u hi\u1EC7u n\u1EE3 chung","dictValue":"public_loan","value1":"","value2":"\u5171\u503A\u6807\u8BC6","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u5171\u503A\u6807\u8BC6","default":true},{"searchValue":null,"createBy":"admin","createTime":"2025-04-24 12:46:19","createTimeStr":"2025-04-24 19:46:19","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"\u6295\u8BC9\u6807\u8BB0","params":{},"dictCode":733308,"dictSort":13,"dictLabel":"\u6295\u8BC9\u610F\u5411","dictLabelTh":"\u00DD \u0111\u1ECBnh khi\u1EBFu n\u1EA1i","dictLabelEs":"Intenci\u00F3n de queja","dictLabelVi":"\u00DD \u0111\u1ECBnh khi\u1EBFu n\u1EA1i","dictValue":"complaint_marking","value1":"","value2":"\u00DD \u0111\u1ECBnh khi\u1EBFu n\u1EA1i","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"default","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u6295\u8BC9\u610F\u5411","default":true},{"searchValue":null,"createBy":"admin","createTime":"2025-07-23 07:12:41","createTimeStr":"2025-07-23 14:12:41","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"value1 \u914D\u7F6E\u9700\u8981\u5C55\u793A\u518D\u5206\u5355\u89C4\u5219\u7684\u8D26\u9F84code,\u591A\u4E2A\u7528,\u9694\u5F00\r\nvalue2 \u4E3A \u50AC\u6536APP\u5C55\u793A\u5B57\u6BB5\r\nvalue3 \u4E3A \u914D\u7F6E\u8D26\u9F84\u5BF9\u5E94code,\u5373\u8BA2\u5355\u6253\u6807\u540E \u5982\u679C\u914D\u7F6E\u4E86\u5F53\u524D\u8D26\u9F84\u5E76\u4E14\u6CA1\u6709\u914D\u7F6E\u5206\u5355\u89C4\u5219 \u5219\u4E0D\u53C2\u4E0E\u5206\u5355","params":{},"dictCode":736870,"dictSort":14,"dictLabel":"D-1\u4E0D\u50AC","dictLabelTh":"D-1\u4E0D\u50AC","dictLabelEs":"D-1 sin gesti\u00F3n","dictLabelVi":"D-1 kh\u00F4ng thu h\u1ED3i","dictValue":"8","value1":"431677,353241","value2":"D-1\u4E0D\u50AC","value3":"431677,353241","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"D-1\u4E0D\u50AC","default":true},{"searchValue":null,"createBy":"admin","createTime":"2025-07-23 07:32:33","createTimeStr":"2025-07-23 14:32:33","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"value1 \u914D\u7F6E\u9700\u8981\u5C55\u793A\u518D\u5206\u5355\u89C4\u5219\u7684\u8D26\u9F84code,\u591A\u4E2A\u7528,\u9694\u5F00\r\nvalue2 \u4E3A \u50AC\u6536APP\u5C55\u793A\u5B57\u6BB5\r\nvalue3 \u4E3A \u914D\u7F6E\u8D26\u9F84\u5BF9\u5E94code,\u5373\u8BA2\u5355\u6253\u6807\u540E \u5982\u679C\u914D\u7F6E\u4E86\u5F53\u524D\u8D26\u9F84\u5E76\u4E14\u6CA1\u6709\u914D\u7F6E\u5206\u5355\u89C4\u5219 \u5219\u4E0D\u53C2\u4E0E\u5206\u5355","params":{},"dictCode":736871,"dictSort":15,"dictLabel":"D-1|D0\u4E0D\u50AC","dictLabelTh":"D-1|D0\u4E0D\u50AC","dictLabelEs":"D-1|D0 sin gesti\u00F3n","dictLabelVi":"D-1|D0 kh\u00F4ng thu h\u1ED3i","dictValue":"9","value1":"","value2":"D-1|D0\u4E0D\u50AC","value3":"304742,431677","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"D-1|D0\u4E0D\u50AC","default":true},{"searchValue":null,"createBy":"admin","createTime":"2025-07-23 07:33:38","createTimeStr":"2025-07-23 14:33:38","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"value1 \u914D\u7F6E\u9700\u8981\u5C55\u793A\u518D\u5206\u5355\u89C4\u5219\u7684\u8D26\u9F84code,\u591A\u4E2A\u7528,\u9694\u5F00\r\nvalue2 \u4E3A \u50AC\u6536APP\u5C55\u793A\u5B57\u6BB5\r\nvalue3 \u4E3A \u914D\u7F6E\u8D26\u9F84\u5BF9\u5E94code,\u5373\u8BA2\u5355\u6253\u6807\u540E \u5982\u679C\u914D\u7F6E\u4E86\u5F53\u524D\u8D26\u9F84\u5E76\u4E14\u6CA1\u6709\u914D\u7F6E\u5206\u5355\u89C4\u5219 \u5219\u4E0D\u53C2\u4E0E\u5206\u5355","params":{},"dictCode":736872,"dictSort":16,"dictLabel":"S1\u4E0D\u50AC","dictLabelTh":"S1\u4E0D\u50AC","dictLabelEs":"S1 sin gesti\u00F3n","dictLabelVi":"S1 kh\u00F4ng thu h\u1ED3i","dictValue":"10","value1":"","value2":"S1\u4E0D\u50AC","value3":"353241","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"S1\u4E0D\u50AC","default":true},{"searchValue":null,"createBy":"admin","createTime":"2025-10-21 00:43:39","createTimeStr":"2025-10-21 07:43:39","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":740233,"dictSort":17,"dictLabel":"D-1\u4E0D\u50AC\u5BF9\u7167","dictLabelTh":"D-1\u4E0D\u50AC\u5BF9\u7167","dictLabelEs":"Cotejo de no cobranza D-1","dictLabelVi":"\u0110\u1ED1i chi\u1EBFu kh\u00F4ng thu h\u1ED3i D-1","dictValue":"11","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"loan_single_specialLabel","cssClass":"","listClass":"default","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"D-1\u4E0D\u50AC\u5BF9\u7167","default":true}];
+    var srcChnTypeDatas = $.table.selectAppDict();
+    var srcChnTeamDatas = $.table.selectApplyDict();
+    var approvalDebtId = "eb7abfa7fd544f69bf02c705f7c90a66";
+    var debtInfoDEnabled = true;
+    var approvalDebtPrefix = prefix + "/detail/" + approvalDebtId + "/debt";
+    var approvalOtherPlatformMessages = {
+        loading: "\u6B63\u5728\u52A0\u8F7D\u5176\u4ED6\u5E73\u53F0\u8D44\u6599...",
+        noData: "\u672A\u67E5\u8BE2\u5230\u7B26\u5408\u6761\u4EF6\u7684\u5176\u4ED6\u5E73\u53F0\u8D44\u6599",
+        incomplete: "\u67E5\u8BE2\u5176\u4ED6\u5E73\u53F0\u8D44\u6599\u9700\u540C\u65F6\u586B\u5199\u624B\u673A\u53F7\u548C\u8EAB\u4EFD\u8BC1\u4FE1\u606F",
+        loadFailed: "\u5176\u4ED6\u5E73\u53F0\u8D44\u6599\u52A0\u8F7D\u5931\u8D25\uFF0C\u8BF7\u7A0D\u540E\u91CD\u8BD5"
+    };
+    var approvalOtherPlatformLoaded = false;
+    var approvalOtherPlatformLoading = false;
+
+    $(function() {
+        organizeApprovalTabs();
+        if (window.ModelHistoryGrade) {
+            ModelHistoryGrade.load('#approvalModelHistoryGrade',
+                prefix + '/detail/' + approvalDebtId + '/modelGrade', {
+                    loadingText: "\u67E5\u8BE2\u4E2D",
+                    unavailableText: "\u672A\u83B7\u53D6"
+                });
+        }
+        renderBankName();
+        renderGender();
+        DebtAnalysis.load('#approvalDebtAnalysis', approvalDebtPrefix + '/analysis');
+        initDebtTables();
+        $('a[href="#tab-other-platform"]').on('shown.bs.tab', loadApprovalOtherPlatform);
+    });
+
+    function loadApprovalOtherPlatform() {
+        if (approvalOtherPlatformLoaded || approvalOtherPlatformLoading) {
+            return;
+        }
+        approvalOtherPlatformLoading = true;
+        showApprovalOtherPlatformState(approvalOtherPlatformMessages.loading);
+        $.get(prefix + '/detail/' + approvalDebtId + '/otherPlatform')
+            .done(function (res) {
+                var data = res && res.code === 0 ? res.data : null;
+                if (!data) {
+                    showApprovalOtherPlatformState((res && res.msg) || approvalOtherPlatformMessages.loadFailed);
+                    return;
+                }
+                if (data.status === 'FOUND') {
+                    renderApprovalOtherPlatform(data);
+                    approvalOtherPlatformLoaded = true;
+                } else if (data.status === 'NOT_FOUND') {
+                    showApprovalOtherPlatformState(approvalOtherPlatformMessages.noData);
+                    approvalOtherPlatformLoaded = true;
+                } else if (data.status === 'INCOMPLETE') {
+                    showApprovalOtherPlatformState(approvalOtherPlatformMessages.incomplete);
+                    approvalOtherPlatformLoaded = true;
+                } else {
+                    showApprovalOtherPlatformState(approvalOtherPlatformMessages.loadFailed);
+                }
+            })
+            .fail(function () {
+                showApprovalOtherPlatformState(approvalOtherPlatformMessages.loadFailed);
+            })
+            .always(function () {
+                approvalOtherPlatformLoading = false;
+            });
+    }
+
+    function renderApprovalOtherPlatform(data) {
+        $('#approvalOtherPlatformState').hide();
+        $('#approvalOtherPlatformContent').show();
+        renderApprovalOtherPlatformAccount(data.facebook);
+        renderApprovalOtherPlatformImage('#approvalOtherPlatformFace', '#approvalOtherPlatformFaceEmpty', data.faceImgUrl);
+        renderApprovalOtherPlatformImage('#approvalOtherPlatformIdFront', '#approvalOtherPlatformIdFrontEmpty', data.ocrFortPic);
+    }
+
+    function showApprovalOtherPlatformState(message) {
+        $('#approvalOtherPlatformContent').hide();
+        $('#approvalOtherPlatformState').text(message || approvalOtherPlatformMessages.loadFailed).show();
+    }
+
+    function renderApprovalOtherPlatformAccount(value) {
+        var $target = $('#approvalOtherPlatformFacebook').empty();
+        if (!value) {
+            $target.text('-');
+        } else if (isSafeApprovalOtherPlatformUrl(value)) {
+            $('<a target="_blank" rel="noopener noreferrer"></a>').attr('href', value).text(value).appendTo($target);
+        } else {
+            $target.text(value);
+        }
+    }
+
+    function renderApprovalOtherPlatformImage(imageSelector, emptySelector, value) {
+        var safeUrl = isSafeApprovalOtherPlatformUrl(value) ? value : '';
+        $(imageSelector).attr('src', safeUrl).toggle(!!safeUrl);
+        $(emptySelector).toggle(!safeUrl);
+    }
+
+    function isSafeApprovalOtherPlatformUrl(value) {
+        return typeof value === 'string' && /^https?:\/\//i.test($.trim(value));
+    }
+
+    function organizeApprovalTabs() {
+        $('#tab-loan-info').append($('.approval-loan-section'));
+        $('#tab-application-info').append($('.approval-application-section'));
+    }
+
+    function initDebtTables() {
+        initDebtTable('debtTableA', approvalDebtPrefix + '/internalOffline', buildInternalDebtColumns(true), 'debtCountA');
+        initDebtTable('debtTableB', approvalDebtPrefix + '/internalOnline', buildInternalDebtColumns(false), 'debtCountB');
+        initDebtTable('debtTableC', approvalDebtPrefix + '/external', buildExternalDebtColumns(), 'debtCountC');
+        if (debtInfoDEnabled) {
+            initDebtTable('debtTableD', approvalDebtPrefix + '/archivedOffline', buildArchivedDebtColumns(), 'debtCountD');
+        }
+        bindDebtTableEvents();
+    }
+
+    function copyFacebookUrl(value) {
+        if ($.common.isEmpty(value)) {
+            return;
+        }
+        var tempTextarea = document.createElement('textarea');
+        tempTextarea.value = value;
+        tempTextarea.style.position = 'fixed';
+        document.body.appendChild(tempTextarea);
+        tempTextarea.focus();
+        tempTextarea.select();
+        try {
+            var successful = document.execCommand('copy');
+            successful ? $.modal.msgSuccess("\u590D\u5236\u6210\u529F") : $.modal.alertWarning("\u590D\u5236\u5931\u8D25");
+        } catch (err) {
+            $.modal.msgError("\u590D\u5236\u5931\u8D25");
+        }
+        document.body.removeChild(tempTextarea);
+    }
+
+    function initDebtTable(tableId, url, columns, countId) {
+        $('#' + tableId).bootstrapTable({
+            url: url,
+            method: 'post',
+            contentType: 'application/x-www-form-urlencoded',
+            pagination: true,
+            // 上下均显示分页，正常缩放下无需滚到长表格底部即可翻页。
+            paginationVAlign: 'both',
+            sidePagination: 'server',
+            pageSize: 10,
+            pageList: [10, 25, 50],
+            undefinedText: '-',
+            queryParams: function (params) {
+                var limit = params.limit || params.pageSize || 10;
+                var pageNumber = params.pageNumber || (params.offset / limit + 1) || 1;
+                return {
+                    pageNum: pageNumber,
+                    pageSize: limit
+                };
+            },
+            responseHandler: function (res) {
+                if (res && res.code === 0) {
+                    updateDebtCount(countId, res.total);
+                    return {
+                        rows: res.rows || [],
+                        total: res.total || 0
+                    };
+                }
+                updateDebtCount(countId, 0);
+                return {
+                    rows: [],
+                    total: 0
+                };
+            },
+            onLoadSuccess: function (data) {
+                updateDebtCount(countId, data && data.total ? data.total : 0);
+            },
+            onLoadError: function () {
+                updateDebtCount(countId, 0);
+            },
+            onPostBody: function () {
+                applySpecialLabelCellTitles($('#' + tableId));
+            },
+            rowStyle: DebtAnalysis.rowStyle,
+            columns: columns
+        });
+    }
+
+    function bindDebtTableEvents() {
+        $('#debtTableA, #debtTableB').on('load-success.bs.table post-body.bs.table', function () {
+            applySpecialLabelCellTitles($(this));
+        });
+    }
+
+    function updateDebtCount(countId, total) {
+        $('#' + countId).text(total || 0);
+    }
+
+    function applySpecialLabelCellTitles(tableElement) {
+        var $tables = tableElement && tableElement.jquery ? tableElement : $('#debtTableA, #debtTableB');
+        $tables.each(function () {
+            $(this).find('tbody td.approval-special-label-cell').each(function () {
+                var fullLabelText = $.trim($(this).text());
+                var $labelText = $('<span class="approval-special-label-text"></span>');
+                $labelText.text(fullLabelText);
+                $(this).attr('title', fullLabelText).empty().append($labelText);
+            });
+        });
+    }
+
+    /**
+     * 字典组件返回值包含展示样式标签，审批详情固定用文本表格展示，这里统一转为纯文本。
+     */
+    function selectPlainDictLabel(datas, value) {
+        var html = $.table.selectDictLabel(datas || [], value, LANG_COUNTRY);
+        return parsePlainHtmlText(html, value);
+    }
+
+    function renderBankName() {
+        $('.bank-name').each(function() {
+            var bankId = $(this).data('bank-id');
+            if (!bankId) {
+                $(this).text('-');
+                return;
+            }
+            $(this).text(parsePlainHtmlText($.table.selectBankName(bankCodeDatas, bankId, LANG_COUNTRY), bankId));
+        });
+    }
+
+    /**
+     * 字典、银行组件返回值可能带样式标签，详情页表格只展示纯文本内容。
+     */
+    function parsePlainHtmlText(html, fallback) {
+        if (!html) {
+            return fallback === 0 ? '0' : (fallback || '-');
+        }
+        return $('<div>').html(html).text() || (fallback === 0 ? '0' : (fallback || '-'));
+    }
+
+    function renderGender() {
+        var value = $('.gender-label').data('value');
+        var genderValue = value === null || value === undefined ? '' : String(value);
+        if (genderValue === 'M' || genderValue === '0') {
+            $('.gender-label').text('Female');
+        } else if (genderValue === 'H' || genderValue === '8') {
+            $('.gender-label').text('Male');
+        } else if (genderValue) {
+            $('.gender-label').text(genderValue);
+        } else {
+            $('.gender-label').text('-');
+        }
+    }
+
+    function buildInternalDebtColumns(serviceFeeAsPercent) {
+        return [
+            {
+                field: 'contractStatus',
+                title: i18n('loan.contractList.contract.status'),
+                class: 'approval-nowrap-cell',
+                formatter: function (value) {
+                    return $.table.selectDictLabel(contractStatusDatas, value, LANG_COUNTRY) || '-';
+                }
+            },
+            {
+                field: 'specialLabel',
+                title: i18n('loan.pre.specialLabels'),
+                width: 180,
+                class: 'approval-special-label-cell',
+                formatter: specialLabelFormatter
+            },
+            {
+                field: 'delayType',
+                title: i18n('loan.collectionList.Order.type'),
+                class: 'approval-nowrap-cell',
+                formatter: function (value) {
+                    return $.table.selectDictLabel(delayTypeDatas, value, LANG_COUNTRY) || '-';
+                }
+            },
+            {
+                field: 'paymentDateStr',
+                title: i18n('borrower.common.loanTime'),
+                width: 140,
+                class: 'approval-date-cell',
+                formatter: textFormatter
+            },
+            {
+                field: 'repayEndDayStr',
+                title: i18n('loan.pendRepayMentList.For.reimbursement'),
+                width: 120,
+                class: 'approval-date-cell',
+                formatter: textFormatter
+            },
+            {
+                field: 'period',
+                title: i18n('loan.pendRepayMentList.periods'),
+                formatter: numberFormatter
+            },
+            {
+                field: 'periodDaysDisplay',
+                title: i18n('offadmin.debt.periodDays'),
+                formatter: textFormatter
+            },
+            {
+                field: 'settleDateStr',
+                title: i18n('loan.deductionResList.Settlement.of.the.time'),
+                width: 140,
+                class: 'approval-date-cell',
+                formatter: textFormatter
+            },
+            {
+                field: 'contractAmount',
+                title: i18n('loan.contractList.Contracts.can.be'),
+                align: 'right',
+                formatter: amountFormatter
+            },
+            {
+                field: 'inHandAmount',
+                title: i18n('borrower.common.LoanAmount'),
+                align: 'right',
+                formatter: amountFormatter
+            },
+            {
+                field: 'serviceFee',
+                title: i18n('offadmin.user.serviceFee'),
+                align: 'right',
+                formatter: serviceFeeAsPercent ? DebtAnalysis.serviceFeeRateFormatter : amountFormatter
+            },
+            {
+                field: 'paymentOrigin',
+                title: i18n('loan.pendRepayMentList.Amount.to.be.repaid.includeCharge'),
+                align: 'right',
+                formatter: amountFormatter
+            },
+            {
+                field: 'paymentActual',
+                title: i18n('loan.collectionList.receivable.amount'),
+                align: 'right',
+                formatter: amountFormatter
+            },
+            {
+                field: 'remainPaymentAmount',
+                title: i18n('loan.pendRepayMentList.Amount.to.be.remain.includeCharge'),
+                align: 'right',
+                formatter: remainPaymentAmountFormatter
+            },
+            {
+                field: 'repayCount',
+                title: i18n('loan.collectionList.Number.repayment'),
+                formatter: numberFormatter
+            },
+            {
+                field: 'delayCount',
+                title: i18n('borrower.common.exhibitPeriodCount'),
+                formatter: numberFormatter
+            },
+            {
+                field: 'overdueDays',
+                title: i18n('loan.collectionList.Overdue.days'),
+                formatter: numberFormatter
+            }
+        ];
+    }
+
+    function buildExternalDebtColumns() {
+        return [
+            { field: 'platform', title: i18n('thd.4981287fe5'), formatter: textFormatter },
+            { field: 'bank', title: i18n('loan.deductionResList.bank'), formatter: textFormatter },
+            { field: 'truly_loan_time_display', title: i18n('borrower.common.loanTime'), formatter: textFormatter },
+            { field: 'truly_expect_repay_time_display', title: i18n('thd.664ef07b76'), formatter: textFormatter },
+            { field: 'truly_repay_time_display', title: i18n('thd.cfa5bdbd37'), formatter: textFormatter },
+            { field: 'truly_repay_amount', title: i18n('thd.7d5e87f6a1'), align: 'right', formatter: amountFormatter },
+            { field: 'remaining_repayable_amount', title: i18n('offadmin.debt.financialProduct.remainingRepayableAmount'), align: 'right', formatter: amountFormatter },
+            { field: 'borrow_amt', title: i18n('loan.contractList.Contracts.can.be'), align: 'right', formatter: amountFormatter },
+            { field: 'in_hand_amt', title: i18n('loan.contractList.Amount.received.per.issue.live'), align: 'right', formatter: amountFormatter },
+            { field: 'overdue_days', title: i18n('thd.9793bf455c'), formatter: numberFormatter },
+            { field: 'loan_term', title: i18n('thd.440e8cfba9'), formatter: numberFormatter },
+            { field: 'loan_period', title: i18n('loan.pendRepayMentList.periods'), formatter: numberFormatter },
+            { field: 'financial_product_period_jqd', title: i18n('offadmin.debt.financialProduct.productTerm'), formatter: numberFormatter },
+            { field: 'financial_product_repay_time_term', title: i18n('offadmin.debt.financialProduct.repayTimeTerm'), formatter: numberFormatter },
+            { field: 'financial_product_service_rate', title: i18n('offadmin.debt.financialProduct.serviceRate'), formatter: DebtFinancialProduct.ratePercentFormatter },
+            { field: 'financial_product_day_rate', title: i18n('offadmin.debt.financialProduct.dayRate'), formatter: DebtFinancialProduct.ratePercentFormatter },
+            { field: 'financial_product_charging_method', title: i18n('offadmin.debt.financialProduct.chargingMethod'), formatter: DebtFinancialProduct.chargingMethodFormatter },
+            { field: 'financial_product_extension_calculation_method', title: i18n('offadmin.debt.financialProduct.extensionCalculationMethod'), formatter: DebtFinancialProduct.extensionCalculationMethodFormatter },
+            { field: 'financial_product_day_extension_rate', title: i18n('offadmin.debt.financialProduct.dayExtensionRate'), formatter: DebtFinancialProduct.ratePercentFormatter },
+            { field: 'financial_product_ratio', title: i18n('offadmin.debt.financialProduct.penaltyDayRate'), formatter: DebtFinancialProduct.ratePercentFormatter },
+            { field: 'repay_cnt', title: i18n('thd.26093521b7'), formatter: numberFormatter },
+            { field: 'extend_cnt', title: i18n('borrower.common.exhibitPeriodCount'), formatter: numberFormatter },
+            { field: 'is_force', title: i18n('thd.07111e5cc0'), formatter: yesNoFormatter },
+            { field: 'is_repay', title: i18n('thd.4fdb14e127'), formatter: repayStatusFormatter },
+            { field: 'is_regret', title: i18n('thd.f671b45267'), formatter: yesNoFormatter }
+        ];
+    }
+
+    function buildArchivedDebtColumns() {
+        return [
+            { field: 'orderId', title: i18n('offadmin.debtD.orderId'), formatter: textFormatter },
+            { field: 'newCustomer', title: i18n('offadmin.debtD.newCustomer'), formatter: textFormatter },
+            { field: 'phoneMask', title: i18n('offadmin.debtD.mobile'), formatter: textFormatter },
+            { field: 'loanCount', title: i18n('offadmin.debtD.loanCount'), formatter: textFormatter },
+            { field: 'loanAmount', title: i18n('offadmin.debtD.loanAmount'), align: 'right', formatter: amountFormatter },
+            { field: 'principalOutstanding', title: i18n('offadmin.debtD.principalOutstanding'), align: 'right', formatter: amountFormatter },
+            { field: 'interestFee', title: i18n('offadmin.debtD.interestFee'), align: 'right', formatter: textFormatter },
+            { field: 'loanDateDisplay', title: i18n('offadmin.debtD.loanDate'), formatter: textFormatter },
+            { field: 'lastRepayDate', title: i18n('offadmin.debtD.lastRepayDate'), formatter: textFormatter },
+            { field: 'period', title: i18n('offadmin.debtD.period'), formatter: textFormatter },
+            { field: 'repaidPeriodCount', title: i18n('offadmin.debtD.repaidPeriodCount'), formatter: textFormatter },
+            { field: 'actualRepay', title: i18n('offadmin.debtD.actualRepay'), align: 'right', formatter: amountFormatter },
+            { field: 'remainingRepay', title: i18n('offadmin.debtD.remainingRepay'), align: 'right', formatter: amountFormatter },
+            { field: 'lineName', title: i18n('offadmin.debtD.lineName'), formatter: textFormatter },
+            { field: 'remark', title: i18n('offadmin.debtD.remark'), formatter: textFormatter }
+        ];
+    }
+
+    function amountFormatter(value) {
+        if ($.common.isEmpty(value) && value !== 0) {
+            return '-';
+        }
+        return $.modal.formatAmountThousand(value);
+    }
+
+    function numberFormatter(value) {
+        return $.common.isEmpty(value) && value !== 0 ? '-' : value;
+    }
+
+    function percentFormatter(value) {
+        return $.common.isEmpty(value) && value !== 0 ? '-' : value + '%';
+    }
+
+    function textFormatter(value) {
+        return $.common.isEmpty(value) ? '-' : $.table.tooltip(value, 20, 'open');
+    }
+
+    function remainPaymentAmountFormatter(value, row) {
+        if (String(row.contractStatus) === '1' || String(row.contractStatus) === '2') {
+            return amountFormatter(value);
+        }
+        return 0;
+    }
+
+    function specialLabelFormatter(value) {
+        if ($.common.isEmpty(value)) {
+            return '';
+        }
+        var labels = [];
+        var specialLabelArray = String(value).split(',');
+        for (var i = 0; i < specialLabelArray.length; i++) {
+            var labelValue = $.trim(specialLabelArray[i]);
+            if ($.common.isEmpty(labelValue)) {
+                continue;
+            }
+            var dictLabel = $.table.selectDictLabel(specialLabels, labelValue, '');
+            labels.push(dictLabel || labelValue);
+        }
+        return labels.join(',');
+    }
+
+    function unixSecondsFormatter(value) {
+        if ($.common.isEmpty(value) && value !== 0) {
+            return '-';
+        }
+        var millis = Number(value) * 1000;
+        if (isNaN(millis) || millis <= 0) {
+            return '-';
+        }
+        return formatDateTime(new Date(millis));
+    }
+
+    function formatDateTime(date) {
+        if (!(date instanceof Date) || isNaN(date.getTime())) {
+            return '-';
+        }
+        return date.getFullYear() + '-'
+            + padTwoDigits(date.getMonth() + 1) + '-'
+            + padTwoDigits(date.getDate()) + ' '
+            + padTwoDigits(date.getHours()) + ':'
+            + padTwoDigits(date.getMinutes()) + ':'
+            + padTwoDigits(date.getSeconds());
+    }
+
+    function padTwoDigits(value) {
+        return value < 10 ? '0' + value : String(value);
+    }
+
+    function yesNoFormatter(value) {
+        if (String(value) === '1') {
+            return i18n('common.yes');
+        }
+        if (String(value) === '0') {
+            return i18n('common.no');
+        }
+        return '-';
+    }
+
+    function repayStatusFormatter(value, row) {
+        if (String(value) !== '1') {
+            return i18n('offadmin.debt.notSettled');
+        }
+        if (String(row.is_early_repay) === '1') {
+            return i18n('offadmin.debt.earlySettled');
+        }
+        if (String(row.is_late_repay) === '1') {
+            return i18n('offadmin.debt.lateSettled');
+        }
+        return i18n('offadmin.debt.settled');
+    }
+
+    function previewImage(src) {
+        if (!src) {
+            return;
+        }
+        layer.open({
+            type: 1,
+            title: false,
+            area: ['80%', '90%'],
+            shadeClose: true,
+            content: '<div style="text-align:center;padding:12px;"><img src="' + src + '" style="max-width:100%;max-height:82vh;"></div>'
+        });
+    }
+
+    function passApproval() {
+        if (!validateExpectedAmount(true)) {
+            return;
+        }
+        $.modal.confirm(i18n('offadmin.approval.passConfirm'), function() {
+            submitApproval(prefix + "/pass", { "id": $('#approvalId').val(),
+                "approvalReason": $.trim($('#rejectReason').val()), "expectedAmount": $.trim($('#expectedAmount').val()) });
+        });
+    }
+
+    function rejectApproval() {
+        var rejectReason = $.trim($('#rejectReason').val());
+        if (!rejectReason) {
+            $.modal.alertWarning(i18n('offadmin.approval.rejectReasonRequired'));
+            $('#rejectReason').focus();
+            return;
+        }
+        if (!validateExpectedAmount(false)) {
+            return;
+        }
+        submitApproval(prefix + "/reject", { "id": $('#approvalId').val(), "rejectReason": rejectReason,
+            "expectedAmount": $.trim($('#expectedAmount').val()) });
+    }
+
+    function closeApproval() {
+        var reason = $.trim($('#rejectReason').val());
+        if (!reason) {
+            $.modal.alertWarning(i18n('offadmin.approval.reviewCloseReasonRequired'));
+            $('#rejectReason').focus();
+            return;
+        }
+        if (!validateExpectedAmount(false)) {
+            return;
+        }
+        $.modal.confirm(i18n('offadmin.approval.reviewCloseConfirm'), function() {
+            submitApproval(prefix + "/close", { "id": $('#approvalId').val(), "reason": reason,
+                "expectedAmount": $.trim($('#expectedAmount').val()) });
+        });
+    }
+
+    function validateExpectedAmount(required) {
+        var input = $('#expectedAmount');
+        if (!input.length) {
+            return true;
+        }
+        var amount = $.trim(input.val());
+        if (!amount && required) {
+            $.modal.alertWarning(i18n('offadmin.approval.expectedAmountRequired'));
+            input.focus();
+            return false;
+        }
+        if (amount && (!/^[0-9]{1,16}(\.[0-9]{1,2})?$/.test(amount) || !/[1-9]/.test(amount))) {
+            $.modal.alertWarning(i18n('offadmin.approval.expectedAmountInvalid'));
+            input.focus();
+            return false;
+        }
+        return true;
+    }
+
+    function submitApproval(url, data) {
+        $.modal.loading(i18n("offadmin.approval.submitting"));
+        $.post(url, data, function(result) {
+            $.modal.closeLoading();
+            if (result.code !== web_status.SUCCESS) {
+                $.modal.alertError(result.msg);
+                return;
+            }
+            refreshApprovalList();
+            $.modal.msgSuccess(result.msg || i18n('common.operate.successfully'));
+            setTimeout(function() {
+                window.location.reload();
+            }, 800);
+        }).fail(function() {
+            $.modal.closeLoading();
+            $.modal.alertError(i18n('offadmin.approval.submitFailed'));
+        });
+    }
+
+    function refreshApprovalList() {
+        var frames = $(window.parent.document).find('.RuoYi_iframe');
+        frames.each(function() {
+            try {
+                if (this.contentWindow
+                        && this.contentWindow.location.href.indexOf('/borrower/payoutApproval') !== -1
+                        && this.contentWindow.location.href.indexOf('/borrower/payoutApproval/detail/') === -1
+                        && this.contentWindow.$
+                        && this.contentWindow.$.table) {
+                    this.contentWindow.$.table.refresh();
+                }
+            } catch (e) {
+                // 跨页签刷新失败不影响审批结果，用户返回列表后仍可手动刷新。
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -5,6 +5,7 @@ import os
 from common.admin_client import ADMIN_URL, authenticate_admin
 from common.approval_client import ApprovalAttempt, ApprovalBusinessError, action_spec, verify_detail, verify_reviewer_context, verify_previous_attempt
 from common.approval_credentials import approval_credentials
+from common.loan_target import loan_target_phone
 from common.phone_sequence import locked
 from common.sso_login import TIMEOUT
 from common.state_store import ROOT, write_json
@@ -14,15 +15,17 @@ def resolve_approval_id(checks):
     explicit = os.getenv("APPROVAL_ID", "").strip()
     if explicit:
         return explicit
-    latest = json.loads((ROOT / ".state/latest_user.json").read_text(encoding="utf-8"))
+    latest = {"phone": loan_target_phone()}
     attempts = json.loads((ROOT / ".state/loan_attempts.json").read_text(encoding="utf-8"))
     matching = [value for value in attempts.values() if value.get("phone") == latest["phone"]
                 and value.get("status") == "db_verified" and value.get("header_id")]
     assert len(matching) == 1, "最新新增用户没有唯一已提交并通过数据库校验的借款，请先执行借款场景"
-    candidates = [checks.approval_record(row["id"]) for row in checks.approval_candidates(matching[0]["header_id"])]
-    pending = [row for row in candidates if str(row["status"]) == "0"]
-    assert len(pending) == 1, "关联借款未生成唯一待审批记录或已审批，停止操作；不会改选其他用户"
-    return pending[0]["id"]
+    def verify_pending():
+        candidates = [checks.approval_record(row["id"]) for row in checks.approval_candidates(matching[0]["header_id"])]
+        pending = [row for row in candidates if str(row["status"]) == "0"]
+        assert len(pending) == 1, "关联借款未生成唯一待审批记录或已审批，停止操作；不会改选其他用户"
+        return pending[0]["id"]
+    return checks.check("关联借款异步生成唯一待审记录（仅查询，不重发借款）", verify_pending, timeout=60)
 
 
 def test_selected_payout_approval(session, database_checks):

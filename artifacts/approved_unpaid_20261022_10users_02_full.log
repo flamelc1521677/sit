@@ -1,0 +1,1377 @@
+[数据库] 登录账号存在且启用通过
+[数据库] 登录账号存在且启用通过
+[批次 1/10] tests/02_user_management/test_add_user.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900223；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================= 1 passed in 14.32s ==============================
+[批次 1/10] tests/03_identity_verification/test_identity_ocr.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=963，phone=0658900223
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750121，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0021；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 43.82s ==============================
+[批次 1/10] tests/05_loan_application/test_start_loan.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=963，phone=0658900223，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=6a34a90a888349b18c4ddc3b9df94842
+PASSED
+
+============================= 1 passed in 13.83s ==============================
+[批次 1/10] tests/07_payout_approval/test_payout_approval.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 e639c1bb3fd7448ca5580ac6c6b1440e，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 13.51s ==============================
+[批次 1/10] tests/16_approved_unpaid/test_approved_unpaid.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 963, "phone": "0658900223", "header_id": "6a34a90a888349b18c4ddc3b9df94842", "approval_id": "e639c1bb3fd7448ca5580ac6c6b1440e", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022145859fwXCQ", "payout_id": "c341c918d2cc4b1cb2b0a2a9cd630742", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 2.18s ==============================
+[批次完成 1/10] 用户 963 / 0658900223 人审通过，未放款
+[批次 2/10] tests/02_user_management/test_add_user.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900224；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================== 1 passed in 8.46s ==============================
+[批次 2/10] tests/03_identity_verification/test_identity_ocr.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=964，phone=0658900224
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750122，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0022；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 35.32s ==============================
+[批次 2/10] tests/05_loan_application/test_start_loan.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=964，phone=0658900224，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=0416977e25284fdaad1a39aea37803ef
+PASSED
+
+============================= 1 passed in 15.76s ==============================
+[批次 2/10] tests/07_payout_approval/test_payout_approval.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 0cafe25ce30d48ce8586444ae8368e6c，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 11.94s ==============================
+[批次 2/10] tests/16_approved_unpaid/test_approved_unpaid.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 964, "phone": "0658900224", "header_id": "0416977e25284fdaad1a39aea37803ef", "approval_id": "0cafe25ce30d48ce8586444ae8368e6c", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022150018dK8WA", "payout_id": "a8114ad1a5a241fbb56d4cbdb0e085b3", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 2.19s ==============================
+[批次完成 2/10] 用户 964 / 0658900224 人审通过，未放款
+[批次 3/10] tests/02_user_management/test_add_user.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900225；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================== 1 passed in 8.84s ==============================
+[批次 3/10] tests/03_identity_verification/test_identity_ocr.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=965，phone=0658900225
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750123，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0023；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 53.22s ==============================
+[批次 3/10] tests/05_loan_application/test_start_loan.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=965，phone=0658900225，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=bc14206c561a4433b63bb126ca825acc
+PASSED
+
+============================= 1 passed in 19.19s ==============================
+[批次 3/10] tests/07_payout_approval/test_payout_approval.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 9999, 'msg': '验证码有误!'}
+FAILED
+
+================================== FAILURES ===================================
+________________________ test_selected_payout_approval ________________________
+tests\07_payout_approval\test_payout_approval.py:36: in test_selected_payout_approval
+    authenticate_admin(session, username=login_name, password=reviewer_password)
+common\admin_client.py:21: in authenticate_admin
+    login(session, client_id, username=username, password=password)
+common\sso_login.py:85: in login
+    assert str(body.get("code")) == "200", f"业务登录失败：{actual}{hint}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 业务登录失败：{'code': 9999, 'msg': '验证码有误!'}；如验证码错误，请使用 manual 模式
+=========================== short test summary info ===========================
+FAILED tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+============================== 1 failed in 3.18s ==============================
+[验证码] 登录尚未完成，仅重新获取验证码；未重发业务请求
+[批次 3/10] tests/07_payout_approval/test_payout_approval.py，尝试 2
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 9b9b093096c64f39b3963d65e17062f2，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 13.24s ==============================
+[批次 3/10] tests/16_approved_unpaid/test_approved_unpaid.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 965, "phone": "0658900225", "header_id": "bc14206c561a4433b63bb126ca825acc", "approval_id": "9b9b093096c64f39b3963d65e17062f2", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C13202610221502014TQ4Q", "payout_id": "500feaf4eeb1480f9a762786b0c63315", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 2.17s ==============================
+[批次完成 3/10] 用户 965 / 0658900225 人审通过，未放款
+[批次 4/10] tests/02_user_management/test_add_user.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900226；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================== 1 passed in 9.58s ==============================
+[批次 4/10] tests/03_identity_verification/test_identity_ocr.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=966，phone=0658900226
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750124，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0024；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 36.18s ==============================
+[批次 4/10] tests/05_loan_application/test_start_loan.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=966，phone=0658900226，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=ff3245042bbc4d228e814514335a0c85
+PASSED
+
+============================= 1 passed in 18.93s ==============================
+[批次 4/10] tests/07_payout_approval/test_payout_approval.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 39777881cdb049fba40e21c36bdcda2d，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 11.30s ==============================
+[批次 4/10] tests/16_approved_unpaid/test_approved_unpaid.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 966, "phone": "0658900226", "header_id": "ff3245042bbc4d228e814514335a0c85", "approval_id": "39777881cdb049fba40e21c36bdcda2d", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022150323Z5L57", "payout_id": "64bc603ab7684e5d8f4b4bdeed548612", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 1.88s ==============================
+[批次完成 4/10] 用户 966 / 0658900226 人审通过，未放款
+[批次 5/10] tests/02_user_management/test_add_user.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900227；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================== 1 passed in 9.88s ==============================
+[批次 5/10] tests/03_identity_verification/test_identity_ocr.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=967，phone=0658900227
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750125，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0025；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 32.64s ==============================
+[批次 5/10] tests/05_loan_application/test_start_loan.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=967，phone=0658900227，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=c8c8c23ecb8d41e6a87dabfd9be2af62
+PASSED
+
+============================= 1 passed in 12.67s ==============================
+[批次 5/10] tests/07_payout_approval/test_payout_approval.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 2b953f7163a749b8a3b5dc03e47e03b8，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 11.26s ==============================
+[批次 5/10] tests/16_approved_unpaid/test_approved_unpaid.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 967, "phone": "0658900227", "header_id": "c8c8c23ecb8d41e6a87dabfd9be2af62", "approval_id": "2b953f7163a749b8a3b5dc03e47e03b8", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022150435Jc34K", "payout_id": "dac4645076ab40a39f099a5f9300af84", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 1.86s ==============================
+[批次完成 5/10] 用户 967 / 0658900227 人审通过，未放款
+[批次 6/10] tests/02_user_management/test_add_user.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900228；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================== 1 passed in 8.09s ==============================
+[批次 6/10] tests/03_identity_verification/test_identity_ocr.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=968，phone=0658900228
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750126，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0026；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 32.01s ==============================
+[批次 6/10] tests/05_loan_application/test_start_loan.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=968，phone=0658900228，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=ed6d4f528a0d46fda11b02a4025ea1dc
+PASSED
+
+============================= 1 passed in 11.90s ==============================
+[批次 6/10] tests/07_payout_approval/test_payout_approval.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 d3242529bfd54ec983a70873a01820f7，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 10.41s ==============================
+[批次 6/10] tests/16_approved_unpaid/test_approved_unpaid.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 968, "phone": "0658900228", "header_id": "ed6d4f528a0d46fda11b02a4025ea1dc", "approval_id": "d3242529bfd54ec983a70873a01820f7", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022150543420dP", "payout_id": "a36136a0f08840b5920bfcccf9b37f5c", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 1.81s ==============================
+[批次完成 6/10] 用户 968 / 0658900228 人审通过，未放款
+[批次 7/10] tests/02_user_management/test_add_user.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900229；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================== 1 passed in 7.88s ==============================
+[批次 7/10] tests/03_identity_verification/test_identity_ocr.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=969，phone=0658900229
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750127，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0027；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 31.01s ==============================
+[批次 7/10] tests/05_loan_application/test_start_loan.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 9999, 'msg': '验证码有误!'}
+FAILED
+
+================================== FAILURES ===================================
+_________________________ test_trial_then_start_loan __________________________
+tests\05_loan_application\test_start_loan.py:17: in test_trial_then_start_loan
+    authenticate_admin(session)
+common\admin_client.py:21: in authenticate_admin
+    login(session, client_id, username=username, password=password)
+common\sso_login.py:85: in login
+    assert str(body.get("code")) == "200", f"业务登录失败：{actual}{hint}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 业务登录失败：{'code': 9999, 'msg': '验证码有误!'}；如验证码错误，请使用 manual 模式
+=========================== short test summary info ===========================
+FAILED tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+============================== 1 failed in 3.26s ==============================
+[验证码] 登录尚未完成，仅重新获取验证码；未重发业务请求
+[批次 7/10] tests/05_loan_application/test_start_loan.py，尝试 2
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=969，phone=0658900229，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=cd391cb5b18a4af8b851af1f4bebf038
+PASSED
+
+============================= 1 passed in 12.51s ==============================
+[批次 7/10] tests/07_payout_approval/test_payout_approval.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 aa5ab7a3e71f4e818f5bf2be98b70a12，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 10.61s ==============================
+[批次 7/10] tests/16_approved_unpaid/test_approved_unpaid.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 969, "phone": "0658900229", "header_id": "cd391cb5b18a4af8b851af1f4bebf038", "approval_id": "aa5ab7a3e71f4e818f5bf2be98b70a12", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C13202610221506543LZ0I", "payout_id": "c19a45e77d474c41ba17fface33dfd2a", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 1.95s ==============================
+[批次完成 7/10] 用户 969 / 0658900229 人审通过，未放款
+[批次 8/10] tests/02_user_management/test_add_user.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900230；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================== 1 passed in 8.15s ==============================
+[批次 8/10] tests/03_identity_verification/test_identity_ocr.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=970，phone=0658900230
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750128，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0028；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 33.48s ==============================
+[批次 8/10] tests/05_loan_application/test_start_loan.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=970，phone=0658900230，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=9f759c90f66f4a1fb1b5dcc66d98ead9
+PASSED
+
+============================= 1 passed in 13.10s ==============================
+[批次 8/10] tests/07_payout_approval/test_payout_approval.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 15bc930925064ec5bf556954bdd698cf，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 11.19s ==============================
+[批次 8/10] tests/16_approved_unpaid/test_approved_unpaid.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 970, "phone": "0658900230", "header_id": "9f759c90f66f4a1fb1b5dcc66d98ead9", "approval_id": "15bc930925064ec5bf556954bdd698cf", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022150805aZJqi", "payout_id": "5fe550d1b34d4e6886946682ca1e2171", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 1.94s ==============================
+[批次完成 8/10] 用户 970 / 0658900230 人审通过，未放款
+[批次 9/10] tests/02_user_management/test_add_user.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900231；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================== 1 passed in 8.19s ==============================
+[批次 9/10] tests/03_identity_verification/test_identity_ocr.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=971，phone=0658900231
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750129，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0029；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 32.15s ==============================
+[批次 9/10] tests/05_loan_application/test_start_loan.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=971，phone=0658900231，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=7b79d4a3488d4d0389087f6f0b28570d
+PASSED
+
+============================= 1 passed in 12.22s ==============================
+[批次 9/10] tests/07_payout_approval/test_payout_approval.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 c41f51f7e1ca43a5a827a258ea6da5a4，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 11.38s ==============================
+[批次 9/10] tests/16_approved_unpaid/test_approved_unpaid.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 971, "phone": "0658900231", "header_id": "7b79d4a3488d4d0389087f6f0b28570d", "approval_id": "c41f51f7e1ca43a5a827a258ea6da5a4", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C13202610221509143HuO0", "payout_id": "c0bf0174a13e49a8aa8e1af20aff57b9", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 1.74s ==============================
+[批次完成 9/10] 用户 971 / 0658900231 人审通过，未放款
+[批次 10/10] tests/02_user_management/test_add_user.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900232；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================== 1 passed in 8.15s ==============================
+[批次 10/10] tests/03_identity_verification/test_identity_ocr.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/03_identity_verification/test_identity_ocr.py::test_upload_ocr_and_save_identity [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[身份 1/5] 目标用户 id=972，phone=0658900232
+[身份 2/5] 上传固定图片并验证 OCR 识别
+[身份 3/5] 证件号日期段=750130，下一日期已持久化
+[身份 4/5] 保存修改后的证件号及 OCR 个人信息
+保存响应：code=0，msg=请求成功
+[数据库] 身份证号码、OCR 姓名及图片落库通过
+[身份 5/5] 回查通过：证件号已更新，OCR 姓名保持一致
+[银行卡 1/3] 读取当前银行卡，保留其他卡记录
+[银行卡 2/3] 保存银行 37006，卡号尾号 0030；下一号码已持久化
+[数据库] 银行 ID、卡号及默认标志落库通过
+[银行卡 3/3] 保存及回查通过：code=0，msg=修改成功。
+PASSED
+
+============================= 1 passed in 31.82s ==============================
+[批次 10/10] tests/05_loan_application/test_start_loan.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=972，phone=0658900232，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=62627895bf3d4120b3ebaa43dba61703
+PASSED
+
+============================= 1 passed in 12.82s ==============================
+[批次 10/10] tests/07_payout_approval/test_payout_approval.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 210fbc7748a1427b9d8006f76621e31c，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 11.48s ==============================
+[批次 10/10] tests/16_approved_unpaid/test_approved_unpaid.py，尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 972, "phone": "0658900232", "header_id": "62627895bf3d4120b3ebaa43dba61703", "approval_id": "210fbc7748a1427b9d8006f76621e31c", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022151024guSW4", "payout_id": "43f1a67d1c014046aeb2ea4914ccba70", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 2.15s ==============================
+[批次完成 10/10] 用户 972 / 0658900232 人审通过，未放款
+[批次全部完成] [{"index": 1, "status": "approved_unpaid_db_verified", "completed_stages": ["tests/02_user_management/test_add_user.py", "tests/03_identity_verification/test_identity_ocr.py", "tests/05_loan_application/test_start_loan.py", "tests/07_payout_approval/test_payout_approval.py", "tests/16_approved_unpaid/test_approved_unpaid.py"], "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py", "logs": ["artifacts\\approved_unpaid_20261022_10users_02_user1_step1_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user1_step2_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user1_step3_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user1_step4_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user1_step5_attempt1.log"], "phone": "0658900223", "user_id": 963, "header_id": "6a34a90a888349b18c4ddc3b9df94842", "approval_id": "e639c1bb3fd7448ca5580ac6c6b1440e", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022145859fwXCQ", "payout_id": "c341c918d2cc4b1cb2b0a2a9cd630742", "payout_state": "2", "loan_amount": "6000"}, {"index": 2, "status": "approved_unpaid_db_verified", "completed_stages": ["tests/02_user_management/test_add_user.py", "tests/03_identity_verification/test_identity_ocr.py", "tests/05_loan_application/test_start_loan.py", "tests/07_payout_approval/test_payout_approval.py", "tests/16_approved_unpaid/test_approved_unpaid.py"], "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py", "logs": ["artifacts\\approved_unpaid_20261022_10users_02_user2_step1_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user2_step2_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user2_step3_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user2_step4_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user2_step5_attempt1.log"], "phone": "0658900224", "user_id": 964, "header_id": "0416977e25284fdaad1a39aea37803ef", "approval_id": "0cafe25ce30d48ce8586444ae8368e6c", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022150018dK8WA", "payout_id": "a8114ad1a5a241fbb56d4cbdb0e085b3", "payout_state": "2", "loan_amount": "6000"}, {"index": 3, "status": "approved_unpaid_db_verified", "completed_stages": ["tests/02_user_management/test_add_user.py", "tests/03_identity_verification/test_identity_ocr.py", "tests/05_loan_application/test_start_loan.py", "tests/07_payout_approval/test_payout_approval.py", "tests/16_approved_unpaid/test_approved_unpaid.py"], "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py", "logs": ["artifacts\\approved_unpaid_20261022_10users_02_user3_step1_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user3_step2_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user3_step3_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user3_step4_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user3_step4_attempt2.log", "artifacts\\approved_unpaid_20261022_10users_02_user3_step5_attempt1.log"], "phone": "0658900225", "user_id": 965, "header_id": "bc14206c561a4433b63bb126ca825acc", "approval_id": "9b9b093096c64f39b3963d65e17062f2", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C13202610221502014TQ4Q", "payout_id": "500feaf4eeb1480f9a762786b0c63315", "payout_state": "2", "loan_amount": "6000"}, {"index": 4, "status": "approved_unpaid_db_verified", "completed_stages": ["tests/02_user_management/test_add_user.py", "tests/03_identity_verification/test_identity_ocr.py", "tests/05_loan_application/test_start_loan.py", "tests/07_payout_approval/test_payout_approval.py", "tests/16_approved_unpaid/test_approved_unpaid.py"], "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py", "logs": ["artifacts\\approved_unpaid_20261022_10users_02_user4_step1_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user4_step2_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user4_step3_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user4_step4_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user4_step5_attempt1.log"], "phone": "0658900226", "user_id": 966, "header_id": "ff3245042bbc4d228e814514335a0c85", "approval_id": "39777881cdb049fba40e21c36bdcda2d", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022150323Z5L57", "payout_id": "64bc603ab7684e5d8f4b4bdeed548612", "payout_state": "2", "loan_amount": "6000"}, {"index": 5, "status": "approved_unpaid_db_verified", "completed_stages": ["tests/02_user_management/test_add_user.py", "tests/03_identity_verification/test_identity_ocr.py", "tests/05_loan_application/test_start_loan.py", "tests/07_payout_approval/test_payout_approval.py", "tests/16_approved_unpaid/test_approved_unpaid.py"], "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py", "logs": ["artifacts\\approved_unpaid_20261022_10users_02_user5_step1_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user5_step2_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user5_step3_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user5_step4_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user5_step5_attempt1.log"], "phone": "0658900227", "user_id": 967, "header_id": "c8c8c23ecb8d41e6a87dabfd9be2af62", "approval_id": "2b953f7163a749b8a3b5dc03e47e03b8", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022150435Jc34K", "payout_id": "dac4645076ab40a39f099a5f9300af84", "payout_state": "2", "loan_amount": "6000"}, {"index": 6, "status": "approved_unpaid_db_verified", "completed_stages": ["tests/02_user_management/test_add_user.py", "tests/03_identity_verification/test_identity_ocr.py", "tests/05_loan_application/test_start_loan.py", "tests/07_payout_approval/test_payout_approval.py", "tests/16_approved_unpaid/test_approved_unpaid.py"], "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py", "logs": ["artifacts\\approved_unpaid_20261022_10users_02_user6_step1_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user6_step2_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user6_step3_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user6_step4_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user6_step5_attempt1.log"], "phone": "0658900228", "user_id": 968, "header_id": "ed6d4f528a0d46fda11b02a4025ea1dc", "approval_id": "d3242529bfd54ec983a70873a01820f7", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022150543420dP", "payout_id": "a36136a0f08840b5920bfcccf9b37f5c", "payout_state": "2", "loan_amount": "6000"}, {"index": 7, "status": "approved_unpaid_db_verified", "completed_stages": ["tests/02_user_management/test_add_user.py", "tests/03_identity_verification/test_identity_ocr.py", "tests/05_loan_application/test_start_loan.py", "tests/07_payout_approval/test_payout_approval.py", "tests/16_approved_unpaid/test_approved_unpaid.py"], "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py", "logs": ["artifacts\\approved_unpaid_20261022_10users_02_user7_step1_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user7_step2_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user7_step3_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user7_step3_attempt2.log", "artifacts\\approved_unpaid_20261022_10users_02_user7_step4_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user7_step5_attempt1.log"], "phone": "0658900229", "user_id": 969, "header_id": "cd391cb5b18a4af8b851af1f4bebf038", "approval_id": "aa5ab7a3e71f4e818f5bf2be98b70a12", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C13202610221506543LZ0I", "payout_id": "c19a45e77d474c41ba17fface33dfd2a", "payout_state": "2", "loan_amount": "6000"}, {"index": 8, "status": "approved_unpaid_db_verified", "completed_stages": ["tests/02_user_management/test_add_user.py", "tests/03_identity_verification/test_identity_ocr.py", "tests/05_loan_application/test_start_loan.py", "tests/07_payout_approval/test_payout_approval.py", "tests/16_approved_unpaid/test_approved_unpaid.py"], "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py", "logs": ["artifacts\\approved_unpaid_20261022_10users_02_user8_step1_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user8_step2_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user8_step3_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user8_step4_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user8_step5_attempt1.log"], "phone": "0658900230", "user_id": 970, "header_id": "9f759c90f66f4a1fb1b5dcc66d98ead9", "approval_id": "15bc930925064ec5bf556954bdd698cf", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022150805aZJqi", "payout_id": "5fe550d1b34d4e6886946682ca1e2171", "payout_state": "2", "loan_amount": "6000"}, {"index": 9, "status": "approved_unpaid_db_verified", "completed_stages": ["tests/02_user_management/test_add_user.py", "tests/03_identity_verification/test_identity_ocr.py", "tests/05_loan_application/test_start_loan.py", "tests/07_payout_approval/test_payout_approval.py", "tests/16_approved_unpaid/test_approved_unpaid.py"], "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py", "logs": ["artifacts\\approved_unpaid_20261022_10users_02_user9_step1_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user9_step2_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user9_step3_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user9_step4_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user9_step5_attempt1.log"], "phone": "0658900231", "user_id": 971, "header_id": "7b79d4a3488d4d0389087f6f0b28570d", "approval_id": "c41f51f7e1ca43a5a827a258ea6da5a4", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C13202610221509143HuO0", "payout_id": "c0bf0174a13e49a8aa8e1af20aff57b9", "payout_state": "2", "loan_amount": "6000"}, {"index": 10, "status": "approved_unpaid_db_verified", "completed_stages": ["tests/02_user_management/test_add_user.py", "tests/03_identity_verification/test_identity_ocr.py", "tests/05_loan_application/test_start_loan.py", "tests/07_payout_approval/test_payout_approval.py", "tests/16_approved_unpaid/test_approved_unpaid.py"], "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py", "logs": ["artifacts\\approved_unpaid_20261022_10users_02_user10_step1_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user10_step2_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user10_step3_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user10_step4_attempt1.log", "artifacts\\approved_unpaid_20261022_10users_02_user10_step5_attempt1.log"], "phone": "0658900232", "user_id": 972, "header_id": "62627895bf3d4120b3ebaa43dba61703", "approval_id": "210fbc7748a1427b9d8006f76621e31c", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022151024guSW4", "payout_id": "43f1a67d1c014046aeb2ea4914ccba70", "payout_state": "2", "loan_amount": "6000"}]

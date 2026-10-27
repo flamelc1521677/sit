@@ -1,0 +1,76 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[数据库] 用户、已放款合同及成功放款单关联通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 1/5] 用户 942 / 0658900215，合同 C1320261021150342BSR8l，第 1 期
+[预提醒] 服务端业务时间 2026-10-21T01:11:59-06:00，任务参数 2 -> T-2，应还日期 2026-10-23
+[预提醒 2/5] 保存所选期次应还日期，仅发送一次
+FAILED
+
+================================== FAILURES ===================================
+______________________ test_generate_prealert_for_phone _______________________
+tests\11_prealert\test_generate_prealert.py:121: in test_generate_prealert_for_phone
+    saved_rows = database_checks.repayment_date_saved(before, period, due_date)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+common\prealert_database.py:70: in repayment_date_saved
+    return self.check("仅指定期次改期，金额/还款状态/其他期次保持一致", verify)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+common\database_checks.py:23: in check
+    result = assertion()
+             ^^^^^^^^^^^
+common\prealert_database.py:66: in verify
+    assert row[field] == value, f"改期修改了第{row['PERIOD']}期的 {field}"
+           ^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 改期修改了第1期的 MITIGATE_LATE_CHARGE
+=========================== short test summary info ===========================
+FAILED tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+============================= 1 failed in 18.52s ==============================
+[数据库] 指定手机号用户及数据库归属通过
+[数据库] 用户、已放款合同及成功放款单关联通过
+[数据库] 成功改期的只读恢复核验：原 API 账务快照及各期日期通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[恢复] 已核验应还日期 2026-10-23；不重复保存，仅执行一次预提醒任务
+[数据库] 预提醒任务执行成功日志及实际参数通过
+[数据库] 新预提醒用户/合同/期次/应还日期/账龄及金额落库通过
+[预提醒] 当前账号列表未返回目标记录；数据库结果单独核验，不宣称列表可见
+[完成] {"status": "db_verified", "phone": "0658900215", "user_id": 942, "contract_id": "C1320261021150342BSR8l", "period": 1, "days": 2, "age": "T-2", "server_business_time": "2026-10-21T01:11:59-06:00", "due_date": "2026-10-23", "original_due_date": "2026-10-28", "job_id": "ea6cf0ee829811f18e13fa163e9c0712", "original_job_params": "2", "plan_msg": "成功", "recovery_source": "pre-save API snapshot", "job_msg": "操作成功", "job_log_id": "c5d2aa31-51ca-4637-9219-79dced6dbb2f", "reminder_id": "85fefc1eea264e4ab76fc26a0836e8c9", "api_list_visible": false}
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[数据库] 用户、已放款合同及成功放款单关联通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒] 已存在本次成功记录 85fefc1eea264e4ab76fc26a0836e8c9，仅回查，不重复改期或触发任务
+[预提醒] 当前账号列表未返回目标记录；数据库结果单独核验，不宣称列表可见
+PASSED
+
+============================= 1 passed in 10.36s ==============================

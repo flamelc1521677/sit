@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 2 items
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 b8459df12ec84342ba7004fa6d83cbf3，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 956, "phone": "0658900221", "header_id": "7e4d727dab814e9597b592afabdd0143", "approval_id": "b8459df12ec84342ba7004fa6d83cbf3", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C1320261022135011j2j1g", "payout_id": "76f1d1a99e6f48459227fd73085b7ac3", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================= 2 passed in 14.93s ==============================

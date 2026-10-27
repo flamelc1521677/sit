@@ -1,0 +1,22 @@
+{
+  "4a180d3f84964edba3f4ef2f5d998f0b": {
+    "status": "db_verified",
+    "approval_id": "eb7abfa7fd544f69bf02c705f7c90a66",
+    "reviewer": "chengzi",
+    "version": 0,
+    "reconciled_readonly": true,
+    "reconciliation": "Thai detail has no expectedAmount input; contract_amount and chengzi USER PASS log verified. No approval replay."
+  },
+  "2050278c28f6460e9936f095cf5fab85": {
+    "status": "db_verified",
+    "approval_id": "3d435ebdab2049afafcc948f228ade64",
+    "reviewer": "chengzi",
+    "version": 0,
+    "old_log_ids": [
+      "e3783e8b87834295b39e5d4e37de87db"
+    ],
+    "expected_amount": "3500",
+    "reason": "AutoCodeXtesting-pass",
+    "action": "pass"
+  }
+}

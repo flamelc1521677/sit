@@ -4,8 +4,9 @@ import os
 from pathlib import Path
 
 from common.admin_client import ADMIN_URL, authenticate_admin
-from common.identity_client import checked_json, latest_user
+from common.identity_client import checked_json
 from common.loan_client import LoanAttempt, application_inputs, repeat_loan_history
+from common.loan_target import loan_target_user
 from common.phone_sequence import locked
 from common.sso_login import TIMEOUT
 from common.state_store import ROOT, write_json
@@ -15,7 +16,8 @@ def test_trial_then_start_loan(session, database_checks):
     config = json.loads(Path(os.getenv("LOAN_CONFIG_FILE", str(ROOT / "config/loan_application.json"))).read_text(encoding="utf-8"))
     authenticate_admin(session)
     with locked(ROOT / ".state" / "loan_operation.lock"):
-        user, phone, _ = latest_user(session, ROOT / ".state" / "latest_user.json")
+        user, phone, _ = loan_target_user(session)
+        database_checks.prealert_user(user, phone)
         attempts_path = ROOT / ".state" / "loan_attempts.json"
         attempts = json.loads(attempts_path.read_text(encoding="utf-8")) if attempts_path.exists() else {}
         key = user["appOwnership"] + ":" + user["uuid"]

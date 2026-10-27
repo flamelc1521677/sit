@@ -1,0 +1,14 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 1001, "phone": "0658900244", "header_id": "1ad117aaf2d74b8984685e438c323912", "approval_id": "3555529fe50944608ee65203e30aec12", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C13202610231413336uKj6", "payout_id": "48d2ddaab076441283326be00fa7b672", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================== 1 passed in 1.78s ==============================

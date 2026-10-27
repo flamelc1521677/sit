@@ -1,0 +1,39 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+FAILED
+
+================================== FAILURES ===================================
+________________________ test_selected_payout_approval ________________________
+tests\07_payout_approval\test_payout_approval.py:41: in test_selected_payout_approval
+    approval_id = resolve_approval_id(database_checks)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\07_payout_approval\test_payout_approval.py:28: in resolve_approval_id
+    return checks.check("关联借款异步生成唯一待审记录（仅查询，不重发借款）", verify_pending, timeout=60)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+common\database_checks.py:25: in check
+    result = assertion()
+             ^^^^^^^^^^^
+tests\07_payout_approval\test_payout_approval.py:26: in verify_pending
+    assert len(pending) == 1, "关联借款未生成唯一待审批记录或已审批，停止操作；不会改选其他用户"
+E   AssertionError: 关联借款未生成唯一待审批记录或已审批，停止操作；不会改选其他用户
+E   assert 0 == 1
+E    +  where 0 = len([])
+=========================== short test summary info ===========================
+FAILED tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+======================== 1 failed in 73.37s (0:01:13) =========================

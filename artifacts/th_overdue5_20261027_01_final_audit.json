@@ -1,0 +1,17 @@
+{
+  "user_id": 172556,
+  "phone": "0650100003",
+  "contract_id": "C132026102717204234AhA",
+  "period": 1,
+  "overdue_days": 5,
+  "grade": "S2+",
+  "repay_time_storage": "2026-10-22 02:00:00",
+  "overdue_date_storage": "2026-10-23 02:00:00",
+  "penalty": "1750.00",
+  "collection_id": "75fdff2bbd6c4ba4a410130557a4c569",
+  "receiver": "ob5",
+  "department_id": "11804",
+  "passed_stages": 9,
+  "list_visible": false,
+  "final_audit": "database_verified"
+}

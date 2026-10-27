@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title>发起借款</title>
+	<link rel="shortcut icon" href="logo2.png">
+	<link href="/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="/css/font-awesome.min.css" rel="stylesheet"/>
+	<!-- bootstrap-table 表格插件样式 -->
+	<link href="/ajax/libs/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+	<link href="/css/animate.css" rel="stylesheet"/>
+	<link href="/css/style.css" rel="stylesheet"/>
+	<link href="/ruoyi/css/ry-ui.css?v=4.1.2" rel="stylesheet"/>
+
+    <style>
+        .payout-card-select {
+            position: relative;
+            width: 100%;
+        }
+        .payout-card-select-trigger {
+            min-height: 34px;
+            padding: 4px 28px 4px 4px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+        }
+        .payout-card-select.is-open .payout-card-select-trigger,
+        .payout-card-select-trigger:hover {
+            border-color: #40a9ff;
+        }
+        .payout-card-select.is-open .payout-card-select-trigger {
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.15);
+        }
+        .payout-card-select-trigger:after {
+            content: '';
+            position: absolute;
+            top: 14px;
+            right: 12px;
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 5px solid rgba(0, 0, 0, 0.25);
+            pointer-events: none;
+        }
+        .payout-card-select.is-open .payout-card-select-trigger:after {
+            border-top: 0;
+            border-bottom: 5px solid rgba(0, 0, 0, 0.25);
+        }
+        .payout-card-tags {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .payout-card-tag {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 1px 8px;
+            border-radius: 2px;
+            background: #f5f5f5;
+            color: rgba(0, 0, 0, 0.85);
+            font-size: 13px;
+            line-height: 22px;
+        }
+        .payout-card-tag-text {
+            flex: 1 1 auto;
+            min-width: 0;
+            word-break: break-all;
+        }
+        .payout-card-tag-badges {
+            display: flex;
+            align-items: center;
+            flex: 0 0 auto;
+            margin-left: 8px;
+        }
+        .payout-card-tag-badges .label {
+            margin: 0 0 0 4px;
+            padding: 1px 6px;
+            font-size: 12px;
+            font-weight: normal;
+            line-height: 1.2;
+        }
+        .payout-card-tag-remove {
+            flex: 0 0 auto;
+            margin-left: 8px;
+            color: rgba(0, 0, 0, 0.45);
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .payout-card-tag-remove:hover {
+            color: #ff4d4f;
+        }
+        .payout-card-placeholder {
+            color: #bfbfbf;
+            line-height: 24px;
+            padding: 0 4px;
+        }
+        .payout-card-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            z-index: 1050;
+            max-height: 220px;
+            overflow-y: auto;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background: #fff;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+            padding: 4px 0;
+        }
+        .payout-card-select.is-open .payout-card-dropdown {
+            display: block;
+        }
+        .payout-card-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 34px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        .payout-card-option:hover {
+            background: #e6f7ff;
+        }
+        .payout-card-option-main {
+            display: flex;
+            align-items: center;
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .payout-card-option-name {
+            margin-right: 8px;
+            color: rgba(0, 0, 0, 0.85);
+            white-space: nowrap;
+        }
+        .payout-card-option-no {
+            color: rgba(0, 0, 0, 0.85);
+            font-weight: 600;
+            word-break: break-all;
+        }
+        .payout-card-option-meta {
+            display: flex;
+            align-items: center;
+            flex: 0 0 auto;
+            margin-left: 12px;
+        }
+        .payout-card-option-meta .label {
+            margin: 0 8px 0 0;
+            padding: 2px 7px;
+            font-size: 12px;
+            font-weight: normal;
+            line-height: 1.2;
+        }
+        .payout-card-option-check {
+            width: 14px;
+            color: #1890ff;
+            font-size: 14px;
+            line-height: 1;
+            text-align: center;
+        }
+        .payout-card-option:not(.is-selected) .payout-card-option-check {
+            visibility: hidden;
+        }
+        .repayment-plan-amount {
+            min-width: 100px;
+            text-align: right;
+        }
+        .repayment-difference-block {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            text-align: right;
+        }
+        .repayment-difference-item {
+            margin-left: 20px;
+            white-space: nowrap;
+        }
+        /* 项目主题的 text-success 为蓝色，此处按差额校验规则固定使用绿色。 */
+        .repayment-difference-item.text-success {
+            color: #1ab394;
+        }
+    </style>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    
+    <div class="alert alert-warning">填写借款要素后点击「试算」查看还款计划，确认后创建虚拟订单并走风控初筛。</div>
+    <form class="form-horizontal m" id="form-offline-start-loan" autocomplete="off">
+        <input name="uuid" type="hidden" value="a76a51b2056242cca7d64c491aff3c8f">
+        <input name="headerId" type="hidden" id="headerId">
+        <input name="version" type="hidden" id="entryVersion">
+        <input name="appOwnership" type="hidden" value="ConbusloPre">
+        <input name="merchantId" type="hidden" value="11801">
+        <input name="channelType" type="hidden" value="2">
+        <input name="productMode" type="hidden" value="2">
+        <input name="chargingMethod" type="hidden" value="1">
+        <input name="loanDate" type="hidden" id="loanDate">
+        <input name="repaymentPlan" type="hidden" id="repaymentPlanJson">
+        <input name="totalServiceFee" type="hidden" id="totalServiceFee">
+        <input name="creditServiceFee" type="hidden" id="creditServiceFee">
+        <input name="paymentChannelFee" type="hidden" id="paymentChannelFee">
+        <input name="calculatedServiceFee" type="hidden" id="calculatedServiceFee">
+        <input name="taxes" type="hidden" id="taxes">
+        <input name="inHandAmount" type="hidden" id="inHandAmount">
+        <input name="payoutBankCardIds" type="hidden" id="payoutBankCardIds">
+        <input name="skipUserConfirm" type="hidden" id="skipUserConfirm" value="false">
+        <input type="hidden" id="needFaceLiveCheck" value="true">
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">产品:</label>
+            <div class="col-sm-8">
+                <select id="productId" name="productId" class="form-control" required>
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">产品期数:</label>
+            <div class="col-sm-8">
+                <input name="installmentCount" class="form-control" type="number" min="1" placeholder="例如 6 / 9 / 12" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">每期天数:</label>
+            <div class="col-sm-8">
+                <input name="periodDays" class="form-control" type="number" min="1" max="31" placeholder="请输入正整数" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">借款金额:</label>
+            <div class="col-sm-8">
+                <input name="loanAmount" class="form-control" type="number" min="1" placeholder="请输入正整数" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">总利息（金额）:</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input name="totalInterest" class="form-control" type="number" min="0" step="0.01" required>
+                    <span class="input-group-addon">$</span>
+                </div>
+                <span class="help-block m-b-none text-danger" id="totalInterestZeroHint" style="display:none;">不允许小于0</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">服务费:</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input name="serviceFee" class="form-control" type="number" min="0" step="0.01" required>
+                    <span class="input-group-addon">%</span>
+                </div>
+                <span class="help-block m-b-none" id="serviceFeeApprox"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">展期费率:</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input name="extensionRate" class="form-control" type="number" min="0.01" step="0.01" required>
+                    <span class="input-group-addon">%</span>
+                    <span class="input-group-addon">天</span>
+                </div>
+                <span class="help-block m-b-none" id="extensionRateApprox"></span>
+                <span class="help-block m-b-none text-danger" id="extensionRateZeroHint" style="display:none;">不允许为零</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">罚息率:</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input name="penaltyRate" class="form-control" type="number" min="0.01" step="0.01" value="10" required>
+                    <span class="input-group-addon">%</span>
+                </div>
+                <span class="help-block m-b-none text-danger" id="penaltyRateZeroHint" style="display:none;">不允许为零</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">借款银行卡:</label>
+            <div class="col-sm-8">
+                <div id="payout-card-select" class="payout-card-select">
+                    <div class="payout-card-select-trigger" id="payout-card-select-trigger">
+                        <div class="payout-card-tags" id="payout-card-tags"></div>
+                        <div class="payout-card-placeholder" id="payout-card-placeholder">请选择</div>
+                    </div>
+                    <div class="payout-card-dropdown" id="payout-card-dropdown">
+                        <div class="payout-card-option  is-selected" data-id="580" data-verity-status="1" data-bank-name="BANCOMEXT" data-card-no="****0037" data-default-card="true" data-verified="false" data-verity-text="未验证">
+                            <div class="payout-card-option-main">
+                                <span class="payout-card-option-name">BANCOMEXT</span>
+                                <span class="payout-card-option-no">****0037</span>
+                            </div>
+                            <div class="payout-card-option-meta">
+                                <span class="label label-primary">默认</span>
+                                <span class="label  label-warning">未验证</span>
+                                <i class="fa fa-check payout-card-option-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="form-group" id="pendingMaterialRow" style="display:none;">
+            <label class="col-sm-3 control-label">待完善资料:</label>
+            <div class="col-sm-8">
+                <span class="label label-warning" id="pendingBankCardTag" style="display:none;">确认银行卡</span>
+                <span class="label label-danger" id="pendingFaceLiveTag" style="display:none;">验证活体</span>
+            </div>
+        </div>
+        <div class="form-group" id="materialCompletionRow" style="display:none;">
+            <label class="col-sm-3 control-label is-required">完善方式:</label>
+            <div class="col-sm-8">
+                <label class="radio-inline" id="materialCompletionCustomerOption">
+                    <input type="radio" name="materialCompletionMode" id="materialCompletionCustomer" value="false">
+                    <span>客户自行处理（H5）</span>
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="materialCompletionMode" id="materialCompletionManual" value="true">
+                    <span>暂不完善（需要人工审核）</span>
+                </label>
+                <span class="help-block m-b-none text-danger" id="materialCompletionRequiredHint" style="display:none;">请选择完善方式。</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-8">
+                <button type="button" class="btn btn-primary" id="btn-trial" onclick="doTrial()">
+                    <i class="fa fa-calculator"></i> <span>试算</span>
+                </button>
+            </div>
+        </div>
+
+
+        <div id="trial-result" style="display:none;">
+            <hr/>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">税费:</label>
+                <div class="col-sm-8">
+                    <input id="result-tax" class="form-control" type="text" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">到手金额:</label>
+                <div class="col-sm-8">
+                    <input id="result-netAmount" class="form-control" type="text" readonly>
+                </div>
+            </div>
+            <div class="form-group" id="payout-plan-block" style="display:none;">
+                <label class="col-sm-3 control-label">放款计划:</label>
+                <div class="col-sm-8">
+                    <p class="help-block m-b-xs" id="payout-plan-summary"></p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                            <tr>
+                                <th>批次</th>
+                                <th>收款卡号</th>
+                                <th>开户行</th>
+                                <th>放款金额</th>
+                            </tr>
+                            </thead>
+                            <tbody id="payout-plan-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">还款计划:</label>
+                <div class="col-sm-8">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                            <tr>
+                                <th>期次</th>
+                                <th>到期日</th>
+                                <th>本金</th>
+                                <th>利息</th>
+                                <th>本期合计</th>
+                            </tr>
+                            </thead>
+                            <tbody id="repayment-body"></tbody>
+                        </table>
+                    </div>
+                    <div class="repayment-difference-block">
+                        <span id="principal-difference-item" class="repayment-difference-item text-success">
+                            <span>本金合计</span>
+                            <span id="principal-plan-total">0.00</span> / <span id="principal-input-total">0.00</span>
+                            （<span>差额</span> <span id="principal-difference-value">0.00</span>）
+                        </span>
+                        <span id="interest-difference-item" class="repayment-difference-item text-success">
+                            <span>利息合计</span>
+                            <span id="interest-plan-total">0.00</span> / <span id="interest-input-total">0.00</span>
+                            （<span>差额</span> <span id="interest-difference-value">0.00</span>）
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<span id="msg-trial-first" style="display:none">请先点击「试算」</span>
+
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<!--jQuery国际化插件-->
+	<script src="/js/jquery.i18n.properties.min.js"></script>
+	<script>
+		//获取应用路径
+		var ROOT = "";
+
+		//获取默认语言
+		var LANG_COUNTRY = "zh_CN";
+		var lang = "zh";
+		// 表单日期组件语言：laydate 仅内置 cn/en，扩展 es/th；datetimepicker 默认识别 zh-cn/en/es/th
+		var LAYDATE_LANG = (LANG_COUNTRY === 'zh_CN' || lang === 'zh') ? 'cn'
+				: (LANG_COUNTRY === 'es_MX' || lang === 'es') ? 'es'
+				: (LANG_COUNTRY === 'th_TH' || lang === 'th') ? 'th'
+				: 'en';
+		var DATETIMEPICKER_LANG = (LANG_COUNTRY === 'zh_CN' || lang === 'zh') ? 'zh-cn'
+				: (LANG_COUNTRY === 'es_MX' || lang === 'es') ? 'es'
+				: (LANG_COUNTRY === 'th_TH' || lang === 'th') ? 'th'
+				: 'en';
+		//当前国家主力聊天工具名（泰国=Line 墨西哥=WhatsApp），页面展示用
+		var IM_NAME = "WhatsApp";
+		//全站日期时间控件（含查询条件/编辑表单）的“今天/现在”按商户国家当前时间取，而非客户端电脑时区。
+		//下发商户国家当前墙钟串，算出与本机时间的毫秒差，供已打补丁的 laydate 读取（默认 0=不改，无上下文时≈0）。
+		try {
+			var __cn = "2026-10-26 04:08:47";
+			var __m = (__cn || '').match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);
+			if (__m) {
+				window.__laydateNowOffsetMs__ = new Date(+__m[1], +__m[2] - 1, +__m[3], +__m[4], +__m[5], +__m[6]).getTime() - Date.now();
+			}
+		} catch (e) {}
+        var isCatchData = [{"searchValue":null,"createBy":"admin","createTime":"2024-01-01 19:34:14","createTimeStr":"2024-01-01 13:34:14","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":23543,"dictSort":1,"dictLabel":"\u56FD\u9645\u5316\u6587\u4EF6\u662F\u5426\u5F00\u542F\u7F13\u5B58","dictLabelTh":"t\u1EC7p qu\u1ED1c t\u1EBF h\u00F3a c\u00F3 b\u1EADt b\u1ED9 nh\u1EDB \u0111\u1EC7m hay ch\u01B0a","dictLabelEs":"Si se habilita cach\u00E9 para archivos de internacionalizaci\u00F3n","dictLabelVi":"C\u00F3 b\u1EADt b\u1ED9 nh\u1EDB \u0111\u1EC7m t\u1EC7p qu\u1ED1c t\u1EBF h\u00F3a hay kh\u00F4ng","dictValue":"true","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"sys_is_catch_static","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u56FD\u9645\u5316\u6587\u4EF6\u662F\u5426\u5F00\u542F\u7F13\u5B58","default":true}];
+        var isCatchFlag = true;
+        if (isCatchData[0].dictValue == 'false'){
+            isCatchFlag = false;
+        }
+		//初始化i18n插件
+		$.i18n.properties({
+			path: ROOT + '/i18n/',//这里表示访问路径
+			name: 'messages',//文件名开头
+			language: LANG_COUNTRY,//文件名语言 例如th_TH
+			mode: 'map',//默认值
+            cache: isCatchFlag //是否开启浏览器缓存
+		});
+
+		//初始化i18n函数
+		function i18n(msgKey) {
+			try {
+				var msg = $.i18n.prop(msgKey);
+				//员工 Line 文案里的聊天工具名按当前国家展示（与后端 CountryAwareMessageSource 同一白名单）
+				if (IM_NAME && IM_NAME !== 'Line' && typeof msgKey === 'string' && typeof msg === 'string'
+						&& (msgKey.indexOf('offadmin.profile.line') === 0
+							|| msgKey.indexOf('offadmin.user.employeeLine') === 0
+							|| msgKey.indexOf('offadmin.msg.offlineAddEmployeeLine') === 0)) {
+					msg = msg.replace(/\bLine\b/g, IM_NAME);
+				}
+				return msg;
+			} catch (e) {
+				console.error(e);
+				return msgKey;
+			}
+		}
+	</script>
+	<!-- bootstrap-table 表格插件 -->
+	<script src="/ajax/libs/bootstrap-table/bootstrap-table.min.js?v=20200727"></script>
+	<script src="/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+	<script>
+		// 按后台当前语言覆盖表格组件内置提示，仅影响分页、工具栏和空数据等展示文案。
+		(function () {
+			function formatMessage(messageKey, values) {
+				var message = i18n(messageKey);
+				$.each(values || [], function (index, value) {
+					message = message.replace(new RegExp('\\{' + index + '\\}', 'g'), value);
+				});
+				return message;
+			}
+
+			$.extend($.fn.bootstrapTable.defaults, {
+				formatLoadingMessage: function () {
+					return i18n('ui.bootstrapTable.loading');
+				},
+				formatRecordsPerPage: function (pageNumber) {
+					return formatMessage('ui.bootstrapTable.recordsPerPage', [pageNumber]);
+				},
+				formatShowingRows: function (pageFrom, pageTo, totalRows, totalNotFiltered) {
+					if (totalNotFiltered !== undefined && totalNotFiltered > totalRows) {
+						return formatMessage('ui.bootstrapTable.showingFilteredRows',
+								[pageFrom, pageTo, totalRows, totalNotFiltered]);
+					}
+					return formatMessage('ui.bootstrapTable.showingRows', [pageFrom, pageTo, totalRows]);
+				},
+				formatSRPaginationPreText: function () {
+					return i18n('ui.bootstrapTable.previousPage');
+				},
+				formatSRPaginationPageText: function (page) {
+					return formatMessage('ui.bootstrapTable.page', [page]);
+				},
+				formatSRPaginationNextText: function () {
+					return i18n('ui.bootstrapTable.nextPage');
+				},
+				formatDetailPagination: function (totalRows) {
+					return formatMessage('ui.bootstrapTable.detailPagination', [totalRows]);
+				},
+				formatClearSearch: function () {
+					return i18n('ui.bootstrapTable.clearSearch');
+				},
+				formatSearch: function () {
+					return i18n('ui.bootstrapTable.search');
+				},
+				formatNoMatches: function () {
+					return i18n('ui.bootstrapTable.noMatches');
+				},
+				formatPaginationSwitch: function () {
+					return i18n('ui.bootstrapTable.paginationSwitch');
+				},
+				formatPaginationSwitchDown: function () {
+					return i18n('ui.bootstrapTable.paginationShow');
+				},
+				formatPaginationSwitchUp: function () {
+					return i18n('ui.bootstrapTable.paginationHide');
+				},
+				formatRefresh: function () {
+					return i18n('ui.bootstrapTable.refresh');
+				},
+				formatToggle: function () {
+					return i18n('ui.bootstrapTable.toggle');
+				},
+				formatToggleOn: function () {
+					return i18n('ui.bootstrapTable.cardViewShow');
+				},
+				formatToggleOff: function () {
+					return i18n('ui.bootstrapTable.cardViewHide');
+				},
+				formatColumns: function () {
+					return i18n('ui.bootstrapTable.columns');
+				},
+				formatColumnsToggleAll: function () {
+					return i18n('ui.bootstrapTable.toggleAll');
+				},
+				formatFullscreen: function () {
+					return i18n('ui.bootstrapTable.fullscreen');
+				},
+				formatAllRows: function () {
+					return i18n('ui.bootstrapTable.allRows');
+				},
+				formatAutoRefresh: function () {
+					return i18n('ui.bootstrapTable.autoRefresh');
+				},
+				formatExport: function () {
+					return i18n('ui.bootstrapTable.export');
+				},
+				formatJumpTo: function () {
+					return i18n('ui.bootstrapTable.jumpTo');
+				},
+				formatAdvancedSearch: function () {
+					return i18n('ui.bootstrapTable.advancedSearch');
+				},
+				formatAdvancedCloseButton: function () {
+					return i18n('ui.bootstrapTable.close');
+				},
+				formatFilterControlSwitch: function () {
+					return i18n('ui.bootstrapTable.filterSwitch');
+				},
+				formatFilterControlSwitchHide: function () {
+					return i18n('ui.bootstrapTable.filterHide');
+				},
+				formatFilterControlSwitchShow: function () {
+					return i18n('ui.bootstrapTable.filterShow');
+				}
+			});
+		})();
+	</script>
+	<script src="/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/columns/bootstrap-table-fixed-columns.min.js?v=20200727"></script>
+	<!-- jquery-validate 表单验证插件 -->
+	<script src="/ajax/libs/validate/jquery.validate.min.js"></script>
+	<script src="/ajax/libs/validate/messages_zh.min.js"></script>
+	<script src="/ajax/libs/validate/jquery.validate.extend.js"></script>
+	<script>
+		// 校验插件默认加载中文包，这里按当前后台语言覆盖为对应国际化文案。
+		$.extend($.validator.messages, {
+			required: i18n("validation.required"),
+			remote: i18n("validation.remote"),
+			email: i18n("validation.email"),
+			url: i18n("validation.url"),
+			date: i18n("validation.date"),
+			dateISO: i18n("validation.dateISO"),
+			number: i18n("validation.number"),
+			digits: i18n("validation.digits"),
+			equalTo: i18n("validation.equalTo"),
+			maxlength: $.validator.format(i18n("validation.maxlength")),
+			minlength: $.validator.format(i18n("validation.minlength")),
+			rangelength: $.validator.format(i18n("validation.rangelength")),
+			range: $.validator.format(i18n("validation.range")),
+			max: $.validator.format(i18n("validation.max")),
+			min: $.validator.format(i18n("validation.min")),
+			step: $.validator.format(i18n("validation.step"))
+		});
+	</script>
+	<!-- jquery-validate 表单树插件 -->
+	<script src="/ajax/libs/bootstrap-treetable/bootstrap-treetable.js"></script>
+	<!-- jquery-export 表格导出插件 -->
+	<script src="/ajax/libs/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/export/tableExport.js"></script>
+	<!-- 遮罩层 -->
+	<script src="/ajax/libs/blockUI/jquery.blockUI.js"></script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"></script>
+	<script src="/ajax/libs/layer/layer.min.js"></script>
+	<script src="/ajax/libs/layui/layui.js"></script>
+	<script>
+		// 全站 laydate 面板默认语言跟随后台会话（含直接 render、未传 lang 的页面）
+		(function () {
+			if (!window.layui || typeof LAYDATE_LANG === 'undefined') {
+				return;
+			}
+			layui.use('laydate', function () {
+				layui.laydate.set({ lang: LAYDATE_LANG });
+			});
+		})();
+	</script>
+	<script src="/ruoyi/js/common.js?v=4.1.1"></script>
+	<script src="/ruoyi/js/ry-ui.js?v=4.1.3"></script>
+	<script> var ctx = "\/"; </script>
+	<script src="/ruoyi/js/saas-customer-profile.js?v=20250918"></script>
+
+<script type="text/javascript">
+    var prefix = ctx + "user/user";
+    var trialDone = false;
+    var currentRepaymentPlan = [];
+    var startLoanSubmitting = false;
+    var repaymentAmountConsistent = false;
+    var maxPeriodDays = 31;
+    // 货币单位来自当前数据源对应的 CountryContext，与页面语言解耦。
+    var currencyUnit = "$";
+    var editContextJson = null;
+    var editContext = editContextJson ? JSON.parse(editContextJson) : null;
+
+    function i18nFormat(msgKey) {
+        var message = i18n(msgKey);
+        for (var i = 1; i < arguments.length; i++) {
+            message = message.replace(new RegExp("\\{" + (i - 1) + "\\}", "g"), arguments[i]);
+        }
+        return message;
+    }
+
+    function escapeRegExp(value) {
+        return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    $(function () {
+        // 放款日 = 商户国家当地的"今天"，交由后端按商户时区计算（defaultLoanDate → getCurrentDateByCountryZone）。
+        // 不能用 new Date().toISOString()（UTC 日期）：墨西哥(UTC-6)当地 18 点后 UTC 已跨到次日，会把放款日/还款日整体多算一天。
+        // 留空提交，后端在 loanDate 为空时按 CountryContext 时区取当天，避免依赖不可信的浏览器时区。
+        $('#loanDate').val('');
+        loadOfflineProducts();
+        renderApproxAmount();
+        renderZeroHints();
+        bindPayoutBankCardEvents();
+        syncPayoutBankCardSelection();
+        $("input[name='loanAmount'], input[name='periodDays'], input[name='totalInterest'], input[name='serviceFee'], input[name='extensionRate'], input[name='penaltyRate']").on('input', function () {
+            renderApproxAmount();
+            renderZeroHints();
+            renderRepaymentAmountDifference();
+            trialDone = false;
+        });
+        $("#form-offline-start-loan input, #form-offline-start-loan select").on('change', function () {
+            if (this.id !== 'repaymentPlanJson' && !$(this).hasClass('repayment-plan-field')) {
+                trialDone = false;
+            }
+        });
+    });
+
+    function bindPayoutBankCardEvents() {
+        var $select = $('#payout-card-select');
+        if (!$select.length) {
+            return;
+        }
+        $('#payout-card-select-trigger').on('click', function (event) {
+            if ($(event.target).closest('.payout-card-tag-remove').length) {
+                return;
+            }
+            $select.toggleClass('is-open');
+        });
+        $('#payout-card-dropdown').on('click', '.payout-card-option', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).toggleClass('is-selected');
+            syncPayoutBankCardSelection();
+            trialDone = false;
+        });
+        $('#payout-card-tags').on('click', '.payout-card-tag-remove', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var cardId = String($(this).attr('data-id') || '');
+            $('#payout-card-dropdown .payout-card-option').filter(function () {
+                return String($(this).attr('data-id')) === cardId;
+            }).removeClass('is-selected');
+            syncPayoutBankCardSelection();
+            trialDone = false;
+        });
+        $(document).on('click.payoutCardSelect', function (event) {
+            if (!$(event.target).closest('#payout-card-select').length) {
+                $select.removeClass('is-open');
+            }
+        });
+        $('input[name="materialCompletionMode"]').on('change', function () {
+            $('#skipUserConfirm').val($('#materialCompletionManual').prop('checked') ? 'true' : 'false');
+            $('#materialCompletionRequiredHint').hide();
+            trialDone = false;
+        });
+    }
+
+    function renderSelectedPayoutBankCards() {
+        var $tags = $('#payout-card-tags');
+        var $placeholder = $('#payout-card-placeholder');
+        if (!$tags.length) {
+            return;
+        }
+        $tags.empty();
+        var hasSelected = false;
+        $('#payout-card-dropdown .payout-card-option.is-selected').each(function () {
+            hasSelected = true;
+            var bankName = $(this).attr('data-bank-name') || '';
+            var cardNo = $(this).attr('data-card-no') || '';
+            var cardId = $(this).attr('data-id') || '';
+            var isDefault = $(this).attr('data-default-card') === 'true';
+            var verified = $(this).attr('data-verified') === 'true';
+            var verityText = $(this).attr('data-verity-text') || '';
+            var badges = '<span class="payout-card-tag-badges">';
+            if (isDefault) {
+                badges += '<span class="label label-primary">' + escapeHtml(i18n('offadmin.user.defaultBankCardShort')) + '</span>';
+            }
+            if (verityText) {
+                badges += '<span class="label ' + (verified ? 'label-success' : 'label-warning') + '">'
+                    + escapeHtml(verityText) + '</span>';
+            }
+            badges += '</span>';
+            $tags.append('<div class="payout-card-tag">'
+                + '<span class="payout-card-tag-text">' + escapeHtml(bankName + ' · ' + cardNo) + '</span>'
+                + badges
+                + '<span class="payout-card-tag-remove" data-id="' + escapeHtml(cardId) + '">&times;</span>'
+                + '</div>');
+        });
+        $placeholder.toggle(!hasSelected);
+    }
+
+    function syncPayoutBankCardSelection() {
+        var selectedIds = [];
+        var hasUnverified = false;
+        $('#payout-card-dropdown .payout-card-option.is-selected').each(function () {
+            selectedIds.push(String($(this).attr('data-id') || ''));
+            if ($(this).attr('data-verity-status') !== '0') {
+                hasUnverified = true;
+            }
+        });
+        renderSelectedPayoutBankCards();
+        var needFaceLiveCheck = $('#needFaceLiveCheck').val() === 'true';
+        var hasPendingMaterials = hasUnverified || needFaceLiveCheck;
+        $('#payoutBankCardIds').val(selectedIds.join(','));
+        $('#pendingBankCardTag').toggle(hasUnverified);
+        $('#pendingFaceLiveTag').toggle(needFaceLiveCheck);
+        $('#pendingMaterialRow').toggle(hasPendingMaterials);
+        $('#materialCompletionRow').toggle(hasPendingMaterials);
+        $('#materialCompletionCustomerOption').toggle(hasUnverified);
+        if (!hasUnverified) {
+            // 仅待验证活体时，不允许选择需要银行卡验证流程支持的 H5 自助完善方式。
+            $('#materialCompletionCustomer').prop('checked', false);
+        }
+        if (!hasPendingMaterials) {
+            $('#materialCompletionCustomer').prop('checked', false);
+            $('#materialCompletionManual').prop('checked', false);
+            $('#materialCompletionRequiredHint').hide();
+            $('#skipUserConfirm').val('false');
+        } else {
+            $('#skipUserConfirm').val($('input[name="materialCompletionMode"]:checked').length
+                ? ($('#materialCompletionManual').prop('checked') ? 'true' : 'false')
+                : '');
+        }
+        return selectedIds;
+    }
+
+    function validatePayoutBankCards() {
+        var selectedIds = syncPayoutBankCardSelection();
+        if (selectedIds.length === 0) {
+            $.modal.alertWarning(i18n("offadmin.msg.payoutBankCardRequired"));
+            return false;
+        }
+        if ($('#materialCompletionRow').is(':visible') && !$('input[name="materialCompletionMode"]:checked').length) {
+            $('#materialCompletionRequiredHint').show();
+            return false;
+        }
+        $('#materialCompletionRequiredHint').hide();
+        return true;
+    }
+
+    function loadOfflineProducts() {
+        if (editContext && editContext.header) {
+            // 编辑产品由已校验归属的编辑上下文提供，保留历史跨商户产品的回显及选择。
+            renderOfflineProductOptions(editContext.products || []);
+        } else {
+            $.get(prefix + "/offline/startLoan/products", function (result) {
+                if (result.code !== web_status.SUCCESS) {
+                    $.modal.alertWarning(result.msg);
+                    return;
+                }
+                renderOfflineProductOptions(result.data || []);
+            });
+        }
+        $('#productId').on('change', function () {
+            var selected = $(this).find('option:selected');
+            if (selected.attr('data-period')) {
+                $("input[name='installmentCount']").val(selected.attr('data-period'));
+            }
+            if (selected.attr('data-period-days')) {
+                $("input[name='periodDays']").val(selected.attr('data-period-days'));
+            }
+        });
+    }
+
+    /** 加载产品选项后再回填历史借款要素，避免产品默认值覆盖已录入数据。 */
+    function renderOfflineProductOptions(products) {
+        var productSelect = $('#productId');
+        $.each(products, function (i, product) {
+            var option = $('<option></option>')
+                .val(product.productId)
+                .text(product.displayName || product.productId)
+                .attr('data-period', product.period || '')
+                .attr('data-period-days', product.periodDays || '');
+            productSelect.append(option);
+        });
+        applyEditContext();
+    }
+
+    function applyEditContext() {
+        if (!editContext || !editContext.header) {
+            return;
+        }
+        var header = editContext.header;
+        $('#headerId').val(header.id || '');
+        $('#entryVersion').val(header.version == null ? '' : header.version);
+        $('#productId').val(header.sourceProductId || '');
+        $("input[name='installmentCount']").val(header.totalPeriod || '');
+        $("input[name='periodDays']").val(header.periodDays || '');
+        $("input[name='loanAmount']").val(header.contractAmount == null ? '' : header.contractAmount);
+        $("input[name='totalInterest']").val(header.totalInterest == null ? '' : header.totalInterest);
+        $("input[name='serviceFee']").val(rateToPercent(header.serviceRate));
+        $("input[name='extensionRate']").val(rateToPercent(header.extensionRate));
+        $("input[name='penaltyRate']").val(rateToPercent(header.penaltyRate));
+        $("input[name='chargingMethod']").val(header.chargingMethod || '1');
+
+        var selected = {};
+        $.each(editContext.payoutCards || [], function (i, card) {
+            selected[String(card.bankCardId || '')] = true;
+        });
+        $('#payout-card-dropdown .payout-card-option').each(function () {
+            $(this).toggleClass('is-selected', !!selected[String($(this).attr('data-id') || '')]);
+        });
+        syncPayoutBankCardSelection();
+        if ($('#materialCompletionRow').is(':visible')) {
+            $(header.skipUserConfirm ? '#materialCompletionManual' : '#materialCompletionCustomer').prop('checked', true);
+            $('#skipUserConfirm').val(header.skipUserConfirm ? 'true' : 'false');
+        }
+
+        renderApproxAmount();
+        renderZeroHints();
+    }
+
+    function rateToPercent(value) {
+        if (value == null || value === '') return '';
+        var text = (Number(value) * 100).toFixed(2).replace(/\.?0+$/, '');
+        return text || '0';
+    }
+
+    function renderApproxAmount() {
+        var loanAmount = parseFloat($("input[name='loanAmount']").val()) || 0;
+        var serviceFee = parseFloat($("input[name='serviceFee']").val()) || 0;
+        var extensionRate = parseFloat($("input[name='extensionRate']").val()) || 0;
+        $('#serviceFeeApprox').text(i18nFormat('offadmin.user.serviceFeeApproxFormat', formatMoney(loanAmount * serviceFee / 100), currencyUnit));
+        $('#extensionRateApprox').text(i18nFormat('offadmin.user.extensionRateApproxFormat', formatMoney(loanAmount * extensionRate / 100), currencyUnit));
+    }
+
+    function renderZeroHints() {
+        var totalInterest = parseFloat($("input[name='totalInterest']").val());
+        var extensionRate = parseFloat($("input[name='extensionRate']").val());
+        var penaltyRate = parseFloat($("input[name='penaltyRate']").val());
+        $('#totalInterestZeroHint').toggle(!isNaN(totalInterest) && totalInterest < 0);
+        $('#extensionRateZeroHint').toggle(!isNaN(extensionRate) && extensionRate <= 0);
+        $('#penaltyRateZeroHint').toggle(!isNaN(penaltyRate) && penaltyRate <= 0);
+    }
+
+    function doTrial() {
+        if (!$.validate.form()) {
+            return;
+        }
+        if (!validatePeriodDays(false)) {
+            return;
+        }
+        if (!validatePayoutBankCards()) {
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: prefix + "/offline/startLoan/trial",
+            data: $('#form-offline-start-loan').serialize(),
+            dataType: "json",
+            beforeSend: function () { $.modal.loading("..."); },
+            success: function (result) {
+                $.modal.closeLoading();
+                if (result.code === web_status.SUCCESS) {
+                    trialDone = true;
+                    renderTrialResult(result.data);
+                } else {
+                    $.modal.alertWarning(result.msg);
+                }
+            },
+            error: function () {
+                $.modal.closeLoading();
+                $.modal.alertError(i18n("offadmin.msg.requestFailed"));
+            }
+        });
+    }
+
+    function renderTrialResult(data) {
+        data = data || {};
+        $('#taxes').val(formatMoney(data.taxes || 0));
+        $('#inHandAmount').val(formatMoney(data.inHandAmount || 0));
+        $('#totalServiceFee').val(formatMoney(data.totalServiceFee || 0));
+        $('#creditServiceFee').val(formatMoney(data.creditServiceFee || 0));
+        $('#paymentChannelFee').val(formatMoney(data.paymentChannelFee || 0));
+        $('#calculatedServiceFee').val(formatMoney(data.serviceFee || 0));
+        $('#result-tax').val($('#taxes').val());
+        $('#result-netAmount').val($('#inHandAmount').val());
+        renderPayoutPlan(data.payoutPlanSummary, data.payoutPlan || []);
+        var tbody = $('#repayment-body');
+        tbody.empty();
+        currentRepaymentPlan = [];
+        if (data.repaymentPlan) {
+            $.each(data.repaymentPlan, function (i, row) {
+                var planRow = {
+                    periodNo: row.period || row.periodNo,
+                    repayDate: row.repayDate || row.dueDate,
+                    repayTotalAmount: row.repayTotalAmount || row.periodTotal,
+                    repayPrincipal: row.repayPrincipal || row.periodPrincipal || 0,
+                    repayInterest: row.repayInterest || row.periodInterest || 0,
+                    repayCreditServiceFee: row.repayCreditServiceFee || 0,
+                    repayPaymentChannelFee: row.repayPaymentChannelFee || 0,
+                    repayServiceFee: row.repayServiceFee || row.periodServiceFee || 0,
+                    repayPenaltyInterest: row.repayPenaltyInterest || 0,
+                    repayTaxes: row.repayTaxes || 0
+                };
+                currentRepaymentPlan.push(planRow);
+                tbody.append('<tr><td>' + escapeHtml(planRow.periodNo) + '</td>'
+                    + '<td><input class="form-control input-sm plan-date repayment-plan-field" type="text" autocomplete="off" value="' + escapeHtml(planRow.repayDate) + '"></td>'
+                    + '<td><input class="form-control input-sm repayment-plan-amount plan-principal repayment-plan-field" type="number" min="0" step="0.01" value="' + escapeHtml(formatMoney(planRow.repayPrincipal)) + '" required></td>'
+                    + '<td><input class="form-control input-sm repayment-plan-amount plan-interest repayment-plan-field" type="number" min="0" step="0.01" value="' + escapeHtml(formatMoney(planRow.repayInterest)) + '" required></td>'
+                    + '<td class="text-right plan-total">' + formatMoney(planRow.repayTotalAmount) + '</td></tr>');
+            });
+        }
+        if (currentRepaymentPlan.length === 0) {
+            tbody.append('<tr><td colspan="5" class="text-center">' + i18n("offadmin.user.noRepaymentPlan") + '</td></tr>');
+        }
+        bindRepaymentPlanDatePickers();
+        bindRepaymentPlanEvents();
+        syncRepaymentPlanJson();
+        $('#trial-result').show();
+    }
+
+    /** 还款计划日期使用 laydate，跟随后台语言，避免原生 type=date 跟随操作系统中文。 */
+    function bindRepaymentPlanDatePickers() {
+        if (!window.layui) {
+            return;
+        }
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            var pickerLang = typeof LAYDATE_LANG !== 'undefined' ? LAYDATE_LANG : 'en';
+            $('#repayment-body .plan-date').each(function () {
+                var elem = this;
+                if (elem.getAttribute('lay-key')) {
+                    return;
+                }
+                laydate.render({
+                    elem: elem,
+                    type: 'date',
+                    format: 'yyyy-MM-dd',
+                    trigger: 'click',
+                    lang: pickerLang,
+                    done: function () {
+                        syncRepaymentPlanJson();
+                        validateRepaymentPlan(true);
+                    }
+                });
+            });
+        });
+    }
+
+    function renderPayoutPlan(summary, planItems) {
+        var body = $('#payout-plan-body');
+        var block = $('#payout-plan-block');
+        var summaryText = $('#payout-plan-summary');
+        body.empty();
+        if (!summary && (!planItems || planItems.length === 0)) {
+            block.hide();
+            return;
+        }
+        var batchCount = summary && summary.batchCount ? summary.batchCount : (planItems ? planItems.length : 0);
+        var totalMinutes = summary && summary.totalMinutes ? summary.totalMinutes : 0;
+        summaryText.text(i18nFormat('offadmin.user.payoutPlanSummaryFormat', batchCount, totalMinutes));
+        if (summary && summary.suggestCardCount && summary.suggestCardCount >= 2) {
+            summaryText.append(' ' + i18nFormat('offadmin.user.payoutPlanSuggestCardFormat', summary.suggestCardCount));
+        }
+        if (planItems && planItems.length > 0) {
+            $.each(planItems, function (i, item) {
+                body.append('<tr><td>' + escapeHtml(item.batchNo || (i + 1)) + '</td>'
+                    + '<td>' + escapeHtml(item.maskedCardNo || item.bankCardId || '-') + '</td>'
+                    + '<td>' + escapeHtml(item.openBankName || item.bankCode || '-') + '</td>'
+                    + '<td class="text-right">' + formatMoney(item.payoutAmount || 0) + '</td></tr>');
+            });
+        } else {
+            body.append('<tr><td colspan="4" class="text-center">-</td></tr>');
+        }
+        block.show();
+    }
+
+    function bindRepaymentPlanEvents() {
+        $('#repayment-body .plan-date').off('change').on('change', function () {
+            syncRepaymentPlanJson();
+            validateRepaymentPlan(true);
+        });
+        $('#repayment-body .plan-principal, #repayment-body .plan-interest').off('input change').on('input change', function () {
+            // 本金、利息属于试算后的计划内调整，不使 trialDone 失效。
+            syncRepaymentPlanJson();
+        });
+    }
+
+    function syncRepaymentPlanJson() {
+        $('#repayment-body tr').each(function (index) {
+            var planRow = currentRepaymentPlan[index];
+            if (!planRow) {
+                return;
+            }
+            var $row = $(this);
+            planRow.repayDate = $row.find('.plan-date').val();
+            planRow.repayPrincipal = $.trim($row.find('.plan-principal').val());
+            planRow.repayInterest = $.trim($row.find('.plan-interest').val());
+            var totalCents = calculateRepaymentPlanRowTotalCents(planRow);
+            planRow.repayTotalAmount = totalCents === null ? null : formatMoneyFromCents(totalCents);
+            $row.find('.plan-total').text(totalCents === null ? '-' : formatMoney(planRow.repayTotalAmount));
+        });
+        $('#repaymentPlanJson').val(JSON.stringify(currentRepaymentPlan));
+        renderRepaymentAmountDifference();
+    }
+
+    /**
+     * 展示计划合计与借款输入金额，并按“各期合计减去输入金额”计算带符号差额。
+     */
+    function renderRepaymentAmountDifference() {
+        var contractAmountCents = parseMoneyToCents($("input[name='loanAmount']").val());
+        var totalInterestCents = parseMoneyToCents($("input[name='totalInterest']").val());
+        var principalSumCents = 0;
+        var interestSumCents = 0;
+        var valid = contractAmountCents !== null && totalInterestCents !== null && currentRepaymentPlan.length > 0;
+        for (var i = 0; i < currentRepaymentPlan.length; i++) {
+            var principalCents = parseMoneyToCents(currentRepaymentPlan[i].repayPrincipal);
+            var interestCents = parseMoneyToCents(currentRepaymentPlan[i].repayInterest);
+            if (principalCents === null || interestCents === null) {
+                valid = false;
+                break;
+            }
+            principalSumCents += principalCents;
+            interestSumCents += interestCents;
+        }
+        if (!valid) {
+            repaymentAmountConsistent = false;
+            renderDifferenceItem('principal', null, contractAmountCents, null);
+            renderDifferenceItem('interest', null, totalInterestCents, null);
+            return;
+        }
+        var principalDifferenceCents = principalSumCents - contractAmountCents;
+        var interestDifferenceCents = interestSumCents - totalInterestCents;
+        repaymentAmountConsistent = principalDifferenceCents === 0 && interestDifferenceCents === 0;
+        renderDifferenceItem('principal', principalSumCents, contractAmountCents, principalDifferenceCents);
+        renderDifferenceItem('interest', interestSumCents, totalInterestCents, interestDifferenceCents);
+    }
+
+    /**
+     * 汇总项始终展示“计划合计 / 输入金额（差额）”，金额统一保留两位小数。
+     */
+    function renderDifferenceItem(amountType, planSumCents, inputAmountCents, differenceCents) {
+        // 两项汇总统一着色，只有本金和利息差额同时为零时才显示绿色。
+        var consistent = repaymentAmountConsistent;
+        $('#' + amountType + '-difference-item').toggleClass('text-success', consistent).toggleClass('text-danger', !consistent);
+        $('#' + amountType + '-plan-total').text(planSumCents === null ? '--' : formatMoneyFromCents(planSumCents));
+        $('#' + amountType + '-input-total').text(inputAmountCents === null ? '--' : formatMoneyFromCents(inputAmountCents));
+        $('#' + amountType + '-difference-value').text(differenceCents === null ? '--' : formatSignedMoneyFromCents(differenceCents));
+    }
+
+    function calculateRepaymentPlanRowTotalCents(planRow) {
+        var amountFields = [
+            'repayPrincipal', 'repayInterest', 'repayCreditServiceFee', 'repayPaymentChannelFee',
+            'repayServiceFee', 'repayPenaltyInterest', 'repayTaxes'
+        ];
+        var totalCents = 0;
+        for (var i = 0; i < amountFields.length; i++) {
+            var amountValue = planRow[amountFields[i]];
+            var amountCents = parseMoneyToCents(amountValue === null || amountValue === undefined ? 0 : amountValue);
+            if (amountCents === null) {
+                return null;
+            }
+            totalCents += amountCents;
+        }
+        return totalCents;
+    }
+
+    /**
+     * 将最多两位小数的金额转换为整数分，避免浮点加减产生伪差额。
+     */
+    function parseMoneyToCents(value) {
+        var normalized = $.trim(String(value === null || value === undefined ? '' : value));
+        if (!/^\d+(\.\d{1,2})?$/.test(normalized)) {
+            return null;
+        }
+        var parts = normalized.split('.');
+        var integerPart = Number(parts[0]);
+        var decimalPart = parts[1] || '';
+        if (decimalPart.length === 0) {
+            decimalPart = '00';
+        } else if (decimalPart.length === 1) {
+            decimalPart += '0';
+        }
+        var cents = integerPart * 100 + Number(decimalPart);
+        return isFinite(cents) && Math.floor(cents) === cents && Math.abs(cents) <= 9007199254740991
+            ? cents : null;
+    }
+
+    function formatMoneyFromCents(cents) {
+        return (cents / 100).toFixed(2);
+    }
+
+    function formatSignedMoneyFromCents(cents) {
+        var sign = cents > 0 ? '+' : (cents < 0 ? '-' : '');
+        return sign + (Math.abs(cents) / 100).toFixed(2);
+    }
+
+    function validateRepaymentPlan(silent) {
+        syncRepaymentPlanJson();
+        var previousDate = null;
+        for (var i = 0; i < currentRepaymentPlan.length; i++) {
+            var row = currentRepaymentPlan[i];
+            if (!row.repayDate || row.repayTotalAmount === null || row.repayTotalAmount === undefined
+                || row.repayTotalAmount === '') {
+                if (!silent) {
+                    $.modal.alertWarning(i18n("offadmin.msg.completeRepaymentPlan"));
+                }
+                return false;
+            }
+            var principalCents = parseMoneyToCents(row.repayPrincipal);
+            var interestCents = parseMoneyToCents(row.repayInterest);
+            // 允许某一期本金和利息均为零，是否可提交由整份计划的合计一致性决定。
+            if (principalCents === null || principalCents < 0 || interestCents === null || interestCents < 0) {
+                if (!silent) {
+                    $.modal.alertWarning(i18n("offadmin.msg.repaymentPlanAmountPositive"));
+                }
+                return false;
+            }
+            var repayAmount = parseFloat(row.repayTotalAmount);
+            if (isNaN(repayAmount) || repayAmount < 0) {
+                if (!silent) {
+                    $.modal.alertWarning(i18n("offadmin.msg.repayAmountPositive"));
+                }
+                return false;
+            }
+            if (previousDate && row.repayDate <= previousDate) {
+                if (!silent) {
+                    $.modal.alertWarning(i18n("offadmin.msg.repayDateAfterPrevious"));
+                }
+                return false;
+            }
+            previousDate = row.repayDate;
+        }
+        if (!repaymentAmountConsistent) {
+            if (!silent) {
+                $.modal.alertWarning(i18n("offadmin.msg.repaymentPlanAmountMismatch"));
+            }
+            return false;
+        }
+        return true;
+    }
+
+    function validatePeriodDays(silent) {
+        var periodDays = Number($("input[name='periodDays']").val());
+        if (!isNaN(periodDays) && periodDays > maxPeriodDays) {
+            if (!silent) {
+                $.modal.alertWarning(i18nFormat("offadmin.msg.periodDaysMax", maxPeriodDays));
+            }
+            return false;
+        }
+        return true;
+    }
+
+    function formatMoney(value) {
+        var numberValue = parseFloat(value || 0);
+        return numberValue.toFixed(2).replace(/\.00$/, '');
+    }
+
+    function escapeHtml(value) {
+        return $('<div/>').text(value === null || value === undefined ? '' : value).html();
+    }
+
+    function submitHandler(indexOrOptions, layero) {
+        return new Promise((resolve, reject) => {
+            var embed = indexOrOptions && typeof indexOrOptions === 'object' && indexOrOptions.embed === true;
+            if (startLoanSubmitting) {
+                resolve();
+                return;
+            }
+            if (!validatePeriodDays(false)) {
+                reject({ code: 500, msg: 'invalid period days' });
+                return;
+            }
+            if (!trialDone) {
+                $.modal.alertWarning($('#msg-trial-first').text());
+                reject({ code: 500, msg: 'trial required' });
+                return;
+            }
+            if (!validateRepaymentPlan(false)) {
+                reject({ code: 500, msg: 'invalid repayment plan' });
+                return;
+            }
+            if (!validatePayoutBankCards()) {
+                reject({ code: 500, msg: 'payout bank card required' });
+                return;
+            }
+            startLoanSubmitting = true;
+            $.ajax({
+                url: prefix + "/offline/startLoan",
+                type: "post",
+                dataType: "json",
+                data: $('#form-offline-start-loan').serialize(),
+                beforeSend: function () {
+                    $.modal.loading(i18n("common.progressData"));
+                    $.modal.disable();
+                },
+                success: function (result) {
+                    resolve(result);
+                    if (result.code == web_status.SUCCESS) {
+                        if (embed) {
+                            return;
+                        }
+                        var promptTitle = i18n("offadmin.user.disbursementPromptTitle");
+                        var content = (result.msg || '')
+                            .replace(new RegExp('^' + escapeRegExp(promptTitle) + '[:：]\\s*'), '')
+                            .replace(/^放款提示[:：]\s*/, '');
+                        layer.alert(content, {
+                            icon: $.modal.icon(modal_status.SUCCESS),
+                            title: promptTitle,
+                            btn: [i18n("loan.common.affirm")],
+                            btnclass: ['btn btn-primary']
+                        }, function (index) {
+                            layer.close(index);
+                            $.modal.close();
+                            if (parent && parent.$ && parent.$.table) {
+                                parent.$.table.refresh();
+                            }
+                        });
+                    } else if (result.code == web_status.WARNING) {
+                        $.modal.alertWarning(result.msg);
+                    } else {
+                        $.modal.alertError(result.msg);
+                    }
+                },
+                error: function () {
+                    $.modal.alertError(i18n("offadmin.msg.requestFailed"));
+                    reject({ code: 500, msg: 'request failed' });
+                },
+                complete: function () {
+                    startLoanSubmitting = false;
+                    $.modal.closeLoading();
+                    $.modal.enable();
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>

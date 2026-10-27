@@ -1,0 +1,50 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 3 items
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=938，phone=0658900211，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 2200、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 2178.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=dea4f379aed24d0691824873e2bd97d5
+PASSED
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 9999, 'msg': '验证码有误!'}
+FAILED
+
+================================== FAILURES ===================================
+________________________ test_selected_payout_approval ________________________
+tests\07_payout_approval\test_payout_approval.py:36: in test_selected_payout_approval
+    authenticate_admin(session, username=login_name, password=reviewer_password)
+common\admin_client.py:21: in authenticate_admin
+    login(session, client_id, username=username, password=password)
+common\sso_login.py:82: in login
+    assert str(body.get("code")) == "200", f"业务登录失败：{actual}；如验证码错误，请使用 manual 模式"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 业务登录失败：{'code': 9999, 'msg': '验证码有误!'}；如验证码错误，请使用 manual 模式
+=========================== short test summary info ===========================
+FAILED tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+======================== 1 failed, 1 passed in 13.21s =========================

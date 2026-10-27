@@ -1,0 +1,15 @@
+{
+  "user_id": 965,
+  "phone": "0658900225",
+  "uuid": "f2e865c0c8c440cb928e08c3369bfdd4",
+  "repeat_request_id": "user965-repeat-20261022-01",
+  "header_id": "c34d7ecd96ef4c1889e1212382c63e21",
+  "approval_id": "c52b42d5f0324fa6aa7d35e3dc929264",
+  "approval_status": 0,
+  "loan_amount": "6000",
+  "installments": 3,
+  "period_days": 7,
+  "previous_loan_count": 1,
+  "status": "repeat_submitted_pending_review_db_verified"
+}
+复借提交1 passed in 9.46s；数据库确认待人审、无人工审批及放款成功记录。本次未新增用户、未操作人审或放款。

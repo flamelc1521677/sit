@@ -5,6 +5,7 @@ import re
 
 from common.admin_client import ADMIN_URL, authenticate_admin
 from common.payout_client import PayoutAttempt, build_payout_payload
+from common.loan_target import loan_target_phone
 from common.phone_sequence import locked
 from common.sso_login import TIMEOUT
 from common.state_store import ROOT, write_json
@@ -13,7 +14,7 @@ from common.state_store import ROOT, write_json
 def test_payout_approved_success(session, database_checks):
     authenticate_admin(session)
     database_checks.login_account(os.environ["SSO_USERNAME"])
-    latest = json.loads((ROOT / ".state/latest_user.json").read_text(encoding="utf-8"))
+    latest = {"phone": loan_target_phone()}
     loans = json.loads((ROOT / ".state/loan_attempts.json").read_text(encoding="utf-8"))
     targets = [loan for loan in loans.values() if loan.get("phone") == latest["phone"] and loan.get("status") == "db_verified"]
     assert len(targets) == 1, "最新用户没有唯一已提交并校验的借款"

@@ -1,0 +1,201 @@
+[执行] u997_repeat1_loan，tests/05_loan_application/test_start_loan.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 9999, 'msg': '验证码有误!'}
+FAILED
+
+================================== FAILURES ===================================
+_________________________ test_trial_then_start_loan __________________________
+tests\05_loan_application\test_start_loan.py:17: in test_trial_then_start_loan
+    authenticate_admin(session)
+common\admin_client.py:21: in authenticate_admin
+    login(session, client_id, username=username, password=password)
+common\sso_login.py:85: in login
+    assert str(body.get("code")) == "200", f"业务登录失败：{actual}{hint}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 业务登录失败：{'code': 9999, 'msg': '验证码有误!'}；如验证码错误，请使用 manual 模式
+=========================== short test summary info ===========================
+FAILED tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+============================= 1 failed in 10.80s ==============================
+[验证码] 仅重试尚未完成的登录，不重发业务操作
+[执行] u997_repeat1_loan，tests/05_loan_application/test_start_loan.py，登录尝试 2
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[复借] 用户 997，独立申请标识 user997-repeat1-two_users_reloans_ordered_overdue_20261026_01，保留 1 笔历史
+[借款 1/5] 目标用户 id=997，phone=0658900240，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=60408af836ea48bfa9ed392414a1c06e
+PASSED
+
+============================= 1 passed in 11.25s ==============================
+[执行] u997_repeat1_review，tests/07_payout_approval/test_payout_approval.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 关联借款异步生成唯一待审记录（仅查询，不重发借款）通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 d1fd901db3234370a49ce9dc2d42f226，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+
+============================= 1 passed in 12.60s ==============================
+[执行] u997_repeat1_payout，tests/08_disbursement/test_payout_success.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/08_disbursement/test_payout_success.py::test_payout_approved_success [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[放款 1/4] 目标用户 0658900240，合同 C1320261026181054Xe01c，放款单 daf05a81d53e41e5acd55d5c477fa4f4，当前状态 2
+[放款 2/4] POST /pay/borTransferBillMoco/edit，state=1，仅提交一次
+[放款 3/4] 响应 code=0，msg=修改成功
+[数据库] 放款单、修改流水、合同和借款放款状态同步通过
+[放款 4/4] 放款单成功，修改流水及借款/合同状态同步校验通过
+PASSED
+
+============================= 1 passed in 15.25s ==============================
+[数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[复贷完成] 用户 997 第1笔复贷已放款，合同 C1320261026181054Xe01c
+[执行] u997_repeat2_loan，tests/05_loan_application/test_start_loan.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[复借] 用户 997，独立申请标识 user997-repeat2-two_users_reloans_ordered_overdue_20261026_01，保留 2 笔历史
+[借款 1/5] 目标用户 id=997，phone=0658900240，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=fd7b961e284c48369024d44047f27a38
+PASSED
+
+============================= 1 passed in 12.63s ==============================
+[执行] u997_repeat2_review，tests/07_payout_approval/test_payout_approval.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+FAILED
+
+================================== FAILURES ===================================
+________________________ test_selected_payout_approval ________________________
+tests\07_payout_approval\test_payout_approval.py:41: in test_selected_payout_approval
+    approval_id = resolve_approval_id(database_checks)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\07_payout_approval\test_payout_approval.py:28: in resolve_approval_id
+    return checks.check("关联借款异步生成唯一待审记录（仅查询，不重发借款）", verify_pending, timeout=60)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+common\database_checks.py:25: in check
+    result = assertion()
+             ^^^^^^^^^^^
+tests\07_payout_approval\test_payout_approval.py:26: in verify_pending
+    assert len(pending) == 1, "关联借款未生成唯一待审批记录或已审批，停止操作；不会改选其他用户"
+E   AssertionError: 关联借款未生成唯一待审批记录或已审批，停止操作；不会改选其他用户
+E   assert 0 == 1
+E    +  where 0 = len([])
+=========================== short test summary info ===========================
+FAILED tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+======================== 1 failed in 73.37s (0:01:13) =========================
+Traceback (most recent call last):
+  File "C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\tools\run_reloans_ordered_overdue.py", line 153, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\tools\run_reloans_ordered_overdue.py", line 94, in main
+    stage(prefix + '_review', 'tests/07_payout_approval/test_payout_approval.py', record)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\tools\run_reloans_ordered_overdue.py", line 74, in stage
+    raise RuntimeError('场景失败，保留原进度，不自动重发业务请求')
+RuntimeError: 场景失败，保留原进度，不自动重发业务请求

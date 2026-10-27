@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-27",
+  "local_tests_passed": 215,
+  "collected_thai_scenarios": 14,
+  "vscode_thai_entries": 25,
+  "business_mutations_requested": false,
+  "previous_paid_user_unchanged": true,
+  "unchanged_contract": "C1320261027161023X3S6e",
+  "passed_readonly_checks": [
+    "TH11 prealert preflight",
+    "TH12 prealert transfer form preflight",
+    "TH15 collection transfer form preflight",
+    "TH17 initial paid-to-overdue preflight",
+    "TH task IDs/country scope/clock/grades/OB5 receiver"
+  ],
+  "guarded_readonly_samples": {
+    "TH13": "Stopped before writes: duplicate active repayment periods in historical contract C13202610261100578kd95",
+    "TH14": "Stopped before writes: historical contract C1320261024094351PC5Lk has multiple collection records"
+  },
+  "not_executed": [
+    "new users",
+    "repeat submissions",
+    "review actions",
+    "date changes",
+    "scheduled task runs",
+    "actual transfers",
+    "actual overdue generation"
+  ],
+  "task_write_paths_require_later_targeted_validation": true
+}

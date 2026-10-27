@@ -5,11 +5,17 @@ from common.sso_login import BASE_URL
 from common.database import connect_database
 from common.database_checks import DatabaseChecks
 from common.approval_credentials import approval_credentials
+from common.sso_credentials import sso_credentials
 import os
 
 
 @pytest.fixture(scope="session", autouse=True)
 def preflight_independent_approver(request):
+    if any("04_local_checks" not in item.path.parts for item in request.session.items):
+        username, _ = sso_credentials()
+        os.environ["SSO_USERNAME"] = username
+    if any("02_user_management" in item.path.parts for item in request.session.items):
+        assert not os.getenv("LOAN_TARGET_PHONE", "").strip(), "新增用户流程不能混入 LOAN_TARGET_PHONE；请清空后执行，避免借款目标错配"
     if any("07_payout_approval" in item.path.parts for item in request.session.items):
         approval_credentials(os.getenv("SSO_USERNAME"))
 

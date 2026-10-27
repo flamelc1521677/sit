@@ -1,17 +1,5 @@
 """Resolve the independent reviewer without storing passwords in project files."""
-import os
-
-
-def configured_value(name):
-    value = os.getenv(name)
-    if not value and os.name == "nt":
-        import winreg
-        try:
-            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment") as key:
-                value, _ = winreg.QueryValueEx(key, name)
-        except FileNotFoundError:
-            pass
-    return value
+from common.environment import configured_value
 
 
 def approval_credentials(requester):

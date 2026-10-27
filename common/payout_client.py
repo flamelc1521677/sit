@@ -48,16 +48,16 @@ class PayoutForm(HTMLParser):
             self.textarea = None
 
 
-def database_time(local_time):
+def database_time(local_time, merchant_timezone=None, database_timezone=None):
     if not local_time:
         return None
     value = datetime.strptime(local_time, "%Y-%m-%d %H:%M:%S")
-    merchant = ZoneInfo(os.getenv("PAYOUT_MERCHANT_TIMEZONE", "America/Mexico_City"))
-    database = ZoneInfo(os.getenv("PAYOUT_DATABASE_TIMEZONE", "Asia/Shanghai"))
+    merchant = ZoneInfo(merchant_timezone or os.getenv("PAYOUT_MERCHANT_TIMEZONE", "America/Mexico_City"))
+    database = ZoneInfo(database_timezone or os.getenv("PAYOUT_DATABASE_TIMEZONE", "Asia/Shanghai"))
     return value.replace(tzinfo=merchant).astimezone(database).replace(tzinfo=None)
 
 
-def build_payout_payload(html, bill, page_now):
+def build_payout_payload(html, bill, page_now, merchant_timezone=None, database_timezone=None):
     parser = PayoutForm()
     parser.feed(html)
     fields = parser.fields
@@ -69,9 +69,9 @@ def build_payout_payload(html, bill, page_now):
     trade_time = fields.get("tradeTime") or page_now
     complete_time = fields.get("completeTime") or page_now
     assert trade_time and complete_time, "页面未返回商户当前时间或执行时间"
-    assert database_time(complete_time) >= database_time(trade_time), "放款完成时间早于执行时间"
+    assert database_time(complete_time, merchant_timezone, database_timezone) >= database_time(trade_time, merchant_timezone, database_timezone), "放款完成时间早于执行时间"
     if bill.get("TRADE_TIME"):
-        assert database_time(trade_time) == bill["TRADE_TIME"], "表单执行时间与数据库时间不一致，请检查商户时区"
+        assert database_time(trade_time, merchant_timezone, database_timezone) == bill["TRADE_TIME"], "表单执行时间与数据库时间不一致，请检查商户时区"
     return {"id": bill["ID"], "ids": bill["ID"], "systemSourceId": "BORROWER",
             "contractId": bill["CONTRACT_ID"], "bizId": bill["BIZ_ID"], "state": "1",
             "tradeTime": trade_time, "completeTime": complete_time,

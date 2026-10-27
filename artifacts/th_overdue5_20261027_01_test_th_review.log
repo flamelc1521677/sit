@@ -1,0 +1,42 @@
+0.02s - Debugger warning: It seems that frozen modules are being used, which may
+0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+0.00s - to python to disable frozen modules.
+0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- c:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\thailand
+configfile: pytest.ini
+collecting ... collected 1 item
+
+thailand\tests\07_payout_approval\test_th_review.py::test_thailand_review_pass [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 9999, 'msg': '验证码有误!'}
+[泰国登录] 验证码9999，重新获取验证码；仅重试登录，不重发新增请求
+[后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 泰国独立人审chengzi账号与部门通过
+[泰国登录] SSO result.success、OAuth、chengzi及泰国应用范围校验通过
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 泰国新增用户/手机号密文/OB5/Line/部门落库通过
+[数据库] 登录账号存在且启用通过
+[数据库] 泰国独立人审chengzi账号与部门通过
+[数据库] 泰国唯一人审待办或已自动成功放款路径通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[泰国人审] chengzi执行人审通过，审批单3d435ebdab2049afafcc948f228ade64，仅请求一次
+[数据库] 泰国人审通过状态/合同金额/原因/chengzi及唯一人工流水通过
+PASSED
+
+============================= 1 passed in 19.50s ==============================

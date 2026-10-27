@@ -1,0 +1,59 @@
+2026-10-22：新增5名用户，6000元/3期/每期7天；全部资料完善、试算提交借款、ob5-mx人审通过。未执行放款修改接口。批次结束后统一复核：5笔放款状态均为2，合同无放款日期，无成功放款流水。
+[
+  {
+    "user_id": 953,
+    "phone": "0658900218",
+    "contract_id": "C1320261022104514Lv5c7",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "successful_payout_flows": 0
+  },
+  {
+    "user_id": 954,
+    "phone": "0658900219",
+    "contract_id": "C13202610221046269NS8k",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "successful_payout_flows": 0
+  },
+  {
+    "user_id": 955,
+    "phone": "0658900220",
+    "contract_id": "C1320261022104803K0kZr",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "successful_payout_flows": 0
+  },
+  {
+    "user_id": 956,
+    "phone": "0658900221",
+    "contract_id": "C132026102210491775CxS",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "successful_payout_flows": 0
+  },
+  {
+    "user_id": 957,
+    "phone": "0658900222",
+    "contract_id": "C1320261022105039L0GwR",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "successful_payout_flows": 0
+  }
+]
+本地规则测试178 passed。第五名首次登录验证码错误，仅重新登录；实际只新增5名用户。

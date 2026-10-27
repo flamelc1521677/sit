@@ -1,0 +1,91 @@
+{
+  "status": "awaiting_backend_virtual_order_generation",
+  "users": [
+    {
+      "user_id": 996,
+      "phone": "0658900239",
+      "headers": [
+        {
+          "ID": "1c28559b9b9f40f1b83c57142f98eb2c",
+          "VIRTUAL_ORDER_ID": "24996047",
+          "CREATE_TIME": "2026-10-23 14:06:49",
+          "VERSION": 3
+        },
+        {
+          "ID": "ab100010458944b5a14b28ce88de1168",
+          "VIRTUAL_ORDER_ID": "24996079",
+          "CREATE_TIME": "2026-10-26 18:05:01",
+          "VERSION": 3
+        },
+        {
+          "ID": "c7c67be10247401cb7e2d1d1a053d8af",
+          "VIRTUAL_ORDER_ID": null,
+          "CREATE_TIME": "2026-10-26 18:05:39",
+          "VERSION": 2
+        }
+      ],
+      "paid_contracts": [
+        {
+          "CONTRACT_ID": "C132026102314070453qf6",
+          "CREATE_TIME": "2026-10-23 14:07:03",
+          "PAYMENT_DATE": "2026-10-23 14:45:15",
+          "CONTRACT_STATUS": "1"
+        },
+        {
+          "CONTRACT_ID": "C1320261026180516c22Mu",
+          "CREATE_TIME": "2026-10-26 18:05:16",
+          "PAYMENT_DATE": "2026-10-26 18:05:24",
+          "CONTRACT_STATUS": "1"
+        }
+      ],
+      "pending_header_id": "c7c67be10247401cb7e2d1d1a053d8af",
+      "approval_count": 0,
+      "prealert_count": 0,
+      "overdue_count": 0,
+      "due_dates_modified": false
+    },
+    {
+      "user_id": 997,
+      "phone": "0658900240",
+      "headers": [
+        {
+          "ID": "f8098db4568c4e9897d05ba8c979b79b",
+          "VIRTUAL_ORDER_ID": "24996048",
+          "CREATE_TIME": "2026-10-23 14:08:16",
+          "VERSION": 3
+        },
+        {
+          "ID": "60408af836ea48bfa9ed392414a1c06e",
+          "VIRTUAL_ORDER_ID": "24996081",
+          "CREATE_TIME": "2026-10-26 18:10:40",
+          "VERSION": 3
+        },
+        {
+          "ID": "fd7b961e284c48369024d44047f27a38",
+          "VIRTUAL_ORDER_ID": null,
+          "CREATE_TIME": "2026-10-26 18:11:27",
+          "VERSION": 2
+        }
+      ],
+      "paid_contracts": [
+        {
+          "CONTRACT_ID": "C13202610231408302zGwA",
+          "CREATE_TIME": "2026-10-23 14:08:29",
+          "PAYMENT_DATE": "2026-10-23 14:51:58",
+          "CONTRACT_STATUS": "1"
+        },
+        {
+          "CONTRACT_ID": "C1320261026181054Xe01c",
+          "CREATE_TIME": "2026-10-26 18:10:54",
+          "PAYMENT_DATE": "2026-10-26 18:11:09",
+          "CONTRACT_STATUS": "1"
+        }
+      ],
+      "pending_header_id": "fd7b961e284c48369024d44047f27a38",
+      "approval_count": 0,
+      "prealert_count": 0,
+      "overdue_count": 0,
+      "due_dates_modified": false
+    }
+  ]
+}

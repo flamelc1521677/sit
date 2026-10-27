@@ -1,0 +1,14 @@
+{
+  "user_id": 974,
+  "phone": "0658900233",
+  "loan_amount": "6000",
+  "installments": 3,
+  "period_days": 7,
+  "header_id": "8c97a2f4d3d148e2b49cfbfff8031500",
+  "approval_id": "b09e50bd433b49719856dd3ca244fa22",
+  "approval_status": 0,
+  "audit_time": null,
+  "manual_review_actions": 0,
+  "status": "submitted_pending_review_db_verified"
+}
+仅执行02新增、03资料、05试算提交，未执行人审或放款。3 passed in 59.78s。

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title>表格行内编辑</title>
+	<link rel="shortcut icon" href="logo2.png">
+	<link href="/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="/css/font-awesome.min.css" rel="stylesheet"/>
+	<!-- bootstrap-table 表格插件样式 -->
+	<link href="/ajax/libs/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+	<link href="/css/animate.css" rel="stylesheet"/>
+	<link href="/css/style.css" rel="stylesheet"/>
+	<link href="/ruoyi/css/ry-ui.css?v=4.1.2" rel="stylesheet"/>
+
+    
+	<link href="/ajax/libs/bootstrap-table/extensions/editable/bootstrap-editable.css" rel="stylesheet"/>
+
+    
+	<link href="/ajax/libs/datapicker/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="btn-group-sm" id="toolbar" role="group">
+        <form id="formId">
+            <input type="hidden" value="C1320261021150342BSR8l" name="contractId"/>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+            <a style="float: right" class="btn btn-primary" onclick="getData()">保存</a>
+        </div>
+    </div>
+</div>
+
+
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<!--jQuery国际化插件-->
+	<script src="/js/jquery.i18n.properties.min.js"></script>
+	<script>
+		//获取应用路径
+		var ROOT = "";
+
+		//获取默认语言
+		var LANG_COUNTRY = "zh_CN";
+		var lang = "zh";
+		// 表单日期组件语言：laydate 仅内置 cn/en，扩展 es/th；datetimepicker 默认识别 zh-cn/en/es/th
+		var LAYDATE_LANG = (LANG_COUNTRY === 'zh_CN' || lang === 'zh') ? 'cn'
+				: (LANG_COUNTRY === 'es_MX' || lang === 'es') ? 'es'
+				: (LANG_COUNTRY === 'th_TH' || lang === 'th') ? 'th'
+				: 'en';
+		var DATETIMEPICKER_LANG = (LANG_COUNTRY === 'zh_CN' || lang === 'zh') ? 'zh-cn'
+				: (LANG_COUNTRY === 'es_MX' || lang === 'es') ? 'es'
+				: (LANG_COUNTRY === 'th_TH' || lang === 'th') ? 'th'
+				: 'en';
+		//当前国家主力聊天工具名（泰国=Line 墨西哥=WhatsApp），页面展示用
+		var IM_NAME = "WhatsApp";
+		//全站日期时间控件（含查询条件/编辑表单）的“今天/现在”按商户国家当前时间取，而非客户端电脑时区。
+		//下发商户国家当前墙钟串，算出与本机时间的毫秒差，供已打补丁的 laydate 读取（默认 0=不改，无上下文时≈0）。
+		try {
+			var __cn = "2026-10-21 01:04:21";
+			var __m = (__cn || '').match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);
+			if (__m) {
+				window.__laydateNowOffsetMs__ = new Date(+__m[1], +__m[2] - 1, +__m[3], +__m[4], +__m[5], +__m[6]).getTime() - Date.now();
+			}
+		} catch (e) {}
+        var isCatchData = [{"searchValue":null,"createBy":"admin","createTime":"2024-01-01 19:34:14","createTimeStr":"2024-01-01 13:34:14","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":23543,"dictSort":1,"dictLabel":"\u56FD\u9645\u5316\u6587\u4EF6\u662F\u5426\u5F00\u542F\u7F13\u5B58","dictLabelTh":"t\u1EC7p qu\u1ED1c t\u1EBF h\u00F3a c\u00F3 b\u1EADt b\u1ED9 nh\u1EDB \u0111\u1EC7m hay ch\u01B0a","dictLabelEs":"Si se habilita cach\u00E9 para archivos de internacionalizaci\u00F3n","dictLabelVi":"C\u00F3 b\u1EADt b\u1ED9 nh\u1EDB \u0111\u1EC7m t\u1EC7p qu\u1ED1c t\u1EBF h\u00F3a hay kh\u00F4ng","dictValue":"true","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"sys_is_catch_static","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u56FD\u9645\u5316\u6587\u4EF6\u662F\u5426\u5F00\u542F\u7F13\u5B58","default":true}];
+        var isCatchFlag = true;
+        if (isCatchData[0].dictValue == 'false'){
+            isCatchFlag = false;
+        }
+		//初始化i18n插件
+		$.i18n.properties({
+			path: ROOT + '/i18n/',//这里表示访问路径
+			name: 'messages',//文件名开头
+			language: LANG_COUNTRY,//文件名语言 例如th_TH
+			mode: 'map',//默认值
+            cache: isCatchFlag //是否开启浏览器缓存
+		});
+
+		//初始化i18n函数
+		function i18n(msgKey) {
+			try {
+				var msg = $.i18n.prop(msgKey);
+				//员工 Line 文案里的聊天工具名按当前国家展示（与后端 CountryAwareMessageSource 同一白名单）
+				if (IM_NAME && IM_NAME !== 'Line' && typeof msgKey === 'string' && typeof msg === 'string'
+						&& (msgKey.indexOf('offadmin.profile.line') === 0
+							|| msgKey.indexOf('offadmin.user.employeeLine') === 0
+							|| msgKey.indexOf('offadmin.msg.offlineAddEmployeeLine') === 0)) {
+					msg = msg.replace(/\bLine\b/g, IM_NAME);
+				}
+				return msg;
+			} catch (e) {
+				console.error(e);
+				return msgKey;
+			}
+		}
+	</script>
+	<!-- bootstrap-table 表格插件 -->
+	<script src="/ajax/libs/bootstrap-table/bootstrap-table.min.js?v=20200727"></script>
+	<script src="/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+	<script>
+		// 按后台当前语言覆盖表格组件内置提示，仅影响分页、工具栏和空数据等展示文案。
+		(function () {
+			function formatMessage(messageKey, values) {
+				var message = i18n(messageKey);
+				$.each(values || [], function (index, value) {
+					message = message.replace(new RegExp('\\{' + index + '\\}', 'g'), value);
+				});
+				return message;
+			}
+
+			$.extend($.fn.bootstrapTable.defaults, {
+				formatLoadingMessage: function () {
+					return i18n('ui.bootstrapTable.loading');
+				},
+				formatRecordsPerPage: function (pageNumber) {
+					return formatMessage('ui.bootstrapTable.recordsPerPage', [pageNumber]);
+				},
+				formatShowingRows: function (pageFrom, pageTo, totalRows, totalNotFiltered) {
+					if (totalNotFiltered !== undefined && totalNotFiltered > totalRows) {
+						return formatMessage('ui.bootstrapTable.showingFilteredRows',
+								[pageFrom, pageTo, totalRows, totalNotFiltered]);
+					}
+					return formatMessage('ui.bootstrapTable.showingRows', [pageFrom, pageTo, totalRows]);
+				},
+				formatSRPaginationPreText: function () {
+					return i18n('ui.bootstrapTable.previousPage');
+				},
+				formatSRPaginationPageText: function (page) {
+					return formatMessage('ui.bootstrapTable.page', [page]);
+				},
+				formatSRPaginationNextText: function () {
+					return i18n('ui.bootstrapTable.nextPage');
+				},
+				formatDetailPagination: function (totalRows) {
+					return formatMessage('ui.bootstrapTable.detailPagination', [totalRows]);
+				},
+				formatClearSearch: function () {
+					return i18n('ui.bootstrapTable.clearSearch');
+				},
+				formatSearch: function () {
+					return i18n('ui.bootstrapTable.search');
+				},
+				formatNoMatches: function () {
+					return i18n('ui.bootstrapTable.noMatches');
+				},
+				formatPaginationSwitch: function () {
+					return i18n('ui.bootstrapTable.paginationSwitch');
+				},
+				formatPaginationSwitchDown: function () {
+					return i18n('ui.bootstrapTable.paginationShow');
+				},
+				formatPaginationSwitchUp: function () {
+					return i18n('ui.bootstrapTable.paginationHide');
+				},
+				formatRefresh: function () {
+					return i18n('ui.bootstrapTable.refresh');
+				},
+				formatToggle: function () {
+					return i18n('ui.bootstrapTable.toggle');
+				},
+				formatToggleOn: function () {
+					return i18n('ui.bootstrapTable.cardViewShow');
+				},
+				formatToggleOff: function () {
+					return i18n('ui.bootstrapTable.cardViewHide');
+				},
+				formatColumns: function () {
+					return i18n('ui.bootstrapTable.columns');
+				},
+				formatColumnsToggleAll: function () {
+					return i18n('ui.bootstrapTable.toggleAll');
+				},
+				formatFullscreen: function () {
+					return i18n('ui.bootstrapTable.fullscreen');
+				},
+				formatAllRows: function () {
+					return i18n('ui.bootstrapTable.allRows');
+				},
+				formatAutoRefresh: function () {
+					return i18n('ui.bootstrapTable.autoRefresh');
+				},
+				formatExport: function () {
+					return i18n('ui.bootstrapTable.export');
+				},
+				formatJumpTo: function () {
+					return i18n('ui.bootstrapTable.jumpTo');
+				},
+				formatAdvancedSearch: function () {
+					return i18n('ui.bootstrapTable.advancedSearch');
+				},
+				formatAdvancedCloseButton: function () {
+					return i18n('ui.bootstrapTable.close');
+				},
+				formatFilterControlSwitch: function () {
+					return i18n('ui.bootstrapTable.filterSwitch');
+				},
+				formatFilterControlSwitchHide: function () {
+					return i18n('ui.bootstrapTable.filterHide');
+				},
+				formatFilterControlSwitchShow: function () {
+					return i18n('ui.bootstrapTable.filterShow');
+				}
+			});
+		})();
+	</script>
+	<script src="/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/columns/bootstrap-table-fixed-columns.min.js?v=20200727"></script>
+	<!-- jquery-validate 表单验证插件 -->
+	<script src="/ajax/libs/validate/jquery.validate.min.js"></script>
+	<script src="/ajax/libs/validate/messages_zh.min.js"></script>
+	<script src="/ajax/libs/validate/jquery.validate.extend.js"></script>
+	<script>
+		// 校验插件默认加载中文包，这里按当前后台语言覆盖为对应国际化文案。
+		$.extend($.validator.messages, {
+			required: i18n("validation.required"),
+			remote: i18n("validation.remote"),
+			email: i18n("validation.email"),
+			url: i18n("validation.url"),
+			date: i18n("validation.date"),
+			dateISO: i18n("validation.dateISO"),
+			number: i18n("validation.number"),
+			digits: i18n("validation.digits"),
+			equalTo: i18n("validation.equalTo"),
+			maxlength: $.validator.format(i18n("validation.maxlength")),
+			minlength: $.validator.format(i18n("validation.minlength")),
+			rangelength: $.validator.format(i18n("validation.rangelength")),
+			range: $.validator.format(i18n("validation.range")),
+			max: $.validator.format(i18n("validation.max")),
+			min: $.validator.format(i18n("validation.min")),
+			step: $.validator.format(i18n("validation.step"))
+		});
+	</script>
+	<!-- jquery-validate 表单树插件 -->
+	<script src="/ajax/libs/bootstrap-treetable/bootstrap-treetable.js"></script>
+	<!-- jquery-export 表格导出插件 -->
+	<script src="/ajax/libs/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/export/tableExport.js"></script>
+	<!-- 遮罩层 -->
+	<script src="/ajax/libs/blockUI/jquery.blockUI.js"></script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"></script>
+	<script src="/ajax/libs/layer/layer.min.js"></script>
+	<script src="/ajax/libs/layui/layui.js"></script>
+	<script>
+		// 全站 laydate 面板默认语言跟随后台会话（含直接 render、未传 lang 的页面）
+		(function () {
+			if (!window.layui || typeof LAYDATE_LANG === 'undefined') {
+				return;
+			}
+			layui.use('laydate', function () {
+				layui.laydate.set({ lang: LAYDATE_LANG });
+			});
+		})();
+	</script>
+	<script src="/ruoyi/js/common.js?v=4.1.1"></script>
+	<script src="/ruoyi/js/ry-ui.js?v=4.1.3"></script>
+	<script> var ctx = "\/"; </script>
+	<script src="/ruoyi/js/saas-customer-profile.js?v=20250918"></script>
+
+
+	<script src="/ajax/libs/bootstrap-table/extensions/editable/bootstrap-editable.min.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
+
+
+	<script src="/ajax/libs//datapicker/bootstrap-datetimepicker.min.js"></script>
+	<script>
+		// 跟随后台语言，避免组件默认 zh-cn 导致西语/泰语界面仍显示中文日期面板。
+		(function ($) {
+			if (!$ || !$.fn || !$.fn.datetimepicker) {
+				return;
+			}
+			var dates = $.fn.datetimepicker.dates;
+			dates.es = {
+				days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+				daysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+				daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'],
+				months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+				monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+				meridiem: ['am', 'pm'],
+				today: 'Hoy',
+				clear: 'Limpiar',
+				weekStart: 1
+			};
+			dates.th = {
+				days: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'],
+				daysShort: ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.', 'อา.'],
+				daysMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส', 'อา'],
+				months: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
+				monthsShort: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+				meridiem: ['am', 'pm'],
+				today: 'วันนี้',
+				clear: 'ล้าง',
+				weekStart: 0
+			};
+			$.fn.datetimepicker.defaults = $.fn.datetimepicker.defaults || {};
+			$.fn.datetimepicker.defaults.language = typeof DATETIMEPICKER_LANG !== 'undefined' ? DATETIMEPICKER_LANG : 'en';
+		})(window.jQuery);
+	</script>
+
+<script>
+    var prefix = ctx + "loan/contract";
+    var editableFlag = "";
+    var datas = [{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:44:59","createTimeStr":"2020-04-27 01:44:59","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"\u6B63\u5E38\u72B6\u6001","params":{},"dictCode":6,"dictSort":1,"dictLabel":"\u6B63\u5E38","dictLabelTh":"B\u00ECnh th\u01B0\u1EDDng","dictLabelEs":"Normal","dictLabelVi":"B\u00ECnh th\u01B0\u1EDDng","dictValue":"0","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"sys_normal_disable","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u6B63\u5E38","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:02","createTimeStr":"2020-04-27 01:45:02","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"\u505C\u7528\u72B6\u6001","params":{},"dictCode":7,"dictSort":2,"dictLabel":"\u505C\u7528","dictLabelTh":"ng\u1EEBng s\u1EED d\u1EE5ng","dictLabelEs":"Deshabilitado","dictLabelVi":"Ng\u1EEBng s\u1EED d\u1EE5ng","dictValue":"1","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"sys_normal_disable","cssClass":"","listClass":"","isDefault":"N","status":"0","flag":null,"dictLabelI18n":"\u505C\u7528","default":false}];
+    var repayStatus = [{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:44:58","createTimeStr":"2020-04-27 01:44:58","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":476,"dictSort":0,"dictLabel":"\u8FD8\u6B3E","dictLabelTh":"tr\u1EA3 n\u1EE3","dictLabelEs":"Pago","dictLabelVi":"Tr\u1EA3 n\u1EE3","dictValue":"YES","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u8FD8\u6B3E","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:44:59","createTimeStr":"2020-04-27 01:44:59","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":477,"dictSort":1,"dictLabel":"\u672A\u8FD8","dictLabelTh":"Ch\u01B0a tr\u1EDF  ","dictLabelEs":"No pagado","dictLabelVi":"Ch\u01B0a tr\u1EA3","dictValue":"NOT","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u672A\u8FD8","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:03","createTimeStr":"2020-04-27 01:45:03","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":478,"dictSort":2,"dictLabel":"\u7B49\u5F85\u5212\u6263","dictLabelTh":"\u0110ang ch\u1EDD kh\u1EA5u tr\u1EEB","dictLabelEs":"En espera de d\u00E9bito","dictLabelVi":"Ch\u1EDD kh\u1EA5u tr\u1EEB","dictValue":"3","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u7B49\u5F85\u5212\u6263","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:05","createTimeStr":"2020-04-27 01:45:05","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":479,"dictSort":3,"dictLabel":"\u672A\u8FD8\u6B3E","dictLabelTh":"Kh\u00F4ng ho\u00E0n tr\u1EA3","dictLabelEs":"Sin pago","dictLabelVi":"Ch\u01B0a tr\u1EA3 n\u1EE3","dictValue":"1","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u672A\u8FD8\u6B3E","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:06","createTimeStr":"2020-04-27 01:45:06","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":480,"dictSort":4,"dictLabel":"\u5DF2\u8FD8\u6B3E","dictLabelTh":"\u0110\u00E3 ho\u00E0n tr\u1EA3","dictLabelEs":"Pagado","dictLabelVi":"\u0110\u00E3 tr\u1EA3 n\u1EE3","dictValue":"2","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u5DF2\u8FD8\u6B3E","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:07","createTimeStr":"2020-04-27 01:45:07","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":481,"dictSort":5,"dictLabel":"\u5546\u8F6C\u4E2A\u5931\u8D25","dictLabelTh":"th\u01B0\u01A1ng chuy\u1EC3n nh\u00E2n th\u1EA5t b\u1EA1i","dictLabelEs":"Fallo en transferencia de empresa a particular","dictLabelVi":"Chuy\u1EC3n t\u1EEB doanh nghi\u1EC7p sang c\u00E1 nh\u00E2n th\u1EA5t b\u1EA1i","dictValue":"4-2","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u5546\u8F6C\u4E2A\u5931\u8D25","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:08","createTimeStr":"2020-04-27 01:45:08","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":482,"dictSort":6,"dictLabel":"\u63D0\u524D\u8FD8\u6B3E\u9884\u7EA6\u4E2D","dictLabelTh":"\u0111ang tr\u1EA3 n\u1EE3 h\u1EB9n tr\u01B0\u1EDBc","dictLabelEs":"Cita de pago anticipado en proceso","dictLabelVi":"\u0110ang \u0111\u1EB7t l\u1ECBch tr\u1EA3 n\u1EE3 tr\u01B0\u1EDBc h\u1EA1n","dictValue":"10","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u63D0\u524D\u8FD8\u6B3E\u9884\u7EA6\u4E2D","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:08","createTimeStr":"2020-04-27 01:45:08","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":483,"dictSort":7,"dictLabel":"\u5212\u6263\u5931\u8D25","dictLabelTh":"Kh\u1EA5u tr\u1EEB kh\u00F4ng th\u00E0nh c\u00F4ng","dictLabelEs":"D\u00E9bito fallido","dictLabelVi":"Kh\u1EA5u tr\u1EEB th\u1EA5t b\u1EA1i","dictValue":"3-1","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u5212\u6263\u5931\u8D25","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:09","createTimeStr":"2020-04-27 01:45:09","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":484,"dictSort":8,"dictLabel":"\u5212\u6263\u6210\u529F","dictLabelTh":"Kh\u1EA5u tr\u1EEB th\u00E0nh c\u00F4ng","dictLabelEs":"D\u00E9bito exitoso","dictLabelVi":"Kh\u1EA5u tr\u1EEB th\u00E0nh c\u00F4ng","dictValue":"3-2","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u5212\u6263\u6210\u529F","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:09","createTimeStr":"2020-04-27 01:45:09","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":485,"dictSort":9,"dictLabel":"\u7B49\u5F85\u901A\u77E5\u51FA\u501F\u4EBA","dictLabelTh":"\u0110ang ch\u1EDD th\u00F4ng b\u00E1o cho ng\u01B0\u1EDDi cho vay","dictLabelEs":"En espera de notificar al prestamista","dictLabelVi":"Ch\u1EDD th\u00F4ng b\u00E1o cho ng\u01B0\u1EDDi cho vay","dictValue":"4-1","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u7B49\u5F85\u901A\u77E5\u51FA\u501F\u4EBA","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:09","createTimeStr":"2020-04-27 01:45:09","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":486,"dictSort":10,"dictLabel":"\u901A\u77E5\u51FA\u501F\u4EBA\u6210\u529F","dictLabelTh":"Th\u00F4ng b\u00E1o cho ng\u01B0\u1EDDi cho vay th\u00E0nh c\u00F4ng","dictLabelEs":"Prestamista notificado con \u00E9xito","dictLabelVi":"Th\u00F4ng b\u00E1o cho ng\u01B0\u1EDDi cho vay th\u00E0nh c\u00F4ng","dictValue":"5","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u901A\u77E5\u51FA\u501F\u4EBA\u6210\u529F","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:10","createTimeStr":"2020-04-27 01:45:10","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":487,"dictSort":11,"dictLabel":"\u98CE\u9669\u91D1\u57AB\u4ED8","dictLabelTh":"ti\u1EC1n t\u1EA1m \u1EE9ng r\u1EE7i ro","dictLabelEs":"Anticipo de fondo de riesgo","dictLabelVi":"T\u1EA1m \u1EE9ng qu\u1EF9 r\u1EE7i ro","dictValue":"6","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u98CE\u9669\u91D1\u57AB\u4ED8","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:10","createTimeStr":"2020-04-27 01:45:10","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":488,"dictSort":12,"dictLabel":"\u98CE\u9669\u91D1\u8865\u507F","dictLabelTh":"\u0111\u1EC1n b\u00F9 r\u1EE7i ro","dictLabelEs":"Compensaci\u00F3n de fondo de riesgo","dictLabelVi":"B\u1ED3i th\u01B0\u1EDDng qu\u1EF9 r\u1EE7i ro","dictValue":"7","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u98CE\u9669\u91D1\u8865\u507F","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:10","createTimeStr":"2020-04-27 01:45:10","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":489,"dictSort":13,"dictLabel":"\u5546\u8F6C\u4E2A\u6210\u529F","dictLabelTh":"th\u01B0\u01A1ng chuy\u1EC3n nh\u00E2n th\u00E0nh c\u00F4ng","dictLabelEs":"Transferencia de empresa a particular exitosa","dictLabelVi":"Chuy\u1EC3n t\u1EEB doanh nghi\u1EC7p sang c\u00E1 nh\u00E2n th\u00E0nh c\u00F4ng","dictValue":"4-0","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u5546\u8F6C\u4E2A\u6210\u529F","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:10","createTimeStr":"2020-04-27 01:45:10","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":490,"dictSort":14,"dictLabel":"\u63D0\u524D\u8FD8\u6B3E\u5B8C\u6210","dictLabelTh":"Ho\u00E0n th\u00E0nh vi\u1EC7c tr\u1EA3 n\u1EE3 s\u1EDBm","dictLabelEs":"Pago anticipado completado","dictLabelVi":"Ho\u00E0n t\u1EA5t tr\u1EA3 n\u1EE3 s\u1EDBm","dictValue":"9","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u63D0\u524D\u8FD8\u6B3E\u5B8C\u6210","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:10","createTimeStr":"2020-04-27 01:45:10","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":491,"dictSort":15,"dictLabel":"\u4EE3\u8FD8","dictLabelTh":"tr\u1EA3 ti\u1EC1n thay","dictLabelEs":"Pago por terceros","dictLabelVi":"Tr\u1EA3 n\u1EE3 thay","dictValue":"13","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u4EE3\u8FD8","default":true},{"searchValue":null,"createBy":"admin","createTime":"2020-04-27 06:45:11","createTimeStr":"2020-04-27 01:45:11","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":null,"params":{},"dictCode":492,"dictSort":16,"dictLabel":"\u4EE3\u507F","dictLabelTh":"b\u1ED3i th\u01B0\u1EDDng thay","dictLabelEs":"Subrogaci\u00F3n de pago","dictLabelVi":"B\u1ED3i th\u01B0\u1EDDng thay","dictValue":"14","value1":null,"value2":null,"value3":null,"value4":null,"value5":null,"dictType":"loan_repay_status","cssClass":null,"listClass":null,"isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u4EE3\u507F","default":true}];
+    var count = 0;
+
+    $(function() {
+        Date.prototype.Format = function(fmt) {
+            var o = {
+                "M+" : this.getMonth()+1,
+                "d+" : this.getDate(),
+                "h+" : this.getHours(),
+                "m+" : this.getMinutes(),
+                "s+" : this.getSeconds(),
+                "q+" : Math.floor((this.getMonth()+3)/3),
+                "S"  : this.getMilliseconds()
+            };
+            if (/(y+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+            }
+            for (var k in o) {
+                if (new RegExp("("+ k +")").test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1)
+                        ? o[k] : (("00"+ o[k]).substr((""+ o[k]).length)));
+                }
+            }
+            return fmt;
+        };
+        var options = {
+            url: prefix + "/getRepaymentPlan",
+            saveRepayPlanUrl: prefix + "/saveRepaymentPlan",
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showColumns: false,
+            showPageGo: false,
+            onEditableSave: onEditableSave,
+            columns: [
+                {
+                    checkbox: true
+                },
+                {
+                    field: 'period',
+                    title: i18n('offadmin.repaymentPlan.period')
+                },
+                {
+                    field: 'contractId',
+                    title: i18n('loan.common.contractId')
+                },
+                {
+                    field: 'repayTimeStr',
+                    title: i18n('offadmin.repaymentPlan.receivableDate'),
+                    sortable: true,
+                    formatter: dateFormatter,
+                    editable: {
+                        type: 'date',
+                        clear: false,
+                        disabled: editableFlag,
+                        placement: 'right',
+                        title: i18n('loan.common.please.chooseDate') + ':'
+                    }
+                },
+                {
+                    field: 'receivableTotalAmount',
+                    title: i18n('offadmin.repaymentPlan.receivableTotal')
+                },
+                {
+                    field: 'receivableContractPrincipal',
+                    title: i18n('offadmin.repaymentPlan.receivableContractPrincipal')
+                },
+                {
+                    field: 'receivableLoanPrincipal',
+                    title: i18n('offadmin.repaymentPlan.receivableLoanPrincipal')
+                },
+                {
+                    field: 'receivableLoanServiceFee',
+                    title: i18n('offadmin.repaymentPlan.receivableLoanServiceFee')
+                },
+                {
+                    field: 'receivableInterest',
+                    title: i18n('offadmin.repaymentPlan.receivableInterest')
+                },
+                {
+                    field: 'receivableServiceFee',
+                    title: i18n('offadmin.repaymentPlan.receivableServiceFee')
+                },
+                {
+                    field: 'receivablePenalty',
+                    title: i18n('offadmin.repaymentPlan.receivablePenalty')
+                },
+                {
+                    field: 'repayStatus',
+                    title: i18n('offadmin.repaymentPlan.repayStatus'),
+                    editable: {
+                        type: 'select',
+                        disabled: editableFlag,
+                        source: function() {
+                            return $.table.selectDataDict(repayStatus, LANG_COUNTRY);
+                        }
+                    }
+                },
+                {
+                    field: 'actualRepayDate',
+                    title: i18n('offadmin.repaymentPlan.actualRepayDate'),
+                    formatter: dateFormatter
+                },
+                {
+                    field: 'actualTotalAmount',
+                    title: i18n('offadmin.repaymentPlan.actualTotal'),
+                    formatter: actualAmountFormatter
+                },
+                {
+                    field: 'actualContractPrincipal',
+                    title: i18n('offadmin.repaymentPlan.actualContractPrincipal'),
+                    formatter: actualAmountFormatter
+                },
+                {
+                    field: 'actualLoanPrincipal',
+                    title: i18n('offadmin.repaymentPlan.actualLoanPrincipal'),
+                    formatter: actualAmountFormatter
+                },
+                {
+                    field: 'actualLoanServiceFee',
+                    title: i18n('offadmin.repaymentPlan.actualLoanServiceFee'),
+                    formatter: actualAmountFormatter
+                },
+                {
+                    field: 'actualInterest',
+                    title: i18n('offadmin.repaymentPlan.actualInterest'),
+                    formatter: actualAmountFormatter
+                },
+                {
+                    field: 'actualServiceFee',
+                    title: i18n('offadmin.repaymentPlan.actualServiceFee'),
+                    formatter: actualAmountFormatter
+                },
+                {
+                    field: 'actualPenalty',
+                    title: i18n('offadmin.repaymentPlan.actualPenalty'),
+                    formatter: actualAmountFormatter
+                },
+                {
+                    field: 'mitigateTotalAmount',
+                    title: i18n('offadmin.repaymentPlan.mitigateTotal'),
+                    formatter: mitigateAmountFormatter
+                },
+                {
+                    field: 'mitigateContractPrincipal',
+                    title: i18n('offadmin.repaymentPlan.mitigateContractPrincipal'),
+                    formatter: mitigateAmountFormatter
+                },
+                {
+                    field: 'mitigateLoanPrincipal',
+                    title: i18n('offadmin.repaymentPlan.mitigateLoanPrincipal'),
+                    formatter: mitigateAmountFormatter
+                },
+                {
+                    field: 'mitigateInterest',
+                    title: i18n('offadmin.repaymentPlan.mitigateInterest'),
+                    formatter: mitigateAmountFormatter
+                },
+                {
+                    field: 'mitigateLoanServiceFee',
+                    title: i18n('offadmin.repaymentPlan.mitigateLoanServiceFee'),
+                    formatter: mitigateAmountFormatter
+                },
+                {
+                    field: 'mitigatePenalty',
+                    title: i18n('offadmin.repaymentPlan.mitigatePenalty'),
+                    formatter: mitigateAmountFormatter
+                },
+                {
+                    field: 'overdueDays',
+                    title: i18n('loan.collectionList.Overdue.days'),
+                    formatter: function(value) {
+                        return value == null ? 0 : value;
+                    }
+                },
+                {
+                    field: 'lateChargeActual',
+                    title: i18n('loan.pendRepayMentList.default.interest'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'monthCapital',
+                    title: i18n('loan.pendRepayMentList.On.the.principal'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'newPoundage',
+                    title: i18n('loan.contractList.Service.charge.per.period.live'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'newGst',
+                    title: i18n('loan.contractList.Each.issue.of.taxes.fees.live'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'newPrincipal',
+                    title: i18n('loan.contractList.Amount.received.per.issue.live'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'monthInterest',
+                    title: i18n('loan.pendRepayMentList.monthly.interest'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'interestTaxActual',
+                    title: i18n('loan.pendRepayMentList.monthly.interest.tax'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'manageFee',
+                    title: i18n('loan.contractList.Monthly.management.fee'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'taxes',
+                    title: i18n('loan.contractList.Month.of.taxes.and.fees'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'monthlyPaymentActual',
+                    title: i18n('loan.contractList.Monthly.payments'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'periodOriginReceivableAmount',
+                    title: i18n('loan.rem.origin.Collection.amount')
+                },
+                {
+                    field: 'periodActualRepayAmount',
+                    title: i18n('loan.pre.actualRepayAmount')
+                },
+                {
+                    field: 'periodMitigateAmount',
+                    title: i18n('loan.repaymentPlan.mitigateAmount')
+                },
+                {
+                    field: 'poundage',
+                    title: i18n('loan.contractList.Service.charge.per.period'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'gst',
+                    title: i18n('loan.contractList.Each.issue.of.taxes.fees'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'principal',
+                    title: i18n('loan.contractList.Amount.received.per.issue'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'lateChargeOrigin',
+                    title: i18n('loan.contractList.Source.penalty')
+                },
+                {
+                    field: 'mitigateLateCharge',
+                    title: i18n('loan.contractList.Accumulated.reduction.of.penalty.interest'),
+                    editable: {
+                        disabled: editableFlag,
+                        emptytext: '0'
+                    }
+                },
+                {
+                    field: 'redPacketAmount',
+                    title: i18n('loan.common.Discount.amount')
+                },
+                {
+                    field: 'remainRedPacket',
+                    title: i18n('loan.common.remains.Discount.amount')
+                }
+            ]
+        };
+        $.table.init(options);
+    });
+
+    function dateFormatter(value) {
+        return value ? value.substring(0, 10) : '';
+    }
+
+    /** 未发生实还或减免的期次保持空白，与业务表格口径一致。 */
+    function actualAmountFormatter(value, row) {
+        var actualTotal = Number(row.actualTotalAmount || 0);
+        if (!row.actualRepayDate && actualTotal === 0) {
+            return '';
+        }
+        return value == null ? 0 : value;
+    }
+
+    function mitigateAmountFormatter(value, row) {
+        var actualTotal = Number(row.actualTotalAmount || 0);
+        var mitigateTotal = Number(row.mitigateTotalAmount || 0);
+        if (!row.actualRepayDate && actualTotal === 0 && mitigateTotal === 0) {
+            return '';
+        }
+        return value == null ? 0 : value;
+    }
+
+    function onEditableSave() {
+        count++;
+    }
+
+    /**
+     * 保存原还款计划可编辑字段；新增的账务展示字段只读，不进入保存协议。
+     */
+    function getData() {
+        if (count === 0) {
+            $.modal.alertWarning(i18n('loan.common.There.is.no.data.to.update'));
+            return;
+        }
+        var repayData = $('#' + table.options.id).bootstrapTable('getData');
+        var displayOnlyFields = [
+            'receivableTotalAmount', 'receivableContractPrincipal', 'receivableLoanPrincipal',
+            'receivableLoanServiceFee', 'receivableInterest', 'receivableServiceFee',
+            'receivablePenalty', 'actualRepayDate', 'actualTotalAmount', 'actualContractPrincipal',
+            'actualLoanPrincipal', 'actualLoanServiceFee', 'actualInterest', 'actualServiceFee',
+            'actualPenalty', 'mitigateTotalAmount', 'mitigateContractPrincipal',
+            'mitigateLoanPrincipal', 'mitigateLoanServiceFee', 'mitigateInterest', 'mitigatePenalty'
+        ];
+        repayData = $.map(repayData, function(row) {
+            var item = $.extend({}, row);
+            $.each(displayOnlyFields, function(index, field) {
+                delete item[field];
+            });
+            delete item.periodOriginReceivableAmount;
+            delete item.periodActualRepayAmount;
+            delete item.periodMitigateAmount;
+            return item;
+        });
+        var data = {
+            repayData: JSON.stringify(repayData)
+        };
+        $.ajax({
+            url: table.options.saveRepayPlanUrl,
+            type: 'post',
+            dataType: 'json',
+            data: data,
+            success: function(result) {
+                if (result.code === web_status.SUCCESS) {
+                    count = 0;
+                    $.modal.alertSuccess(result.msg);
+                } else {
+                    $.modal.alertWarning(i18n(result.msg));
+                    $.table.refresh();
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

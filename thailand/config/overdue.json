@@ -1,0 +1,31 @@
+{
+  "countryCode": "TH",
+  "serverBusinessTimezone": "Asia/Bangkok",
+  "storageTimezone": "Asia/Shanghai",
+  "maximumDays": 365,
+  "maximumPenaltyRounds": 30,
+  "entryJob": {
+    "jobId": "336c762ee4b9489a9261df45a1cb72c3",
+    "beanName": "loanTask",
+    "methodName": "executeCreateRemTimer",
+    "expectedParams": "",
+    "dbGroupId": "1",
+    "targetGroup": "1"
+  },
+  "penaltyJob": {
+    "jobId": "6861381967d8437b922f385b7c010c0f",
+    "beanName": "loanTask",
+    "methodName": "executeNewPenaltyTimer",
+    "expectedParams": "200",
+    "dbGroupId": "1",
+    "targetGroup": "1"
+  },
+  "updateDaysJob": {
+    "jobId": "35341f84c58d446dbdb7b58cae52416c",
+    "beanName": "loanTask",
+    "methodName": "updateRemindOverdueDays",
+    "expectedParams": "0",
+    "dbGroupId": "1",
+    "targetGroup": "1"
+  }
+}

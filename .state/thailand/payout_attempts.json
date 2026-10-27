@@ -1,0 +1,40 @@
+{
+  "06c9d399114b43a0bdbae8eab669a56b": {
+    "status": "db_verified",
+    "header_id": "4a180d3f84964edba3f4ef2f5d998f0b",
+    "contract_id": "C1320261027161023X3S6e",
+    "phone": "0650100002",
+    "payload": {
+      "id": "06c9d399114b43a0bdbae8eab669a56b",
+      "ids": "06c9d399114b43a0bdbae8eab669a56b",
+      "systemSourceId": "BORROWER",
+      "contractId": "BOR20261027161022FlWZT1",
+      "bizId": "NLO_20261027161023G0ur3GN",
+      "state": "1",
+      "tradeTime": "2026-10-27 15:10:24",
+      "completeTime": "2026-10-27 15:14:25",
+      "arriTradeTime": "",
+      "updateReason": ""
+    },
+    "operator": "ob5"
+  },
+  "91ec0e4ab5c1426c9c85e8d04f0e887c": {
+    "status": "db_verified",
+    "header_id": "2050278c28f6460e9936f095cf5fab85",
+    "contract_id": "C132026102717204234AhA",
+    "phone": "0650100003",
+    "payload": {
+      "id": "91ec0e4ab5c1426c9c85e8d04f0e887c",
+      "ids": "91ec0e4ab5c1426c9c85e8d04f0e887c",
+      "systemSourceId": "BORROWER",
+      "contractId": "BOR20261027172041QT03JO",
+      "bizId": "NLO_20261027172042KirsoRN",
+      "state": "1",
+      "tradeTime": "2026-10-27 16:20:43",
+      "completeTime": "2026-10-27 16:20:51",
+      "arriTradeTime": "",
+      "updateReason": ""
+    },
+    "operator": "ob5"
+  }
+}

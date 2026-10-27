@@ -2,6 +2,7 @@
 import json
 import os
 import tempfile
+import time
 from pathlib import Path
 
 from common.phone_sequence import locked
@@ -20,7 +21,16 @@ def write_json(path, value):
             json.dump(value, handle, ensure_ascii=False, indent=2)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temporary, path)
+        # Windows scanners/editors can briefly hold the destination without delete sharing.
+        # Retry only this local atomic replacement; never retry a business request here.
+        for attempt in range(8):
+            try:
+                os.replace(temporary, path)
+                break
+            except PermissionError:
+                if attempt == 7:
+                    raise
+                time.sleep(min(0.1 * (attempt + 1), 0.5))
     finally:
         if temporary is not None and temporary.exists():
             temporary.unlink()

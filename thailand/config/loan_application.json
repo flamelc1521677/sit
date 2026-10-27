@@ -1,0 +1,12 @@
+{
+  "productId": "001399",
+  "installmentCount": "3",
+  "periodDays": "7",
+  "loanAmount": "3500",
+  "totalInterest": "100",
+  "serviceFee": "1",
+  "extensionRate": "1",
+  "penaltyRate": "10",
+  "skipUserConfirm": "true",
+  "materialCompletionMode": "true"
+}

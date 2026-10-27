@@ -1,0 +1,95 @@
+{
+  "run_id": "th_full_20261027_01",
+  "status": "payout_success_verified",
+  "country": "TH",
+  "stages": [
+    {
+      "file": "thailand/tests/02_user_management/test_th_add_user.py",
+      "exit_code": 1,
+      "log": "artifacts\\th_full_20261027_01_test_th_add_user.log"
+    },
+    {
+      "file": "thailand/tests/02_user_management/test_th_add_user.py",
+      "exit_code": 1,
+      "log": "artifacts\\th_full_20261027_01_test_th_add_user_resume1.log"
+    },
+    {
+      "file": "thailand/tests/03_identity_verification/test_th_profile.py",
+      "exit_code": 1,
+      "log": "artifacts\\th_full_20261027_01_test_th_profile.log"
+    },
+    {
+      "file": "thailand/tests/03_identity_verification/test_th_profile.py",
+      "exit_code": 1,
+      "log": "artifacts\\th_full_20261027_01_test_th_profile_resume1.log"
+    },
+    {
+      "file": "thailand/tests/03_identity_verification/test_th_profile.py",
+      "exit_code": 0,
+      "log": "artifacts\\th_full_20261027_01_test_th_profile_resume2.log"
+    },
+    {
+      "file": "thailand/tests/05_loan_application/test_th_loan.py",
+      "exit_code": 0,
+      "log": "artifacts\\th_full_20261027_01_test_th_loan.log"
+    },
+    {
+      "file": "thailand/tests/07_payout_approval/test_th_review.py",
+      "exit_code": 1,
+      "log": "artifacts\\th_full_20261027_01_test_th_review.log"
+    },
+    {
+      "file": "thailand/tests/08_disbursement/test_th_payout.py",
+      "exit_code": 0,
+      "log": "artifacts\\th_full_20261027_01_test_th_payout.log"
+    }
+  ],
+  "created_user": {
+    "phone": "0650100002",
+    "employeeLine": "ob516772222",
+    "country": "TH",
+    "user_id": 172555,
+    "uuid": "a776cf3018e64c82ac1507f862a51f70",
+    "appOwnership": "supma"
+  },
+  "current_stage": "thailand/tests/08_disbursement/test_th_payout.py",
+  "precreate_audit": {
+    "phone": "0650100001",
+    "existing_user_id": 172554,
+    "create_request_sent": false,
+    "reason": "Pre-POST duplicate assertion; no add_user_attempts was created"
+  },
+  "creation_reconciliation": {
+    "reason": "API phone mask differs from DB storage mask; both now checked independently plus exact encrypted phone/UUID/ID/employee",
+    "new_create_request_sent": false,
+    "user_id": 172555
+  },
+  "prewrite_reconciliation": [
+    {
+      "stage": "profile",
+      "reason": "Empty OCR channel is legitimate new-user form value; no upload/save request sent",
+      "profile_attempt_exists": false
+    },
+    {
+      "stage": "profile",
+      "reason": "Thai saveIdentityVerification persists edited identity in t_mgt_user_compose_info; original OCR table remains original. Readonly reconcile original API success; no OCR/save replay."
+    }
+  ],
+  "review_reconciliation": {
+    "approval_id": "eb7abfa7fd544f69bf02c705f7c90a66",
+    "operator_id": 1572,
+    "approval_request_replayed": false
+  },
+  "receipt": {
+    "user_id": 172555,
+    "phone": "0650100002",
+    "header_id": "4a180d3f84964edba3f4ef2f5d998f0b",
+    "contract_id": "C1320261027161023X3S6e",
+    "payout_id": "06c9d399114b43a0bdbae8eab669a56b",
+    "payout_state": "1",
+    "trade_amount": "3465.00",
+    "payment_date": "2026-10-27 16:14:25"
+  },
+  "final_audit_file": "artifacts/th_full_20261027_01_final_audit.json",
+  "final_audit_verified": true
+}

@@ -1,0 +1,32 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/13_overdue/test_generate_overdue.py::test_generate_overdue_and_penalty [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 已放款合同、预提醒已分单及目标未还期次前置条件通过
+[数据库] 入催任务参数、范围及调度配置通过
+[数据库] 罚息任务参数、范围及调度配置通过
+[逾期预检] {"mode": "create", "contract_id": "C132026102314070453qf6", "period": 1, "prealert_id": "6ecf08e0be594ea0a77e94d531bd2b22", "server_business_time": "2026-10-26T04:23:35-06:00", "business_due_time": "2026-10-23T01:00:00-06:00", "storage_due_time": "2026-10-23 15:00:00", "overdue_days": 3, "descriptive_age": "S1", "actual_grade": "S1+", "actual_grade_code": "353241", "penalty_rounds": 1, "expected_daily_penalty": null, "expected_grade": null, "entry_job_id": "ea6ce1c5829811f18e13fa163e9c0712", "entry_job_params": "", "penalty_job_id": "ea6ce6cb829811f18e13fa163e9c0712", "penalty_job_params": "200"}
+[数据库] 两表同合同同期次日期落库，金额和其他期次保持一致通过
+[逾期] 两表目标日期已核验，执行一次入催任务
+[数据库] 入催任务执行成功日志及实际参数通过
+[数据库] 合同逾期状态及新入催单期次/天数/账龄通过
+[罚息] 第 1/1 轮，只执行一次任务，校验本轮增量
+[数据库] 罚息第1轮执行成功日志及实际参数通过
+[数据库] 本轮罚息增长、罚息时钟及本金/应还日期不变通过
+[完成] 合同 C132026102314070453qf6，逾期 3 天，实际账龄 S1+，已核验 1 轮罚息；列表可见=False
+PASSED
+
+============================= 1 passed in 18.77s ==============================

@@ -51,7 +51,7 @@ def build_approval_payload(approval, action, reason, amount):
     assert reason and len(reason) <= 500, "审批原因必须为 1 至 500 字"
     amount = str(amount).strip()
     assert re.fullmatch(r"\d{1,16}(\.\d{1,2})?", amount) and Decimal(amount) > 0, "用户期望额度必须为正数且最多两位小数"
-    # This suite uses the reference 2200 amount; stop instead of guessing for a different loan.
+    # Require an explicit expected amount matching this loan; never reuse another loan amount.
     assert Decimal(str(approval["contract_amount"])) == Decimal(amount), "审批期望额度与目标借款合同金额不一致，请核对配置"
     return {"id": approval["id"], spec["reason_field"]: reason, "expectedAmount": amount}
 

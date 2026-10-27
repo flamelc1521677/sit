@@ -1,0 +1,31 @@
+{
+  "countryCode": "MX",
+  "serverBusinessTimezone": "America/Mexico_City",
+  "storageTimezone": "Asia/Shanghai",
+  "maximumDays": 365,
+  "maximumPenaltyRounds": 30,
+  "entryJob": {
+    "jobId": "ea6ce1c5829811f18e13fa163e9c0712",
+    "beanName": "loanTask",
+    "methodName": "executeCreateRemTimer",
+    "expectedParams": "",
+    "dbGroupId": "1",
+    "targetGroup": "2"
+  },
+  "penaltyJob": {
+    "jobId": "ea6ce6cb829811f18e13fa163e9c0712",
+    "beanName": "loanTask",
+    "methodName": "executeNewPenaltyTimer",
+    "expectedParams": "200",
+    "dbGroupId": "1",
+    "targetGroup": "2"
+  },
+  "updateDaysJob": {
+    "jobId": "ea6ce20a829811f18e13fa163e9c0712",
+    "beanName": "loanTask",
+    "methodName": "updateRemindOverdueDays",
+    "expectedParams": "0",
+    "dbGroupId": "1",
+    "targetGroup": "2"
+  }
+}

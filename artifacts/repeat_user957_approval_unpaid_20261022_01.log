@@ -1,0 +1,52 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 3 items
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[复借] 用户 957，独立申请标识 user957-repeat-20261022-01，保留 1 笔历史
+[借款 1/5] 目标用户 id=957，phone=0658900222，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 6000、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 5940.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=996b1840eab74ea1b7d03a9c5545b602
+PASSED
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 7763a8d40791496d882cae6b899507db，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=6000，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+tests/16_approved_unpaid/test_approved_unpaid.py::test_approved_but_not_disbursed [数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[数据库] 登录账号存在且启用通过
+[数据库] 独立人审通过、放款单未成功、合同未放款及无成功放款流水通过
+[完成] {"user_id": 957, "phone": "0658900222", "header_id": "996b1840eab74ea1b7d03a9c5545b602", "approval_id": "7763a8d40791496d882cae6b899507db", "approval_status": 1, "reviewer": "ob5-mx", "contract_id": "C132026102214433833Mve", "payout_id": "b12f570f27494111bdc5bef3752d8338", "payout_state": "2", "loan_amount": "6000", "status": "approved_unpaid_db_verified"}
+PASSED
+
+============================= 3 passed in 32.46s ==============================

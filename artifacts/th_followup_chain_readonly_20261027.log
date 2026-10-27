@@ -1,0 +1,22 @@
+[后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 泰国OB5账号ID与部门归属通过
+[泰国登录] SSO result.success、OAuth、OB5及泰国应用范围校验通过
+[数据库] 指定手机号用户及数据库归属通过
+[数据库] 用户、已放款合同及成功放款单关联通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[数据库] 定时任务参数、范围及调度配置通过
+[数据库] 定时任务参数、范围及调度配置通过
+[数据库] 定时任务参数、范围及调度配置通过
+[数据库] 泰国OB5固定分单接收人及部门启用状态通过
+[数据库] 泰国OB5固定分单接收人及部门启用状态通过
+[泰国逾期串联初始预检] {"phone": "0650100002", "user_id": 172555, "uuid": "a776cf3018e64c82ac1507f862a51f70", "appOwnership": "supma", "contract_id": "C1320261027161023X3S6e", "period": 1, "days": 1, "server_business_time": "2026-10-27T15:39:16+07:00", "business_due_time": "2026-10-26T01:00:00+07:00", "storage_due_time": "2026-10-26 02:00:00", "actual_grade": "S0+", "prealert_task_params": "2", "prealert_id": null, "jobs": [{"id": "ca13c67e339a4bbdbd67dc3cf50b1143", "beanName": "loanTask", "methodName": "executePreAlertListTimer", "params": "2", "dbGroupId": "1", "targetGroup": "1"}, {"id": "336c762ee4b9489a9261df45a1cb72c3", "beanName": "loanTask", "methodName": "executeCreateRemTimer", "params": "", "dbGroupId": "1", "targetGroup": "1"}, {"id": "6861381967d8437b922f385b7c010c0f", "beanName": "loanTask", "methodName": "executeNewPenaltyTimer", "params": "200", "dbGroupId": "1", "targetGroup": "1"}, {"id": "35341f84c58d446dbdb7b58cae52416c", "beanName": "loanTask", "methodName": "updateRemindOverdueDays", "params": "0", "dbGroupId": "1", "targetGroup": "1"}]}
+[只读完成] 已验证已放款合同、目标期次、泰国任务/账龄/接收人；后续实际转交及入催结果须在生成后校验。未改期、未执行任务。

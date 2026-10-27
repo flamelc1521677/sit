@@ -3,9 +3,12 @@ import time
 
 from common.database import schema_name
 from decimal import Decimal
+from common.prealert_database import PrealertDatabaseChecks
+from common.overdue_database import OverdueDatabaseChecks
+from common.collection_assignment_database import CollectionAssignmentChecks
 
 
-class DatabaseChecks:
+class DatabaseChecks(PrealertDatabaseChecks, OverdueDatabaseChecks, CollectionAssignmentChecks):
     def __init__(self, database):
         self.database = database
         self.biz = schema_name("SIT_DB_BUSINESS_SCHEMA", "off_biz_mex")
@@ -215,7 +218,7 @@ class DatabaseChecks:
             return header, contract, bill
         return self.check("人审通过、虚拟订单、合同和放款单归属及金额", verify, timeout=60)
 
-    def payout_success(self, before, payload, old_flows, operator_name):
+    def payout_success(self, before, payload, old_flows, operator_name, merchant_timezone=None, database_timezone=None):
         from common.payout_client import database_time
         def verify():
             row = self.payout_bill(before["ID"])
@@ -223,7 +226,7 @@ class DatabaseChecks:
             for field in ("BIZ_ID", "CONTRACT_ID", "BID_ID", "SYSTEM_SOURCE_ID", "TRADE_AMOUNT"):
                 assert row[field] == before[field], f"放款单关联/金额字段 {field} 被修改"
             for field, parameter in {"TRADE_TIME": "tradeTime", "COMPLETE_TIME": "completeTime", "ARRI_TRADE_TIME": "arriTradeTime"}.items():
-                assert row[field] == database_time(payload[parameter]), f"放款单 {field} 未按商户时区正确保存"
+                assert row[field] == database_time(payload[parameter], merchant_timezone, database_timezone), f"放款单 {field} 未按商户时区正确保存"
             assert (row["UPDATE_REASON"] or "") == payload["updateReason"], "放款修改原因不一致"
             assert row["LAST_OPERATOR_ID"] == operator_name, "放款修改人不一致"
             flows = self.database.select(f"SELECT ID,STATE,OPERATOR_ID,COMPLETE_TIME,UPDATE_REASON FROM `{self.payout}`.pay_trade_bill_flow WHERE BILL_ID=%s", (before["ID"],))

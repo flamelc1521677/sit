@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title>新增线下用户</title>
+	<link rel="shortcut icon" href="logo2.png">
+	<link href="/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="/css/font-awesome.min.css" rel="stylesheet"/>
+	<!-- bootstrap-table 表格插件样式 -->
+	<link href="/ajax/libs/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+	<link href="/css/animate.css" rel="stylesheet"/>
+	<link href="/css/style.css" rel="stylesheet"/>
+	<link href="/ruoyi/css/ry-ui.css?v=4.1.2" rel="stylesheet"/>
+
+    
+	<link href="/ajax/libs/select2/select2.min.css" rel="stylesheet"/>
+	<link href="/ajax/libs/select2/select2-bootstrap.css" rel="stylesheet"/>
+
+    <style>
+        .registration-type-options {
+            padding-top: 7px;
+            white-space: nowrap;
+        }
+        .registration-type-option {
+            margin-right: 32px;
+            font-weight: normal;
+        }
+        .registration-type-option:last-child {
+            margin-right: 0;
+        }
+        .registration-type-help {
+            margin: 7px 0 0;
+            color: #999;
+            font-size: 12px;
+            line-height: 20px;
+        }
+    </style>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-offline-add" autocomplete="off">
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">员工 Line:</label>
+            <div class="col-sm-8">
+                <select id="employeeLineConfigId" name="employeeLineConfigId" class="form-control noselect2" required></select>
+                <input type="hidden" id="employeeLine" name="employeeLine"/>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">手机号:</label>
+            <div class="col-sm-8">
+                <input name="phone" class="form-control" type="text" maxlength="200" required
+                       placeholder="请输入加密后的手机号（hashid）">
+            </div>
+        </div>
+        <div id="error-msg" class="form-group" style="display:none;">
+            <div class="col-sm-8 col-sm-offset-3">
+                <span class="text-danger" id="error-text"></span>
+            </div>
+        </div>
+    </form>
+</div>
+
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<!--jQuery国际化插件-->
+	<script src="/js/jquery.i18n.properties.min.js"></script>
+	<script>
+		//获取应用路径
+		var ROOT = "";
+
+		//获取默认语言
+		var LANG_COUNTRY = "zh_CN";
+		var lang = "zh";
+		// 表单日期组件语言：laydate 仅内置 cn/en，扩展 es/th；datetimepicker 默认识别 zh-cn/en/es/th
+		var LAYDATE_LANG = (LANG_COUNTRY === 'zh_CN' || lang === 'zh') ? 'cn'
+				: (LANG_COUNTRY === 'es_MX' || lang === 'es') ? 'es'
+				: (LANG_COUNTRY === 'th_TH' || lang === 'th') ? 'th'
+				: 'en';
+		var DATETIMEPICKER_LANG = (LANG_COUNTRY === 'zh_CN' || lang === 'zh') ? 'zh-cn'
+				: (LANG_COUNTRY === 'es_MX' || lang === 'es') ? 'es'
+				: (LANG_COUNTRY === 'th_TH' || lang === 'th') ? 'th'
+				: 'en';
+		//当前国家主力聊天工具名（泰国=Line 墨西哥=WhatsApp），页面展示用
+		var IM_NAME = "Line";
+		//全站日期时间控件（含查询条件/编辑表单）的“今天/现在”按商户国家当前时间取，而非客户端电脑时区。
+		//下发商户国家当前墙钟串，算出与本机时间的毫秒差，供已打补丁的 laydate 读取（默认 0=不改，无上下文时≈0）。
+		try {
+			var __cn = "2026-10-27 14:27:59";
+			var __m = (__cn || '').match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);
+			if (__m) {
+				window.__laydateNowOffsetMs__ = new Date(+__m[1], +__m[2] - 1, +__m[3], +__m[4], +__m[5], +__m[6]).getTime() - Date.now();
+			}
+		} catch (e) {}
+        var isCatchData = [{"searchValue":null,"createBy":"admin","createTime":"2024-01-01 19:34:14","createTimeStr":"2024-01-02 02:34:14","updateBy":null,"updateTime":null,"updateTimeStr":null,"remark":"","params":{},"dictCode":23543,"dictSort":1,"dictLabel":"\u56FD\u9645\u5316\u6587\u4EF6\u662F\u5426\u5F00\u542F\u7F13\u5B58","dictLabelTh":"t\u1EC7p qu\u1ED1c t\u1EBF h\u00F3a c\u00F3 b\u1EADt b\u1ED9 nh\u1EDB \u0111\u1EC7m hay ch\u01B0a","dictLabelEs":"Si se habilita cach\u00E9 para archivos de internacionalizaci\u00F3n","dictLabelVi":"C\u00F3 b\u1EADt b\u1ED9 nh\u1EDB \u0111\u1EC7m t\u1EC7p qu\u1ED1c t\u1EBF h\u00F3a hay kh\u00F4ng","dictValue":"true","value1":"","value2":"","value3":"","value4":"","value5":"","dictType":"sys_is_catch_static","cssClass":"","listClass":"","isDefault":"Y","status":"0","flag":null,"dictLabelI18n":"\u56FD\u9645\u5316\u6587\u4EF6\u662F\u5426\u5F00\u542F\u7F13\u5B58","default":true}];
+        var isCatchFlag = true;
+        if (isCatchData[0].dictValue == 'false'){
+            isCatchFlag = false;
+        }
+		//初始化i18n插件
+		$.i18n.properties({
+			path: ROOT + '/i18n/',//这里表示访问路径
+			name: 'messages',//文件名开头
+			language: LANG_COUNTRY,//文件名语言 例如th_TH
+			mode: 'map',//默认值
+            cache: isCatchFlag //是否开启浏览器缓存
+		});
+
+		//初始化i18n函数
+		function i18n(msgKey) {
+			try {
+				var msg = $.i18n.prop(msgKey);
+				//员工 Line 文案里的聊天工具名按当前国家展示（与后端 CountryAwareMessageSource 同一白名单）
+				if (IM_NAME && IM_NAME !== 'Line' && typeof msgKey === 'string' && typeof msg === 'string'
+						&& (msgKey.indexOf('offadmin.profile.line') === 0
+							|| msgKey.indexOf('offadmin.user.employeeLine') === 0
+							|| msgKey.indexOf('offadmin.msg.offlineAddEmployeeLine') === 0)) {
+					msg = msg.replace(/\bLine\b/g, IM_NAME);
+				}
+				return msg;
+			} catch (e) {
+				console.error(e);
+				return msgKey;
+			}
+		}
+	</script>
+	<!-- bootstrap-table 表格插件 -->
+	<script src="/ajax/libs/bootstrap-table/bootstrap-table.min.js?v=20200727"></script>
+	<script src="/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+	<script>
+		// 按后台当前语言覆盖表格组件内置提示，仅影响分页、工具栏和空数据等展示文案。
+		(function () {
+			function formatMessage(messageKey, values) {
+				var message = i18n(messageKey);
+				$.each(values || [], function (index, value) {
+					message = message.replace(new RegExp('\\{' + index + '\\}', 'g'), value);
+				});
+				return message;
+			}
+
+			$.extend($.fn.bootstrapTable.defaults, {
+				formatLoadingMessage: function () {
+					return i18n('ui.bootstrapTable.loading');
+				},
+				formatRecordsPerPage: function (pageNumber) {
+					return formatMessage('ui.bootstrapTable.recordsPerPage', [pageNumber]);
+				},
+				formatShowingRows: function (pageFrom, pageTo, totalRows, totalNotFiltered) {
+					if (totalNotFiltered !== undefined && totalNotFiltered > totalRows) {
+						return formatMessage('ui.bootstrapTable.showingFilteredRows',
+								[pageFrom, pageTo, totalRows, totalNotFiltered]);
+					}
+					return formatMessage('ui.bootstrapTable.showingRows', [pageFrom, pageTo, totalRows]);
+				},
+				formatSRPaginationPreText: function () {
+					return i18n('ui.bootstrapTable.previousPage');
+				},
+				formatSRPaginationPageText: function (page) {
+					return formatMessage('ui.bootstrapTable.page', [page]);
+				},
+				formatSRPaginationNextText: function () {
+					return i18n('ui.bootstrapTable.nextPage');
+				},
+				formatDetailPagination: function (totalRows) {
+					return formatMessage('ui.bootstrapTable.detailPagination', [totalRows]);
+				},
+				formatClearSearch: function () {
+					return i18n('ui.bootstrapTable.clearSearch');
+				},
+				formatSearch: function () {
+					return i18n('ui.bootstrapTable.search');
+				},
+				formatNoMatches: function () {
+					return i18n('ui.bootstrapTable.noMatches');
+				},
+				formatPaginationSwitch: function () {
+					return i18n('ui.bootstrapTable.paginationSwitch');
+				},
+				formatPaginationSwitchDown: function () {
+					return i18n('ui.bootstrapTable.paginationShow');
+				},
+				formatPaginationSwitchUp: function () {
+					return i18n('ui.bootstrapTable.paginationHide');
+				},
+				formatRefresh: function () {
+					return i18n('ui.bootstrapTable.refresh');
+				},
+				formatToggle: function () {
+					return i18n('ui.bootstrapTable.toggle');
+				},
+				formatToggleOn: function () {
+					return i18n('ui.bootstrapTable.cardViewShow');
+				},
+				formatToggleOff: function () {
+					return i18n('ui.bootstrapTable.cardViewHide');
+				},
+				formatColumns: function () {
+					return i18n('ui.bootstrapTable.columns');
+				},
+				formatColumnsToggleAll: function () {
+					return i18n('ui.bootstrapTable.toggleAll');
+				},
+				formatFullscreen: function () {
+					return i18n('ui.bootstrapTable.fullscreen');
+				},
+				formatAllRows: function () {
+					return i18n('ui.bootstrapTable.allRows');
+				},
+				formatAutoRefresh: function () {
+					return i18n('ui.bootstrapTable.autoRefresh');
+				},
+				formatExport: function () {
+					return i18n('ui.bootstrapTable.export');
+				},
+				formatJumpTo: function () {
+					return i18n('ui.bootstrapTable.jumpTo');
+				},
+				formatAdvancedSearch: function () {
+					return i18n('ui.bootstrapTable.advancedSearch');
+				},
+				formatAdvancedCloseButton: function () {
+					return i18n('ui.bootstrapTable.close');
+				},
+				formatFilterControlSwitch: function () {
+					return i18n('ui.bootstrapTable.filterSwitch');
+				},
+				formatFilterControlSwitchHide: function () {
+					return i18n('ui.bootstrapTable.filterHide');
+				},
+				formatFilterControlSwitchShow: function () {
+					return i18n('ui.bootstrapTable.filterShow');
+				}
+			});
+		})();
+	</script>
+	<script src="/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/columns/bootstrap-table-fixed-columns.min.js?v=20200727"></script>
+	<!-- jquery-validate 表单验证插件 -->
+	<script src="/ajax/libs/validate/jquery.validate.min.js"></script>
+	<script src="/ajax/libs/validate/messages_zh.min.js"></script>
+	<script src="/ajax/libs/validate/jquery.validate.extend.js"></script>
+	<script>
+		// 校验插件默认加载中文包，这里按当前后台语言覆盖为对应国际化文案。
+		$.extend($.validator.messages, {
+			required: i18n("validation.required"),
+			remote: i18n("validation.remote"),
+			email: i18n("validation.email"),
+			url: i18n("validation.url"),
+			date: i18n("validation.date"),
+			dateISO: i18n("validation.dateISO"),
+			number: i18n("validation.number"),
+			digits: i18n("validation.digits"),
+			equalTo: i18n("validation.equalTo"),
+			maxlength: $.validator.format(i18n("validation.maxlength")),
+			minlength: $.validator.format(i18n("validation.minlength")),
+			rangelength: $.validator.format(i18n("validation.rangelength")),
+			range: $.validator.format(i18n("validation.range")),
+			max: $.validator.format(i18n("validation.max")),
+			min: $.validator.format(i18n("validation.min")),
+			step: $.validator.format(i18n("validation.step"))
+		});
+	</script>
+	<!-- jquery-validate 表单树插件 -->
+	<script src="/ajax/libs/bootstrap-treetable/bootstrap-treetable.js"></script>
+	<!-- jquery-export 表格导出插件 -->
+	<script src="/ajax/libs/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+	<script src="/ajax/libs/bootstrap-table/extensions/export/tableExport.js"></script>
+	<!-- 遮罩层 -->
+	<script src="/ajax/libs/blockUI/jquery.blockUI.js"></script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"></script>
+	<script src="/ajax/libs/layer/layer.min.js"></script>
+	<script src="/ajax/libs/layui/layui.js"></script>
+	<script>
+		// 全站 laydate 面板默认语言跟随后台会话（含直接 render、未传 lang 的页面）
+		(function () {
+			if (!window.layui || typeof LAYDATE_LANG === 'undefined') {
+				return;
+			}
+			layui.use('laydate', function () {
+				layui.laydate.set({ lang: LAYDATE_LANG });
+			});
+		})();
+	</script>
+	<script src="/ruoyi/js/common.js?v=4.1.1"></script>
+	<script src="/ruoyi/js/ry-ui.js?v=4.1.3"></script>
+	<script> var ctx = "\/"; </script>
+	<script src="/ruoyi/js/saas-customer-profile.js?v=20250918"></script>
+
+
+	<script src="/ajax/libs/select2/select2.min.js"></script>
+
+<script type="text/javascript">
+    var prefix = ctx + "user/user";
+
+    $(function() {
+        $("#employeeLineConfigId").select2({
+            theme: "bootstrap",
+            placeholder: i18n("common.choose"),
+            allowClear: true,
+            minimumInputLength: 0,
+            ajax: {
+                url: prefix + "/offline/employeeLineOptions",
+                dataType: "json",
+                delay: 250,
+                data: function(params) {
+                    return {
+                        keyword: params.term || "",
+                        pageNum: params.page || 1,
+                        pageSize: 20
+                    };
+                },
+                processResults: function(response) {
+                    var data = response && response.data ? response.data : {};
+                    return {
+                        results: data.results || [],
+                        pagination: data.pagination || { more: false }
+                    };
+                },
+                cache: true
+            }
+        }).on("change", function() {
+            var selectedData = $(this).select2("data");
+            var lineAccount = selectedData && selectedData.length > 0 ? selectedData[0].lineAccount : "";
+            $("#employeeLine").val(lineAccount || "");
+            $(this).valid();
+        });
+    });
+
+    function showError(msg) {
+        $("#error-text").text(msg);
+        $("#error-msg").show();
+    }
+
+    function hideError() {
+        $("#error-msg").hide();
+        $("#error-text").text("");
+    }
+    function refreshParentUserList() {
+        // 新增成功后刷新父页面列表，父页面 queryParams 会读取当前查询表单条件。
+        if (window.parent && window.parent.$ && window.parent.$.table) {
+            window.parent.$.table.refresh();
+        }
+    }
+    function submitHandler(indexOrOptions, layero, forceEmployeeLinePhoneDuplicate) {
+        return new Promise((resolve, reject) => {
+            var embed = indexOrOptions && typeof indexOrOptions === 'object' && indexOrOptions.embed === true;
+            if (!$.validate.form()) {
+                reject({ code: 500, msg: 'validate failed' });
+                return;
+            }
+            hideError();
+            var data = $('#form-offline-add').serialize();
+            if (forceEmployeeLinePhoneDuplicate === true) {
+                data += (data ? '&' : '') + 'forceEmployeeLinePhoneDuplicate=true';
+            }
+            $.ajax({
+                url: prefix + "/offline/addUser",
+                type: "POST",
+                data: data,
+                beforeSend: function() {
+                    $.modal.loading(i18n("tb.2fb90b0535"));
+                },
+                success: function(result) {
+                    $.modal.closeLoading();
+                    if (result.confirmEmployeeLinePhoneDuplicate === true) {
+                        layer.confirm(result.msg, {
+                            icon: 0,
+                            title: i18n('offadmin.msg.offlineAddEmployeeLinePhoneExistsTitle'),
+                            btn: [i18n('offadmin.msg.offlineAddEmployeeLinePhoneChooseOther'),
+                                i18n('offadmin.msg.offlineAddEmployeeLinePhoneForceContinue')]
+                        }, function(confirmIndex) {
+                            layer.close(confirmIndex);
+                            showError(result.msg);
+                            resolve(result);
+                        }, function(confirmIndex) {
+                            layer.close(confirmIndex);
+                            submitHandler(indexOrOptions, layero, true).then(resolve).catch(reject);
+                        });
+                        return;
+                    }
+
+                    resolve(result);
+                    if (result.code === web_status.SUCCESS) {
+                        if (embed) {
+                            return;
+                        }
+                        // 关闭当前弹窗，刷新父表格
+                        $.modal.close();
+                        refreshParentUserList();
+                        if (parent && parent.$) {
+                            parent.$.modal.msgSuccess(result.msg);
+                            parent.$.table.refresh();
+                            /*
+                            // 新增成功后暂不自动打开编辑用户详情弹窗，避免详情页确认按钮触发 submitHandler 报错。
+                            var data = result.data;
+                            if (data && data.id) {
+                                var detailUrl = prefix + "/detail/" + data.id;
+                                if (data.appOwnership) {
+                                    detailUrl += "?appOwnership=" + encodeURIComponent(data.appOwnership);
+                                }
+                                parent.$.modal.open(i18n("tb.b4f21eca11"), detailUrl, 900, offlineDialogHeight());
+                            }
+                            */
+                        }
+                    } else {
+                        showError(result.msg);
+                    }
+                },
+                error: function() {
+                    $.modal.closeLoading();
+                    showError(i18n('ui.requestFailedRetry'));
+                    reject({ code: 500, msg: 'request failed' });
+                }
+            });
+        });
+    }
+    function offlineDialogHeight() {
+        return Math.min(680, Math.max(420, $(window).height() - 50));
+    }
+</script>
+</body>
+</html>

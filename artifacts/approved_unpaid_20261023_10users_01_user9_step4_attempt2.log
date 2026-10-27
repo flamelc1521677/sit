@@ -1,0 +1,30 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 9999, 'msg': '验证码有误!'}
+FAILED
+
+================================== FAILURES ===================================
+________________________ test_selected_payout_approval ________________________
+tests\07_payout_approval\test_payout_approval.py:36: in test_selected_payout_approval
+    authenticate_admin(session, username=login_name, password=reviewer_password)
+common\admin_client.py:21: in authenticate_admin
+    login(session, client_id, username=username, password=password)
+common\sso_login.py:85: in login
+    assert str(body.get("code")) == "200", f"业务登录失败：{actual}{hint}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 业务登录失败：{'code': 9999, 'msg': '验证码有误!'}；如验证码错误，请使用 manual 模式
+=========================== short test summary info ===========================
+FAILED tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+============================== 1 failed in 4.01s ==============================

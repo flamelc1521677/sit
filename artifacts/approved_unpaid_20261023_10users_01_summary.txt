@@ -1,0 +1,130 @@
+2026-10-23：新增10名用户，6000元/3期/每期7天，全部资料完善、先试算再提交及ob5-mx人审通过；本次未执行放款修改接口。最终统一复核未放款9笔、已放款1笔。
+[
+  {
+    "user_id": 996,
+    "phone": "0658900239",
+    "contract_id": "C132026102314070453qf6",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "success_flows": [],
+    "final_status": "approved_unpaid_verified"
+  },
+  {
+    "user_id": 997,
+    "phone": "0658900240",
+    "contract_id": "C13202610231408302zGwA",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "success_flows": [],
+    "final_status": "approved_unpaid_verified"
+  },
+  {
+    "user_id": 998,
+    "phone": "0658900241",
+    "contract_id": "C1320261023140946McM95",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "success_flows": [],
+    "final_status": "approved_unpaid_verified"
+  },
+  {
+    "user_id": 999,
+    "phone": "0658900242",
+    "contract_id": "C1320261023141105LwV0H",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "success_flows": [],
+    "final_status": "approved_unpaid_verified"
+  },
+  {
+    "user_id": 1000,
+    "phone": "0658900243",
+    "contract_id": "C1320261023141224Kmda4",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "1",
+    "contract_status": "1",
+    "payment_date": "2026-10-23 14:12:32",
+    "success_flows": [
+      {
+        "ID": "eff1feea-43a1-48f4-bb9b-d9c7f1293a7c",
+        "OPERATOR_ID": "ob1-mx",
+        "COMPLETE_TIME": "2026-10-23 14:12:32"
+      }
+    ],
+    "final_status": "later_payout_success_observed"
+  },
+  {
+    "user_id": 1001,
+    "phone": "0658900244",
+    "contract_id": "C13202610231413336uKj6",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "success_flows": [],
+    "final_status": "approved_unpaid_verified"
+  },
+  {
+    "user_id": 1002,
+    "phone": "0658900245",
+    "contract_id": "C13202610231414554h072",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "success_flows": [],
+    "final_status": "approved_unpaid_verified"
+  },
+  {
+    "user_id": 1003,
+    "phone": "0658900246",
+    "contract_id": "C1320261023141608GF9Bc",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "success_flows": [],
+    "final_status": "approved_unpaid_verified"
+  },
+  {
+    "user_id": 1004,
+    "phone": "0658900247",
+    "contract_id": "C13202610231417364gP4W",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "success_flows": [],
+    "final_status": "approved_unpaid_verified"
+  },
+  {
+    "user_id": 1005,
+    "phone": "0658900248",
+    "contract_id": "C13202610231418480kT06",
+    "approval_status": 1,
+    "reviewer": "ob5-mx",
+    "payout_state": "2",
+    "contract_status": "0",
+    "payment_date": null,
+    "success_flows": [],
+    "final_status": "approved_unpaid_verified"
+  }
+]
+第2、5、7名借款前及第9名人审前遇验证码错误，仅重新登录，未重复业务提交。

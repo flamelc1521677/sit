@@ -1,0 +1,67 @@
+{
+  "status": "four_paid_contracts_overdue_verified_two_applications_without_contract",
+  "orders": [
+    {
+      "user_id": 996,
+      "phone": "0658900239",
+      "contract_id": "C132026102314070453qf6",
+      "period": 1,
+      "overdue_days": 3,
+      "business_due_time": "2026-10-23T01:00:00-06:00",
+      "grade": "S1+",
+      "penalty": "1800.00",
+      "collection_id": "ccd99e586c424124b030b196d45be8e1",
+      "other_periods_unchanged": true
+    },
+    {
+      "user_id": 996,
+      "phone": "0658900239",
+      "contract_id": "C1320261026180516c22Mu",
+      "period": 1,
+      "overdue_days": 2,
+      "business_due_time": "2026-10-24T01:00:00-06:00",
+      "grade": "S1+",
+      "penalty": "1200.00",
+      "collection_id": "488a2b5285764ed2a7fca46ecbbc14e8",
+      "other_periods_unchanged": true
+    },
+    {
+      "user_id": 997,
+      "phone": "0658900240",
+      "contract_id": "C13202610231408302zGwA",
+      "period": 1,
+      "overdue_days": 3,
+      "business_due_time": "2026-10-23T01:00:00-06:00",
+      "grade": "S1+",
+      "penalty": "1800.00",
+      "collection_id": "0d77481f537347a0baed9e82005fe8e8",
+      "other_periods_unchanged": true
+    },
+    {
+      "user_id": 997,
+      "phone": "0658900240",
+      "contract_id": "C1320261026181054Xe01c",
+      "period": 1,
+      "overdue_days": 2,
+      "business_due_time": "2026-10-24T01:00:00-06:00",
+      "grade": "S1+",
+      "penalty": "1200.00",
+      "collection_id": "a8b34f8592c646189cb45a7f1142715f",
+      "other_periods_unchanged": true
+    }
+  ],
+  "deferred": [
+    {
+      "user_id": 996,
+      "header_id": "c7c67be10247401cb7e2d1d1a053d8af",
+      "target_overdue_days": 1,
+      "reason": "no_linked_paid_contract"
+    },
+    {
+      "user_id": 997,
+      "header_id": "fd7b961e284c48369024d44047f27a38",
+      "target_overdue_days": 1,
+      "reason": "no_linked_paid_contract"
+    }
+  ]
+}

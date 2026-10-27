@@ -1,0 +1,9 @@
+{
+  "jobId": "ea6cf0ee829811f18e13fa163e9c0712",
+  "beanName": "loanTask",
+  "methodName": "executePreAlertListTimer",
+  "dbGroupId": "1",
+  "targetGroup": "2",
+  "countryCode": "MX",
+  "serverBusinessTimezone": "America/Mexico_City"
+}

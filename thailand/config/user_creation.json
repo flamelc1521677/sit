@@ -1,0 +1,13 @@
+{
+  "country": "TH",
+  "employeeLogin": "ob5",
+  "employeeUserId": "1593",
+  "employeeDeptId": "11804",
+  "employeeLineName": "lcline1",
+  "employeeLineConfigId": "65",
+  "employeeLine": "ob516772222",
+  "firstPhone": "0650100001",
+  "phoneInputMode": "plain",
+  "allowedOwnerships": ["happyandlife", "happyandlife_ios", "fintreny_ios", "supma", "offline01"],
+  "expectedMessage": "线下用户建档成功。"
+}

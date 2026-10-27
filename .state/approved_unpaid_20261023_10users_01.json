@@ -1,0 +1,433 @@
+{
+  "batch_id": "approved_unpaid_20261023_10users_01",
+  "count": 10,
+  "status": "completed_with_later_payout_change",
+  "loan_amount": "6000",
+  "installments": "3",
+  "users": [
+    {
+      "index": 1,
+      "status": "approved_unpaid_db_verified",
+      "completed_stages": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py"
+      ],
+      "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py",
+      "logs": [
+        "artifacts\\approved_unpaid_20261023_10users_01_user1_step1_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user1_step2_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user1_step3_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user1_step4_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user1_step5_attempt1.log"
+      ],
+      "phone": "0658900239",
+      "user_id": 996,
+      "header_id": "1c28559b9b9f40f1b83c57142f98eb2c",
+      "approval_id": "e6d2f2e3a1a946ed936200a13f276248",
+      "approval_status": 1,
+      "reviewer": "ob5-mx",
+      "contract_id": "C132026102314070453qf6",
+      "payout_id": "aaba2a978813465ea8d7943066f7c234",
+      "payout_state": "2",
+      "loan_amount": "6000",
+      "final_recheck": {
+        "user_id": 996,
+        "phone": "0658900239",
+        "contract_id": "C132026102314070453qf6",
+        "approval_status": 1,
+        "reviewer": "ob5-mx",
+        "payout_state": "2",
+        "contract_status": "0",
+        "payment_date": null,
+        "success_flows": [],
+        "final_status": "approved_unpaid_verified"
+      }
+    },
+    {
+      "index": 2,
+      "status": "approved_unpaid_db_verified",
+      "completed_stages": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py"
+      ],
+      "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py",
+      "logs": [
+        "artifacts\\approved_unpaid_20261023_10users_01_user2_step1_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user2_step2_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user2_step3_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user2_step3_attempt2.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user2_step4_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user2_step5_attempt1.log"
+      ],
+      "phone": "0658900240",
+      "user_id": 997,
+      "header_id": "f8098db4568c4e9897d05ba8c979b79b",
+      "approval_id": "34def45b4f0e498aa35cdb819e90e9cd",
+      "approval_status": 1,
+      "reviewer": "ob5-mx",
+      "contract_id": "C13202610231408302zGwA",
+      "payout_id": "754c03f98caa40f1969983628da7f380",
+      "payout_state": "2",
+      "loan_amount": "6000",
+      "final_recheck": {
+        "user_id": 997,
+        "phone": "0658900240",
+        "contract_id": "C13202610231408302zGwA",
+        "approval_status": 1,
+        "reviewer": "ob5-mx",
+        "payout_state": "2",
+        "contract_status": "0",
+        "payment_date": null,
+        "success_flows": [],
+        "final_status": "approved_unpaid_verified"
+      }
+    },
+    {
+      "index": 3,
+      "status": "approved_unpaid_db_verified",
+      "completed_stages": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py"
+      ],
+      "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py",
+      "logs": [
+        "artifacts\\approved_unpaid_20261023_10users_01_user3_step1_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user3_step2_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user3_step3_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user3_step4_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user3_step5_attempt1.log"
+      ],
+      "phone": "0658900241",
+      "user_id": 998,
+      "header_id": "3e836bebd3f94186bac1be3429c785cd",
+      "approval_id": "57a34ecd8e6142a8b9a26101b7d0676e",
+      "approval_status": 1,
+      "reviewer": "ob5-mx",
+      "contract_id": "C1320261023140946McM95",
+      "payout_id": "08b6f354784244e1beacca1086dbdae6",
+      "payout_state": "2",
+      "loan_amount": "6000",
+      "final_recheck": {
+        "user_id": 998,
+        "phone": "0658900241",
+        "contract_id": "C1320261023140946McM95",
+        "approval_status": 1,
+        "reviewer": "ob5-mx",
+        "payout_state": "2",
+        "contract_status": "0",
+        "payment_date": null,
+        "success_flows": [],
+        "final_status": "approved_unpaid_verified"
+      }
+    },
+    {
+      "index": 4,
+      "status": "approved_unpaid_db_verified",
+      "completed_stages": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py"
+      ],
+      "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py",
+      "logs": [
+        "artifacts\\approved_unpaid_20261023_10users_01_user4_step1_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user4_step2_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user4_step3_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user4_step4_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user4_step5_attempt1.log"
+      ],
+      "phone": "0658900242",
+      "user_id": 999,
+      "header_id": "c1fb1a398a144e729069567bc57f4fa5",
+      "approval_id": "ec2ff68651f746faa37d449b29748b20",
+      "approval_status": 1,
+      "reviewer": "ob5-mx",
+      "contract_id": "C1320261023141105LwV0H",
+      "payout_id": "c53413d72eed402b8b916c04b2c140c5",
+      "payout_state": "2",
+      "loan_amount": "6000",
+      "final_recheck": {
+        "user_id": 999,
+        "phone": "0658900242",
+        "contract_id": "C1320261023141105LwV0H",
+        "approval_status": 1,
+        "reviewer": "ob5-mx",
+        "payout_state": "2",
+        "contract_status": "0",
+        "payment_date": null,
+        "success_flows": [],
+        "final_status": "approved_unpaid_verified"
+      }
+    },
+    {
+      "index": 5,
+      "status": "approved_unpaid_db_verified",
+      "completed_stages": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py"
+      ],
+      "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py",
+      "logs": [
+        "artifacts\\approved_unpaid_20261023_10users_01_user5_step1_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user5_step2_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user5_step3_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user5_step3_attempt2.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user5_step4_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user5_step5_attempt1.log"
+      ],
+      "phone": "0658900243",
+      "user_id": 1000,
+      "header_id": "304e8fb0fe7245749d80abd6cafab514",
+      "approval_id": "a82ddb4114934674ade0b93f50ee1c6d",
+      "approval_status": 1,
+      "reviewer": "ob5-mx",
+      "contract_id": "C1320261023141224Kmda4",
+      "payout_id": "b9583966821b403caec0d4350282efea",
+      "payout_state": "2",
+      "loan_amount": "6000",
+      "final_recheck": {
+        "user_id": 1000,
+        "phone": "0658900243",
+        "contract_id": "C1320261023141224Kmda4",
+        "approval_status": 1,
+        "reviewer": "ob5-mx",
+        "payout_state": "1",
+        "contract_status": "1",
+        "payment_date": "2026-10-23 14:12:32",
+        "success_flows": [
+          {
+            "ID": "eff1feea-43a1-48f4-bb9b-d9c7f1293a7c",
+            "OPERATOR_ID": "ob1-mx",
+            "COMPLETE_TIME": "2026-10-23 14:12:32"
+          }
+        ],
+        "final_status": "later_payout_success_observed"
+      }
+    },
+    {
+      "index": 6,
+      "status": "approved_unpaid_db_verified",
+      "completed_stages": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py"
+      ],
+      "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py",
+      "logs": [
+        "artifacts\\approved_unpaid_20261023_10users_01_user6_step1_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user6_step2_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user6_step3_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user6_step4_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user6_step5_attempt1.log"
+      ],
+      "phone": "0658900244",
+      "user_id": 1001,
+      "header_id": "1ad117aaf2d74b8984685e438c323912",
+      "approval_id": "3555529fe50944608ee65203e30aec12",
+      "approval_status": 1,
+      "reviewer": "ob5-mx",
+      "contract_id": "C13202610231413336uKj6",
+      "payout_id": "48d2ddaab076441283326be00fa7b672",
+      "payout_state": "2",
+      "loan_amount": "6000",
+      "final_recheck": {
+        "user_id": 1001,
+        "phone": "0658900244",
+        "contract_id": "C13202610231413336uKj6",
+        "approval_status": 1,
+        "reviewer": "ob5-mx",
+        "payout_state": "2",
+        "contract_status": "0",
+        "payment_date": null,
+        "success_flows": [],
+        "final_status": "approved_unpaid_verified"
+      }
+    },
+    {
+      "index": 7,
+      "status": "approved_unpaid_db_verified",
+      "completed_stages": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py"
+      ],
+      "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py",
+      "logs": [
+        "artifacts\\approved_unpaid_20261023_10users_01_user7_step1_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user7_step2_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user7_step3_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user7_step3_attempt2.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user7_step4_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user7_step5_attempt1.log"
+      ],
+      "phone": "0658900245",
+      "user_id": 1002,
+      "header_id": "1e4401066d24461f83cb31bf4f9102f8",
+      "approval_id": "48f056c792674e7c802f670c7bff47c0",
+      "approval_status": 1,
+      "reviewer": "ob5-mx",
+      "contract_id": "C13202610231414554h072",
+      "payout_id": "0ec8d7e75cb4477891cc68197bb6f8d7",
+      "payout_state": "2",
+      "loan_amount": "6000",
+      "final_recheck": {
+        "user_id": 1002,
+        "phone": "0658900245",
+        "contract_id": "C13202610231414554h072",
+        "approval_status": 1,
+        "reviewer": "ob5-mx",
+        "payout_state": "2",
+        "contract_status": "0",
+        "payment_date": null,
+        "success_flows": [],
+        "final_status": "approved_unpaid_verified"
+      }
+    },
+    {
+      "index": 8,
+      "status": "approved_unpaid_db_verified",
+      "completed_stages": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py"
+      ],
+      "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py",
+      "logs": [
+        "artifacts\\approved_unpaid_20261023_10users_01_user8_step1_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user8_step2_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user8_step3_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user8_step4_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user8_step5_attempt1.log"
+      ],
+      "phone": "0658900246",
+      "user_id": 1003,
+      "header_id": "28de4d3839ec408bad12c117a3d4f4c9",
+      "approval_id": "848ce1b23ab64ed8afe89843bac72bd6",
+      "approval_status": 1,
+      "reviewer": "ob5-mx",
+      "contract_id": "C1320261023141608GF9Bc",
+      "payout_id": "37a0a7bc419046c5b7d96f15fbc79ce8",
+      "payout_state": "2",
+      "loan_amount": "6000",
+      "final_recheck": {
+        "user_id": 1003,
+        "phone": "0658900246",
+        "contract_id": "C1320261023141608GF9Bc",
+        "approval_status": 1,
+        "reviewer": "ob5-mx",
+        "payout_state": "2",
+        "contract_status": "0",
+        "payment_date": null,
+        "success_flows": [],
+        "final_status": "approved_unpaid_verified"
+      }
+    },
+    {
+      "index": 9,
+      "status": "approved_unpaid_db_verified",
+      "completed_stages": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py"
+      ],
+      "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py",
+      "logs": [
+        "artifacts\\approved_unpaid_20261023_10users_01_user9_step1_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user9_step2_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user9_step3_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user9_step4_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user9_step4_attempt2.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user9_step4_attempt3.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user9_step5_attempt1.log"
+      ],
+      "phone": "0658900247",
+      "user_id": 1004,
+      "header_id": "be5fd08dbb824ea28dd917ce14c3b378",
+      "approval_id": "f5bff724c8aa419ab72cc9d70e189adc",
+      "approval_status": 1,
+      "reviewer": "ob5-mx",
+      "contract_id": "C13202610231417364gP4W",
+      "payout_id": "b960f48864384dcd8469bd825fdaed24",
+      "payout_state": "2",
+      "loan_amount": "6000",
+      "final_recheck": {
+        "user_id": 1004,
+        "phone": "0658900247",
+        "contract_id": "C13202610231417364gP4W",
+        "approval_status": 1,
+        "reviewer": "ob5-mx",
+        "payout_state": "2",
+        "contract_status": "0",
+        "payment_date": null,
+        "success_flows": [],
+        "final_status": "approved_unpaid_verified"
+      }
+    },
+    {
+      "index": 10,
+      "status": "approved_unpaid_db_verified",
+      "completed_stages": [
+        "tests/02_user_management/test_add_user.py",
+        "tests/03_identity_verification/test_identity_ocr.py",
+        "tests/05_loan_application/test_start_loan.py",
+        "tests/07_payout_approval/test_payout_approval.py",
+        "tests/16_approved_unpaid/test_approved_unpaid.py"
+      ],
+      "current_stage": "tests/16_approved_unpaid/test_approved_unpaid.py",
+      "logs": [
+        "artifacts\\approved_unpaid_20261023_10users_01_user10_step1_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user10_step2_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user10_step3_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user10_step4_attempt1.log",
+        "artifacts\\approved_unpaid_20261023_10users_01_user10_step5_attempt1.log"
+      ],
+      "phone": "0658900248",
+      "user_id": 1005,
+      "header_id": "2e099ecda2b947859db246f9a1faf272",
+      "approval_id": "08fb3f68d2e84270b323a7432dcf2263",
+      "approval_status": 1,
+      "reviewer": "ob5-mx",
+      "contract_id": "C13202610231418480kT06",
+      "payout_id": "43454b6080a348c589fa686eaf1c2954",
+      "payout_state": "2",
+      "loan_amount": "6000",
+      "final_recheck": {
+        "user_id": 1005,
+        "phone": "0658900248",
+        "contract_id": "C13202610231418480kT06",
+        "approval_status": 1,
+        "reviewer": "ob5-mx",
+        "payout_state": "2",
+        "contract_status": "0",
+        "payment_date": null,
+        "success_flows": [],
+        "final_status": "approved_unpaid_verified"
+      }
+    }
+  ],
+  "final_all_unpaid_recheck_passed": false,
+  "final_unpaid_count": 9,
+  "final_paid_count": 1
+}

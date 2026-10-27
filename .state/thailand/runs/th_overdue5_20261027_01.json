@@ -1,0 +1,129 @@
+{
+  "run_id": "th_overdue5_20261027_01",
+  "status": "overdue_verified",
+  "country": "TH",
+  "stages": [
+    {
+      "file": "thailand/tests/02_user_management/test_th_add_user.py",
+      "exit_code": 0,
+      "log": "artifacts\\th_overdue5_20261027_01_test_th_add_user.log"
+    },
+    {
+      "file": "thailand/tests/03_identity_verification/test_th_profile.py",
+      "exit_code": 0,
+      "log": "artifacts\\th_overdue5_20261027_01_test_th_profile.log"
+    },
+    {
+      "file": "thailand/tests/05_loan_application/test_th_loan.py",
+      "exit_code": 0,
+      "log": "artifacts\\th_overdue5_20261027_01_test_th_loan.log"
+    },
+    {
+      "file": "thailand/tests/07_payout_approval/test_th_review.py",
+      "exit_code": 0,
+      "log": "artifacts\\th_overdue5_20261027_01_test_th_review.log"
+    },
+    {
+      "file": "thailand/tests/08_disbursement/test_th_payout.py",
+      "exit_code": 0,
+      "log": "artifacts\\th_overdue5_20261027_01_test_th_payout.log"
+    }
+  ],
+  "created_user": {
+    "phone": "0650100003",
+    "employeeLine": "ob516772222",
+    "country": "TH",
+    "user_id": 172556,
+    "uuid": "0bb3ad71542340b6bfbc2c85a0e7115c",
+    "appOwnership": "supma",
+    "flow_run_id": "th_overdue5_20261027_01"
+  },
+  "stop_after": "payout",
+  "overdue_days": 5,
+  "current_stage": "thailand/tests/08_disbursement/test_th_payout.py",
+  "receipt": {
+    "user_id": 172556,
+    "phone": "0650100003",
+    "header_id": "2050278c28f6460e9936f095cf5fab85",
+    "contract_id": "C132026102717204234AhA",
+    "payout_id": "91ec0e4ab5c1426c9c85e8d04f0e887c",
+    "payout_state": "1",
+    "trade_amount": "3465.00",
+    "payment_date": "2026-10-27 17:20:51"
+  },
+  "overdue_receipt": {
+    "phone": "0650100003",
+    "user_id": 172556,
+    "uuid": "0bb3ad71542340b6bfbc2c85a0e7115c",
+    "appOwnership": "supma",
+    "contract_id": "C132026102717204234AhA",
+    "period": 1,
+    "days": 5,
+    "server_business_time": "2026-10-27T16:21:06+07:00",
+    "business_due_time": "2026-10-22T01:00:00+07:00",
+    "storage_due_time": "2026-10-22 02:00:00",
+    "actual_grade": "S2+",
+    "prealert_task_params": "2",
+    "prealert_id": "46315ec6c2704d338f4e8c68a03f6868",
+    "jobs": [
+      {
+        "id": "ca13c67e339a4bbdbd67dc3cf50b1143",
+        "beanName": "loanTask",
+        "methodName": "executePreAlertListTimer",
+        "params": "2",
+        "dbGroupId": "1",
+        "targetGroup": "1"
+      },
+      {
+        "id": "336c762ee4b9489a9261df45a1cb72c3",
+        "beanName": "loanTask",
+        "methodName": "executeCreateRemTimer",
+        "params": "",
+        "dbGroupId": "1",
+        "targetGroup": "1"
+      },
+      {
+        "id": "6861381967d8437b922f385b7c010c0f",
+        "beanName": "loanTask",
+        "methodName": "executeNewPenaltyTimer",
+        "params": "200",
+        "dbGroupId": "1",
+        "targetGroup": "1"
+      },
+      {
+        "id": "35341f84c58d446dbdb7b58cae52416c",
+        "beanName": "loanTask",
+        "methodName": "updateRemindOverdueDays",
+        "params": "0",
+        "dbGroupId": "1",
+        "targetGroup": "1"
+      }
+    ],
+    "status": "overdue_verified",
+    "stages": [
+      {
+        "file": "thailand/tests/11_prealert/test_th_generate_prealert.py",
+        "exit_code": 0,
+        "log": "artifacts\\th_overdue5_20261027_01_overdue_chain_test_th_generate_prealert.log"
+      },
+      {
+        "file": "thailand/tests/12_prealert_assignment/test_th_assign_prealert.py",
+        "exit_code": 0,
+        "log": "artifacts\\th_overdue5_20261027_01_overdue_chain_test_th_assign_prealert.log"
+      },
+      {
+        "file": "thailand/tests/13_overdue/test_th_generate_overdue.py",
+        "exit_code": 0,
+        "log": "artifacts\\th_overdue5_20261027_01_overdue_chain_test_th_generate_overdue.log"
+      },
+      {
+        "file": "thailand/tests/15_collection_assignment/test_th_assign_collection.py",
+        "exit_code": 0,
+        "log": "artifacts\\th_overdue5_20261027_01_overdue_chain_test_th_assign_collection.log"
+      }
+    ],
+    "current_stage": "thailand/tests/15_collection_assignment/test_th_assign_collection.py",
+    "collection_id": "75fdff2bbd6c4ba4a410130557a4c569",
+    "final_penalty": "1750.00"
+  }
+}

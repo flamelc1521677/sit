@@ -10,5 +10,23 @@
     "**/.pytest_cache": true,
     ".venv": true
   },
-  "explorer.sortOrder": "default"
+  "explorer.sortOrder": "default",
+  "terminal.integrated.profiles.windows": {
+    "OFFSAAS - Windows PowerShell": {
+      "path": "${env:SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "args": [
+        "-NoLogo",
+        "-NoProfile"
+      ],
+      "env": {
+        "PSModulePath": "${env:USERPROFILE}\\Documents\\WindowsPowerShell\\Modules;${env:ProgramFiles}\\WindowsPowerShell\\Modules;${env:SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\Modules"
+      },
+      "icon": "terminal-powershell"
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "OFFSAAS - Windows PowerShell",
+  "terminal.integrated.enablePersistentSessions": false,
+  "python.terminal.activateEnvironment": false,
+  "python.terminal.activateEnvInCurrentTerminal": false,
+  "python-envs.terminal.autoActivationType": "off"
 }

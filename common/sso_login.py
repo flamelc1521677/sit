@@ -10,6 +10,7 @@ import pytest
 import requests
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
+from common.sso_credentials import sso_credentials
 
 BASE_URL = os.getenv("SSO_BASE_URL", "https://sso.suxi-test.com").rstrip("/")
 TIMEOUT = (10, 50)
@@ -24,10 +25,11 @@ def get_data(session, path):
 
 
 def login(session, client_id=None, username=None, password=None):
-    username = os.getenv("SSO_USERNAME") if username is None else username
-    password = os.getenv("SSO_PASSWORD") if password is None else password
-    if not username or not password:
-        pytest.fail("请设置 SSO_USERNAME 和 SSO_PASSWORD 环境变量", pytrace=False)
+    implicit_login = username is None and password is None
+    username, password = sso_credentials(username, password)
+    if implicit_login:
+        # Keep business audit/DB assertions on the real requester; explicit reviewers stay separate.
+        os.environ["SSO_USERNAME"] = username
 
     # Load the OCR model before obtaining the short-lived captcha.
     mode = os.getenv("SSO_CAPTCHA_MODE", "ocr")
@@ -79,6 +81,7 @@ def login(session, client_id=None, username=None, password=None):
     # Only expose code and msg on failure, never tokens or full response bodies.
     actual = {"code": body.get("code"), "msg": body.get("msg")}
     print(f"登录响应摘要：{actual}")
-    assert str(body.get("code")) == "200", f"业务登录失败：{actual}；如验证码错误，请使用 manual 模式"
+    hint = "；如验证码错误，请使用 manual 模式" if str(body.get("code")) == "9999" else ""
+    assert str(body.get("code")) == "200", f"业务登录失败：{actual}{hint}"
     assert body.get("msg") == "result.success", f"成功文案与预期不一致：{actual}"
 

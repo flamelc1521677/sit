@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/02_user_management/test_add_user.py::test_add_offline_user [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[新增 1/3] 本次 phone=0658900230；下次号码已持久化
+[新增] 员工 WhatsApp：ob4-mx / 15666226611（配置 56）
+[新增 2/3] POST /user/user/offline/addUser
+[新增 3/3] 响应摘要：{'code': 0, 'msg': '线下用户建档成功。'}
+[数据库] 员工 WhatsApp 归属及启用状态通过
+[数据库] 新增用户、手机号与员工 IM 落库通过
+PASSED
+
+============================== 1 passed in 8.15s ==============================

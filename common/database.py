@@ -26,18 +26,22 @@ def database_password():
     return password
 
 
-@contextmanager
-def connect_database():
+def connection_options():
     password = database_password()
     if not password:
         raise RuntimeError("请设置 SIT_DB_PASSWORD 环境变量；接口场景必须完成数据库校验")
+    return dict(host=os.getenv("SIT_DB_HOST", "sit-db01.suxi-test.com"),
+        port=int(os.getenv("SIT_DB_PORT", "3306")), user=os.getenv("SIT_DB_USER", "user_readwrite"),
+        password=password, charset="utf8mb4", autocommit=True,
+        connect_timeout=10, read_timeout=15, write_timeout=15,
+        cursorclass=pymysql.cursors.DictCursor)
+
+
+@contextmanager
+def connect_database():
     connection = None
     try:
-        connection = pymysql.connect(host=os.getenv("SIT_DB_HOST", "sit-db01.suxi-test.com"),
-            port=int(os.getenv("SIT_DB_PORT", "3306")), user=os.getenv("SIT_DB_USER", "user_readwrite"),
-            password=password, charset="utf8mb4", autocommit=True,
-            connect_timeout=10, read_timeout=15, write_timeout=15,
-            cursorclass=pymysql.cursors.DictCursor)
+        connection = pymysql.connect(**connection_options())
         with connection.cursor() as cursor:
             cursor.execute("SET SESSION TRANSACTION READ ONLY")
         yield Database(connection)

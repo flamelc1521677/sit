@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/15_collection_assignment/test_assign_collection.py::test_assign_collection_to_ob4 [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[数据库] 指定逾期催收单、合同状态及商户关联通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[催收分单] 单笔 0d43f96312ab40d8948d49cdb1ef05d3，合同 C132026102116484951V3h，转交 ob4-mx / 11807
+[数据库] 催收转交接收人/部门/新增流水及原日期金额不变通过
+[完成] 催收已转交 ob4-mx，数据库归属及新增流水通过；列表可见=False
+PASSED
+
+============================== 1 passed in 9.64s ==============================

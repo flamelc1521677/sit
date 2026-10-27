@@ -1,0 +1,453 @@
+[执行] u996_order1_prealert，tests/11_prealert/test_generate_prealert.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[数据库] 用户、已放款合同及成功放款单关联通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 1/5] 用户 996 / 0658900239，合同 C132026102314070453qf6，第 1 期
+[预提醒] 服务端业务时间 2026-10-26T04:21:57-06:00，任务参数 2 -> T-2，应还日期 2026-10-28
+[预提醒 2/5] 保存所选期次应还日期，仅发送一次
+[数据库] 仅指定期次改期，金额/还款状态/其他期次保持一致通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 3/5] 执行一次共享任务，params=2；任务也会处理当前国家其他符合条件订单
+[数据库] 预提醒任务执行成功日志及实际参数通过
+[预提醒 4/5] 任务成功，核验本次新增目标预提醒
+[数据库] 新预提醒用户/合同/期次/应还日期/账龄及金额落库通过
+[预提醒] 当前账号列表未返回目标记录；数据库结果单独核验，不宣称列表可见
+[预提醒 5/5] 已生成 T-2 预提醒 6ecf08e0be594ea0a77e94d531bd2b22，合同/期次/日期/金额及任务日志全部通过
+PASSED
+
+============================= 1 passed in 11.81s ==============================
+[执行] u996_order1_assignment，tests/12_prealert_assignment/test_assign_prealert.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/12_prealert_assignment/test_assign_prealert.py::test_assign_prealert_to_ob4 [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[数据库] 指定预提醒订单、未还状态与合同用户归属通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[分单 1/3] 预提醒 6ecf08e0be594ea0a77e94d531bd2b22，合同 C132026102314070453qf6，第 1 期
+[分单] 接收部门 墨西哥二部-预提醒（11807），接收人 ob4-mx（1590）
+[分单 2/3] 单笔精准转交，仅发送一次 POST updateDistributeOrTransferBills
+[数据库] 精准转交接收人/部门/操作流水，保留原合同日期及金额通过
+[分单 3/3] ob4-mx 接收成功，归属与流水已核验；当前账号列表可见=False
+PASSED
+
+============================== 1 passed in 7.19s ==============================
+[执行] u996_order2_prealert，tests/11_prealert/test_generate_prealert.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 9999, 'msg': '验证码有误!'}
+FAILED
+
+================================== FAILURES ===================================
+______________________ test_generate_prealert_for_phone _______________________
+tests\11_prealert\test_generate_prealert.py:44: in test_generate_prealert_for_phone
+    authenticate_admin(session)
+common\admin_client.py:21: in authenticate_admin
+    login(session, client_id, username=username, password=password)
+common\sso_login.py:85: in login
+    assert str(body.get("code")) == "200", f"业务登录失败：{actual}{hint}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 业务登录失败：{'code': 9999, 'msg': '验证码有误!'}；如验证码错误，请使用 manual 模式
+=========================== short test summary info ===========================
+FAILED tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+============================== 1 failed in 3.17s ==============================
+[验证码] 仅重试尚未完成的登录，不重发业务操作
+[执行] u996_order2_prealert，tests/11_prealert/test_generate_prealert.py，登录尝试 2
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[数据库] 用户、已放款合同及成功放款单关联通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 1/5] 用户 996 / 0658900239，合同 C1320261026180516c22Mu，第 1 期
+[预提醒] 服务端业务时间 2026-10-26T04:22:22-06:00，任务参数 2 -> T-2，应还日期 2026-10-28
+[预提醒 2/5] 保存所选期次应还日期，仅发送一次
+[数据库] 仅指定期次改期，金额/还款状态/其他期次保持一致通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 3/5] 执行一次共享任务，params=2；任务也会处理当前国家其他符合条件订单
+[数据库] 预提醒任务执行成功日志及实际参数通过
+[预提醒 4/5] 任务成功，核验本次新增目标预提醒
+[数据库] 新预提醒用户/合同/期次/应还日期/账龄及金额落库通过
+[预提醒] 当前账号列表未返回目标记录；数据库结果单独核验，不宣称列表可见
+[预提醒 5/5] 已生成 T-2 预提醒 1bf5f10ac6f64bee96887481e7e41d90，合同/期次/日期/金额及任务日志全部通过
+PASSED
+
+============================= 1 passed in 10.95s ==============================
+[执行] u996_order2_assignment，tests/12_prealert_assignment/test_assign_prealert.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/12_prealert_assignment/test_assign_prealert.py::test_assign_prealert_to_ob4 [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[数据库] 指定预提醒订单、未还状态与合同用户归属通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[分单 1/3] 预提醒 1bf5f10ac6f64bee96887481e7e41d90，合同 C1320261026180516c22Mu，第 1 期
+[分单] 接收部门 墨西哥二部-预提醒（11807），接收人 ob4-mx（1590）
+[分单 2/3] 单笔精准转交，仅发送一次 POST updateDistributeOrTransferBills
+[数据库] 精准转交接收人/部门/操作流水，保留原合同日期及金额通过
+[分单 3/3] ob4-mx 接收成功，归属与流水已核验；当前账号列表可见=False
+PASSED
+
+============================== 1 passed in 7.42s ==============================
+[执行] u997_order1_prealert，tests/11_prealert/test_generate_prealert.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[数据库] 用户、已放款合同及成功放款单关联通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 1/5] 用户 997 / 0658900240，合同 C13202610231408302zGwA，第 1 期
+[预提醒] 服务端业务时间 2026-10-26T04:22:43-06:00，任务参数 2 -> T-2，应还日期 2026-10-28
+[预提醒 2/5] 保存所选期次应还日期，仅发送一次
+[数据库] 仅指定期次改期，金额/还款状态/其他期次保持一致通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 3/5] 执行一次共享任务，params=2；任务也会处理当前国家其他符合条件订单
+[数据库] 预提醒任务执行成功日志及实际参数通过
+[预提醒 4/5] 任务成功，核验本次新增目标预提醒
+[数据库] 新预提醒用户/合同/期次/应还日期/账龄及金额落库通过
+[预提醒] 当前账号列表未返回目标记录；数据库结果单独核验，不宣称列表可见
+[预提醒 5/5] 已生成 T-2 预提醒 891428b880bb447587d949b049845f8a，合同/期次/日期/金额及任务日志全部通过
+PASSED
+
+============================= 1 passed in 11.42s ==============================
+[执行] u997_order1_assignment，tests/12_prealert_assignment/test_assign_prealert.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/12_prealert_assignment/test_assign_prealert.py::test_assign_prealert_to_ob4 [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[数据库] 指定预提醒订单、未还状态与合同用户归属通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[分单 1/3] 预提醒 891428b880bb447587d949b049845f8a，合同 C13202610231408302zGwA，第 1 期
+[分单] 接收部门 墨西哥二部-预提醒（11807），接收人 ob4-mx（1590）
+[分单 2/3] 单笔精准转交，仅发送一次 POST updateDistributeOrTransferBills
+[数据库] 精准转交接收人/部门/操作流水，保留原合同日期及金额通过
+[分单 3/3] ob4-mx 接收成功，归属与流水已核验；当前账号列表可见=False
+PASSED
+
+============================== 1 passed in 7.38s ==============================
+[执行] u997_order2_prealert，tests/11_prealert/test_generate_prealert.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[数据库] 用户、已放款合同及成功放款单关联通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 1/5] 用户 997 / 0658900240，合同 C1320261026181054Xe01c，第 1 期
+[预提醒] 服务端业务时间 2026-10-26T04:23:05-06:00，任务参数 2 -> T-2，应还日期 2026-10-28
+[预提醒 2/5] 保存所选期次应还日期，仅发送一次
+[数据库] 仅指定期次改期，金额/还款状态/其他期次保持一致通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 3/5] 执行一次共享任务，params=2；任务也会处理当前国家其他符合条件订单
+[数据库] 预提醒任务执行成功日志及实际参数通过
+[预提醒 4/5] 任务成功，核验本次新增目标预提醒
+[数据库] 新预提醒用户/合同/期次/应还日期/账龄及金额落库通过
+[预提醒] 当前账号列表未返回目标记录；数据库结果单独核验，不宣称列表可见
+[预提醒 5/5] 已生成 T-2 预提醒 7f5cb16f995143ddb7276a940db428ab，合同/期次/日期/金额及任务日志全部通过
+PASSED
+
+============================= 1 passed in 12.32s ==============================
+[执行] u997_order2_assignment，tests/12_prealert_assignment/test_assign_prealert.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/12_prealert_assignment/test_assign_prealert.py::test_assign_prealert_to_ob4 [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[数据库] 指定预提醒订单、未还状态与合同用户归属通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[分单 1/3] 预提醒 7f5cb16f995143ddb7276a940db428ab，合同 C1320261026181054Xe01c，第 1 期
+[分单] 接收部门 墨西哥二部-预提醒（11807），接收人 ob4-mx（1590）
+[分单 2/3] 单笔精准转交，仅发送一次 POST updateDistributeOrTransferBills
+[数据库] 精准转交接收人/部门/操作流水，保留原合同日期及金额通过
+[分单 3/3] ob4-mx 接收成功，归属与流水已核验；当前账号列表可见=False
+PASSED
+
+============================= 1 passed in 12.84s ==============================
+[执行] u996_order1_overdue，tests/13_overdue/test_generate_overdue.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/13_overdue/test_generate_overdue.py::test_generate_overdue_and_penalty [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 已放款合同、预提醒已分单及目标未还期次前置条件通过
+[数据库] 入催任务参数、范围及调度配置通过
+[数据库] 罚息任务参数、范围及调度配置通过
+[逾期预检] {"mode": "create", "contract_id": "C132026102314070453qf6", "period": 1, "prealert_id": "6ecf08e0be594ea0a77e94d531bd2b22", "server_business_time": "2026-10-26T04:23:35-06:00", "business_due_time": "2026-10-23T01:00:00-06:00", "storage_due_time": "2026-10-23 15:00:00", "overdue_days": 3, "descriptive_age": "S1", "actual_grade": "S1+", "actual_grade_code": "353241", "penalty_rounds": 1, "expected_daily_penalty": null, "expected_grade": null, "entry_job_id": "ea6ce1c5829811f18e13fa163e9c0712", "entry_job_params": "", "penalty_job_id": "ea6ce6cb829811f18e13fa163e9c0712", "penalty_job_params": "200"}
+[数据库] 两表同合同同期次日期落库，金额和其他期次保持一致通过
+[逾期] 两表目标日期已核验，执行一次入催任务
+[数据库] 入催任务执行成功日志及实际参数通过
+[数据库] 合同逾期状态及新入催单期次/天数/账龄通过
+[罚息] 第 1/1 轮，只执行一次任务，校验本轮增量
+[数据库] 罚息第1轮执行成功日志及实际参数通过
+[数据库] 本轮罚息增长、罚息时钟及本金/应还日期不变通过
+[完成] 合同 C132026102314070453qf6，逾期 3 天，实际账龄 S1+，已核验 1 轮罚息；列表可见=False
+PASSED
+
+============================= 1 passed in 18.77s ==============================
+[逾期完成] 用户 996 第1笔合同 C132026102314070453qf6 首期逾期3天
+[执行] u996_order2_overdue，tests/13_overdue/test_generate_overdue.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/13_overdue/test_generate_overdue.py::test_generate_overdue_and_penalty [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 已放款合同、预提醒已分单及目标未还期次前置条件通过
+[数据库] 入催任务参数、范围及调度配置通过
+[数据库] 罚息任务参数、范围及调度配置通过
+[逾期预检] {"mode": "create", "contract_id": "C1320261026180516c22Mu", "period": 1, "prealert_id": "1bf5f10ac6f64bee96887481e7e41d90", "server_business_time": "2026-10-26T04:24:00-06:00", "business_due_time": "2026-10-24T01:00:00-06:00", "storage_due_time": "2026-10-24 15:00:00", "overdue_days": 2, "descriptive_age": "S1", "actual_grade": "S1+", "actual_grade_code": "353241", "penalty_rounds": 1, "expected_daily_penalty": null, "expected_grade": null, "entry_job_id": "ea6ce1c5829811f18e13fa163e9c0712", "entry_job_params": "", "penalty_job_id": "ea6ce6cb829811f18e13fa163e9c0712", "penalty_job_params": "200"}
+[数据库] 两表同合同同期次日期落库，金额和其他期次保持一致通过
+[逾期] 两表目标日期已核验，执行一次入催任务
+[数据库] 入催任务执行成功日志及实际参数通过
+[数据库] 合同逾期状态及新入催单期次/天数/账龄通过
+[罚息] 第 1/1 轮，只执行一次任务，校验本轮增量
+[数据库] 罚息第1轮执行成功日志及实际参数通过
+[数据库] 本轮罚息增长、罚息时钟及本金/应还日期不变通过
+[完成] 合同 C1320261026180516c22Mu，逾期 2 天，实际账龄 S1+，已核验 1 轮罚息；列表可见=False
+PASSED
+
+============================= 1 passed in 24.00s ==============================
+[逾期完成] 用户 996 第2笔合同 C1320261026180516c22Mu 首期逾期2天
+[执行] u997_order1_overdue，tests/13_overdue/test_generate_overdue.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/13_overdue/test_generate_overdue.py::test_generate_overdue_and_penalty [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 9999, 'msg': '验证码有误!'}
+FAILED
+
+================================== FAILURES ===================================
+______________________ test_generate_overdue_and_penalty ______________________
+tests\13_overdue\test_generate_overdue.py:53: in test_generate_overdue_and_penalty
+    authenticate_admin(session)
+common\admin_client.py:21: in authenticate_admin
+    login(session, client_id, username=username, password=password)
+common\sso_login.py:85: in login
+    assert str(body.get("code")) == "200", f"业务登录失败：{actual}{hint}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 业务登录失败：{'code': 9999, 'msg': '验证码有误!'}；如验证码错误，请使用 manual 模式
+=========================== short test summary info ===========================
+FAILED tests/13_overdue/test_generate_overdue.py::test_generate_overdue_and_penalty
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+============================== 1 failed in 8.80s ==============================
+[验证码] 仅重试尚未完成的登录，不重发业务操作
+[执行] u997_order1_overdue，tests/13_overdue/test_generate_overdue.py，登录尝试 2
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/13_overdue/test_generate_overdue.py::test_generate_overdue_and_penalty [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 已放款合同、预提醒已分单及目标未还期次前置条件通过
+[数据库] 入催任务参数、范围及调度配置通过
+[数据库] 罚息任务参数、范围及调度配置通过
+[逾期预检] {"mode": "create", "contract_id": "C13202610231408302zGwA", "period": 1, "prealert_id": "891428b880bb447587d949b049845f8a", "server_business_time": "2026-10-26T04:24:34-06:00", "business_due_time": "2026-10-23T01:00:00-06:00", "storage_due_time": "2026-10-23 15:00:00", "overdue_days": 3, "descriptive_age": "S1", "actual_grade": "S1+", "actual_grade_code": "353241", "penalty_rounds": 1, "expected_daily_penalty": null, "expected_grade": null, "entry_job_id": "ea6ce1c5829811f18e13fa163e9c0712", "entry_job_params": "", "penalty_job_id": "ea6ce6cb829811f18e13fa163e9c0712", "penalty_job_params": "200"}
+[数据库] 两表同合同同期次日期落库，金额和其他期次保持一致通过
+[逾期] 两表目标日期已核验，执行一次入催任务
+[数据库] 入催任务执行成功日志及实际参数通过
+[数据库] 合同逾期状态及新入催单期次/天数/账龄通过
+[罚息] 第 1/1 轮，只执行一次任务，校验本轮增量
+[数据库] 罚息第1轮执行成功日志及实际参数通过
+[数据库] 本轮罚息增长、罚息时钟及本金/应还日期不变通过
+[完成] 合同 C13202610231408302zGwA，逾期 3 天，实际账龄 S1+，已核验 1 轮罚息；列表可见=False
+PASSED
+
+============================= 1 passed in 23.86s ==============================
+[逾期完成] 用户 997 第1笔合同 C13202610231408302zGwA 首期逾期3天
+[执行] u997_order2_overdue，tests/13_overdue/test_generate_overdue.py，登录尝试 1
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/13_overdue/test_generate_overdue.py::test_generate_overdue_and_penalty [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 已放款合同、预提醒已分单及目标未还期次前置条件通过
+[数据库] 入催任务参数、范围及调度配置通过
+[数据库] 罚息任务参数、范围及调度配置通过
+[逾期预检] {"mode": "create", "contract_id": "C1320261026181054Xe01c", "period": 1, "prealert_id": "7f5cb16f995143ddb7276a940db428ab", "server_business_time": "2026-10-26T04:24:59-06:00", "business_due_time": "2026-10-24T01:00:00-06:00", "storage_due_time": "2026-10-24 15:00:00", "overdue_days": 2, "descriptive_age": "S1", "actual_grade": "S1+", "actual_grade_code": "353241", "penalty_rounds": 1, "expected_daily_penalty": null, "expected_grade": null, "entry_job_id": "ea6ce1c5829811f18e13fa163e9c0712", "entry_job_params": "", "penalty_job_id": "ea6ce6cb829811f18e13fa163e9c0712", "penalty_job_params": "200"}
+[数据库] 两表同合同同期次日期落库，金额和其他期次保持一致通过
+[逾期] 两表目标日期已核验，执行一次入催任务
+[数据库] 入催任务执行成功日志及实际参数通过
+[数据库] 合同逾期状态及新入催单期次/天数/账龄通过
+[罚息] 第 1/1 轮，只执行一次任务，校验本轮增量
+[数据库] 罚息第1轮执行成功日志及实际参数通过
+[数据库] 本轮罚息增长、罚息时钟及本金/应还日期不变通过
+[完成] 合同 C1320261026181054Xe01c，逾期 2 天，实际账龄 S1+，已核验 1 轮罚息；列表可见=True
+PASSED
+
+============================= 1 passed in 25.20s ==============================
+[逾期完成] 用户 997 第2笔合同 C1320261026181054Xe01c 首期逾期2天
+[已选合同处理完成] 等待统一只读复核；未生成合同的申请保留原状态

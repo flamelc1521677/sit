@@ -1,0 +1,11 @@
+{
+  "firstIdentityNumber": "1551500010011",
+  "firstBankCardNumber": "102519931001",
+  "bankNameId": "KBANK",
+  "reviewerLogin": "chengzi",
+  "reviewerUserId": "1572",
+  "reviewerDeptId": "11804",
+  "approvalReason": "AutoCodeXtesting-pass",
+  "merchantTimezone": "Asia/Bangkok",
+  "databaseTimezone": "Asia/Shanghai"
+}

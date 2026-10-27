@@ -1,0 +1,33 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[数据库] 用户、已放款合同及成功放款单关联通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 1/5] 用户 996 / 0658900239，合同 C132026102314070453qf6，第 1 期
+[预提醒] 服务端业务时间 2026-10-26T04:21:57-06:00，任务参数 2 -> T-2，应还日期 2026-10-28
+[预提醒 2/5] 保存所选期次应还日期，仅发送一次
+[数据库] 仅指定期次改期，金额/还款状态/其他期次保持一致通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 3/5] 执行一次共享任务，params=2；任务也会处理当前国家其他符合条件订单
+[数据库] 预提醒任务执行成功日志及实际参数通过
+[预提醒 4/5] 任务成功，核验本次新增目标预提醒
+[数据库] 新预提醒用户/合同/期次/应还日期/账龄及金额落库通过
+[预提醒] 当前账号列表未返回目标记录；数据库结果单独核验，不宣称列表可见
+[预提醒 5/5] 已生成 T-2 预提醒 6ecf08e0be594ea0a77e94d531bd2b22，合同/期次/日期/金额及任务日志全部通过
+PASSED
+
+============================= 1 passed in 11.81s ==============================

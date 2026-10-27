@@ -1,0 +1,250 @@
+用户 938 / 0658900211：使用今日已有完整资料用户，未新建用户。
+合同 C132026102116484951V3h
+流程：试算提交借款 → ob5-mx 人审通过 → 放款成功 → T-2 预提醒 → 预提醒分单 → 逾期 1 天及一轮罚息 → 催收转交 ob4-mx。
+首次人审登录验证码错误，未发送审批请求；仅从人审步骤续跑，未重复提交借款。
+
+
+collection_flow_938_loan_20261021.log
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 3 items
+
+tests/05_loan_application/test_start_loan.py::test_trial_then_start_loan [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[借款 1/5] 目标用户 id=938，phone=0658900211，检查借款资格
+[数据库] 借款用户身份证及收款银行卡已落库通过
+[借款 2/5] 试算：产品 001412、金额 2200、3期、每期7天
+[数据库] 试算未新增借款记录通过
+[借款 3/5] 试算通过，共3期，实到金额 2178.0，税费 0.0
+[借款 4/5] 携带本次试算费用及还款计划，提交借款一次
+提交响应：code=0，msg=系统正在自动放款，请让客户稍后查账，部分场景下需要人工审核
+[数据库] 借款主记录、还款计划和收款卡落库通过
+[借款 5/5] 数据库主单、3期还款计划及收款卡全部通过，header_id=dea4f379aed24d0691824873e2bd97d5
+PASSED
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 9999, 'msg': '验证码有误!'}
+FAILED
+
+================================== FAILURES ===================================
+________________________ test_selected_payout_approval ________________________
+tests\07_payout_approval\test_payout_approval.py:36: in test_selected_payout_approval
+    authenticate_admin(session, username=login_name, password=reviewer_password)
+common\admin_client.py:21: in authenticate_admin
+    login(session, client_id, username=username, password=password)
+common\sso_login.py:82: in login
+    assert str(body.get("code")) == "200", f"业务登录失败：{actual}；如验证码错误，请使用 manual 模式"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 业务登录失败：{'code': 9999, 'msg': '验证码有误!'}；如验证码错误，请使用 manual 模式
+=========================== short test summary info ===========================
+FAILED tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+======================== 1 failed, 1 passed in 13.21s =========================
+
+
+collection_flow_938_approval_payout_20261021.log
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 2 items
+
+tests/07_payout_approval/test_payout_approval.py::test_selected_payout_approval [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 待审状态、借款类型和关联主单金额通过
+[人审 1/4] 审批单 ccaf47d0cbf745c282e47d5275742525，结果选择：人审通过
+[人审 2/4] POST /borrower/payoutApproval/pass，expectedAmount=2200，仅提交一次
+[人审 3/4] 接口响应 code=0，msg=操作成功
+[数据库] 人审通过状态、原因、额度和人工操作日志落库通过
+[人审 4/4] 人审通过数据库状态及日志校验通过
+PASSED
+tests/08_disbursement/test_payout_success.py::test_payout_approved_success [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 人审通过、虚拟订单、合同和放款单归属及金额通过
+[放款 1/4] 目标用户 0658900211，合同 C132026102116484951V3h，放款单 10e650c6a01b4915bad408a1ac7d4d53，当前状态 2
+[放款 2/4] POST /pay/borTransferBillMoco/edit，state=1，仅提交一次
+[放款 3/4] 响应 code=0，msg=修改成功
+[数据库] 放款单、修改流水、合同和借款放款状态同步通过
+[放款 4/4] 放款单成功，修改流水及借款/合同状态同步校验通过
+PASSED
+
+============================= 2 passed in 21.50s ==============================
+
+
+collection_flow_938_prealert_20261021.log
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/11_prealert/test_generate_prealert.py::test_generate_prealert_for_phone [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 指定手机号用户及数据库归属通过
+[数据库] 用户、已放款合同及成功放款单关联通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 1/5] 用户 938 / 0658900211，合同 C132026102116484951V3h，第 1 期
+[预提醒] 服务端业务时间 2026-10-21T02:49:51-06:00，任务参数 2 -> T-2，应还日期 2026-10-23
+[预提醒 2/5] 保存所选期次应还日期，仅发送一次
+[数据库] 仅指定期次改期，金额/还款状态/其他期次保持一致通过
+[数据库] 预提醒任务参数、范围及调度配置通过
+[预提醒 3/5] 执行一次共享任务，params=2；任务也会处理当前国家其他符合条件订单
+[数据库] 预提醒任务执行成功日志及实际参数通过
+[预提醒 4/5] 任务成功，核验本次新增目标预提醒
+[数据库] 新预提醒用户/合同/期次/应还日期/账龄及金额落库通过
+[预提醒] 当前账号列表未返回目标记录；数据库结果单独核验，不宣称列表可见
+[预提醒 5/5] 已生成 T-2 预提醒 a50922c17e4741d7a742e72371f4fd7d，合同/期次/日期/金额及任务日志全部通过
+PASSED
+
+============================= 1 passed in 12.74s ==============================
+
+
+collection_flow_938_prealert_assignment_20261021.log
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/12_prealert_assignment/test_assign_prealert.py::test_assign_prealert_to_ob4 [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[数据库] 指定预提醒订单、未还状态与合同用户归属通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[分单 1/3] 预提醒 a50922c17e4741d7a742e72371f4fd7d，合同 C132026102116484951V3h，第 1 期
+[分单] 接收部门 墨西哥二部-预提醒（11807），接收人 ob4-mx（1590）
+[分单 2/3] 单笔精准转交，仅发送一次 POST updateDistributeOrTransferBills
+[数据库] 精准转交接收人/部门/操作流水，保留原合同日期及金额通过
+[分单 3/3] ob4-mx 接收成功，归属与流水已核验；当前账号列表可见=False
+PASSED
+
+============================== 1 passed in 8.77s ==============================
+
+
+collection_flow_938_overdue_20261021.log
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/13_overdue/test_generate_overdue.py::test_generate_overdue_and_penalty [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 已放款合同、预提醒已分单及目标未还期次前置条件通过
+[数据库] 入催任务参数、范围及调度配置通过
+[数据库] 罚息任务参数、范围及调度配置通过
+[逾期预检] {"mode": "create", "contract_id": "C132026102116484951V3h", "period": 1, "prealert_id": "a50922c17e4741d7a742e72371f4fd7d", "server_business_time": "2026-10-21T02:51:16-06:00", "business_due_time": "2026-10-20T01:00:00-06:00", "storage_due_time": "2026-10-20 15:00:00", "overdue_days": 1, "descriptive_age": "S1", "actual_grade": "S0", "actual_grade_code": "732181", "penalty_rounds": 1, "expected_daily_penalty": null, "expected_grade": "S0", "entry_job_id": "ea6ce1c5829811f18e13fa163e9c0712", "entry_job_params": "", "penalty_job_id": "ea6ce6cb829811f18e13fa163e9c0712", "penalty_job_params": "200"}
+[数据库] 两表同合同同期次日期落库，金额和其他期次保持一致通过
+[逾期] 两表目标日期已核验，执行一次入催任务
+[数据库] 入催任务执行成功日志及实际参数通过
+[数据库] 合同逾期状态及新入催单期次/天数/账龄通过
+[罚息] 第 1/1 轮，只执行一次任务，校验本轮增量
+[数据库] 罚息第1轮执行成功日志及实际参数通过
+[数据库] 本轮罚息增长、罚息时钟及本金/应还日期不变通过
+[完成] 合同 C132026102116484951V3h，逾期 1 天，实际账龄 S0，已核验 1 轮罚息；列表可见=False
+PASSED
+
+============================= 1 passed in 16.09s ==============================
+
+
+collection_flow_938_assignment_20261021.log
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\18017\.codex\.chatgpt-projects\g-p-6a9a6c4ddfb88191ac1d723d313e99ca\api-tests
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/15_collection_assignment/test_assign_collection.py::test_assign_collection_to_ob4 [后台 1/3] 获取 offadmin OAuth 授权地址
+[1/5] 获取密码加密公钥
+[2/5] 获取本次验证码及 token
+[3/5] 验证码处理完成（ocr）
+[4/5] 加密密码并发送 POST /sso/auth/validate
+[5/5] 检查响应：HTTP 200
+登录响应摘要：{'code': 200, 'msg': 'result.success'}
+[后台 2/3] 完成 OAuth 授权回调
+[后台 3/3] 后台登录完成
+[数据库] 登录账号存在且启用通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[数据库] 指定逾期催收单、合同状态及商户关联通过
+[数据库] 固定接收人 ob4-mx 及所属部门启用状态通过
+[催收分单] 单笔 0d43f96312ab40d8948d49cdb1ef05d3，合同 C132026102116484951V3h，转交 ob4-mx / 11807
+[数据库] 催收转交接收人/部门/新增流水及原日期金额不变通过
+[完成] 催收已转交 ob4-mx，数据库归属及新增流水通过；列表可见=False
+PASSED
+
+============================== 1 passed in 9.64s ==============================
+
+
+最终催收转交核验：{
+  "status": "db_verified",
+  "order_id": "0d43f96312ab40d8948d49cdb1ef05d3",
+  "contract_id": "C132026102116484951V3h",
+  "period": 1,
+  "receiver": "ob4-mx",
+  "receiver_id": "1590",
+  "department_id": "11807",
+  "operator": "ob4-mx",
+  "code": 0,
+  "msg": "分单成功:1,分单失败数量:0,失败合同号：",
+  "flow_id": "f86326df-e268-43d0-b5fd-041596c719b5",
+  "api_list_visible": false
+}

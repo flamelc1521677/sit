@@ -27,6 +27,17 @@ class DetailFields(HTMLParser):
             self.fields[attrs["name"]] = attrs.get("value", "")
 
 
+def lookup_user_by_phone(session, phone, app_ownership=None):
+    data = {"phone": phone, "pageNum": 1, "pageSize": 100}
+    if app_ownership:
+        data["appOwnership"] = app_ownership
+    body = checked_json(session.post(ADMIN_URL + "/user/user/list", data=data, timeout=TIMEOUT), "按手机号查询用户")
+    assert int(body.get("total", 0)) == 1 and len(body.get("rows", [])) == 1, "手机号未定位唯一用户，请指定应用后核对"
+    user = body["rows"][0]
+    assert all(user.get(k) for k in ("id", "uuid", "appOwnership")), "用户身份信息不完整"
+    return user
+
+
 def latest_user(session, state_path):
     assert state_path.exists(), "没有最新新增用户记录，请先执行场景 02"
     target = json.loads(state_path.read_text(encoding="utf-8"))

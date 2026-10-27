@@ -1,0 +1,52 @@
+{
+  "user_id": 172555,
+  "phone": "0650100002",
+  "header_id": "4a180d3f84964edba3f4ef2f5d998f0b",
+  "contract_id": "C1320261027161023X3S6e",
+  "payout_id": "06c9d399114b43a0bdbae8eab669a56b",
+  "payout_state": "1",
+  "trade_amount": "3465.00",
+  "payment_date": "2026-10-27 16:14:25",
+  "identity_number": "1551500010011",
+  "bank_name": "KBANK",
+  "bank_card": "102519931001",
+  "approval_id": "eb7abfa7fd544f69bf02c705f7c90a66",
+  "approval_operator": "chengzi",
+  "manual_pass_log_id": "f5d90d07724c49d0bf11472b92e0804c",
+  "payout_operator": "ob5",
+  "payout_success_flow_id": "753c0e17-7195-408b-9c62-0a4cae9e66e9",
+  "installments": [
+    {
+      "period": 1,
+      "due_date": "2026-11-03 23:59:59",
+      "principal": "1166.67",
+      "interest": "33.33"
+    },
+    {
+      "period": 2,
+      "due_date": "2026-11-10 23:59:59",
+      "principal": "1166.67",
+      "interest": "33.33"
+    },
+    {
+      "period": 3,
+      "due_date": "2026-11-17 23:59:59",
+      "principal": "1166.66",
+      "interest": "33.34"
+    }
+  ],
+  "only_one_user_created": true,
+  "occupied_initial_phone": "0650100001",
+  "next_phone": "0650100003",
+  "next_identity": "1551500010012",
+  "next_bank_card": "102519931002",
+  "database_checks": [
+    "登录账号存在且启用",
+    "泰国OB5账号ID与部门归属",
+    "员工 WhatsApp 归属及启用状态",
+    "泰国新增用户/手机号密文/OB5/Line/部门落库",
+    "泰国编辑资料compose证件密文/脱敏值及原OCR姓名图片关联",
+    "泰国KBANK卡号明文回查/密文/脱敏及默认标志",
+    "泰国成功放款单/合同/借款/转账/正式三期本息一致"
+  ]
+}

@@ -1,0 +1,57 @@
+[
+  {
+    "index": 1,
+    "status": "complete",
+    "user_id": 938,
+    "phone": "0658900211",
+    "uuid": "e0ff4e1338bc4820b0e708e4ce45a188",
+    "appOwnership": "ConbusloPre",
+    "identity_date": "750109",
+    "bank_last4": "0009",
+    "no_loans": true
+  },
+  {
+    "index": 2,
+    "status": "complete",
+    "user_id": 939,
+    "phone": "0658900212",
+    "uuid": "a0cbaf385a344ebfac7c6206ddd5c4de",
+    "appOwnership": "ConbusloPre",
+    "identity_date": "750110",
+    "bank_last4": "0010",
+    "no_loans": true
+  },
+  {
+    "index": 3,
+    "status": "complete",
+    "user_id": 940,
+    "phone": "0658900213",
+    "uuid": "9a55f800fc2b45eba2b1d097c23cfe8d",
+    "appOwnership": "ConbusloPre",
+    "identity_date": "750111",
+    "bank_last4": "0011",
+    "no_loans": true
+  },
+  {
+    "index": 4,
+    "status": "complete",
+    "user_id": 941,
+    "phone": "0658900214",
+    "uuid": "4bd32102e2d34974bf31b8d79db4a4bb",
+    "appOwnership": "ConbusloPre",
+    "identity_date": "750112",
+    "bank_last4": "0012",
+    "no_loans": true
+  },
+  {
+    "index": 5,
+    "status": "complete",
+    "user_id": 942,
+    "phone": "0658900215",
+    "uuid": "c661d56cf8c545cf90f1ceef4806076b",
+    "appOwnership": "ConbusloPre",
+    "identity_date": "750113",
+    "bank_last4": "0013",
+    "no_loans": true
+  }
+]
