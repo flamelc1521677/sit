@@ -58,3 +58,5 @@
 - 用户要求补齐泰国同等逾期能力：thailand/overdue_fixture.py是独立受限SIT TH日期造数入口，只允许固定sit-db01.suxi-test.com:3306/off_th_saas_loan，固定表和四个日期字段，行锁/完整快照/记录ID+合同+期次+旧值核验后事务提交；不扩展common/overdue_fixture.py的MX权限。仅在用户指定实际目标后执行，日常数据库接口仍只读。TH11～15默认dry_run=1，未知事务/任务结果不重发，不允许删除状态或换标识绕过。
 - 泰国服务端时区Asia/Bangkok，存储Asia/Shanghai；四个任务的targetGroup固定1、dbGroupId固定1，ID来自thailand/config，不得使用MX任务。账龄读取TH真实配置；罚息create只运行1次，不把天数当轮数，金额按实际结果/API/DB核验。TH14按三表日期+更新任务正常流程，金额和其他期次不变，不执行罚息任务。
 - TH17只读预检或显式--execute处理已放款合同，复用有效预提醒后转交OB5、入催/罚息及催收转交；TH18显式完整新增到逾期。不要为验证代码擅自改期或执行共享任务。当前历史样本存在重复期次/多催收记录，脚本必须继续拦截，不能放宽唯一性来强行通过。
+
+- 2026-11-05 用户授权墨西哥审批自动使用订单分配复审人：先读review_assignment_managed及assigned_reviewer_id/name，凭据由本机MX_REVIEWER_PASSWORDS映射读取；仅对应默认账号可使用原APPROVER_PASSWORD，不混用密码。保持提交人与复审人独立；缺少分配人凭据停止。明确分配人拒绝且待审版本未变时允许切换对应账号继续相同结果，保留拒绝流水；未知结果不重发。规则见docs/assigned-reviewer.md。

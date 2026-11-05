@@ -26,12 +26,24 @@ def verify_reviewer_context(approval, operator_id, login_name):
     assert requester, "缺少实际借款发起账号记录，请提供 LOAN_REQUESTER_USERNAME 后再核对"
     assert operator_id and login_name, "缺少审批操作账号"
     assert requester.strip().casefold() != login_name.strip().casefold(), "人审不能审核自己提交的借款，请使用独立审批账号"
+    if str(approval.get("review_assignment_managed") or "0") == "1":
+        assert str(approval.get("assigned_reviewer_id")) == str(operator_id), "操作账号不是订单分配复审人"
+        assert str(approval.get("assigned_reviewer_name") or "").casefold() == login_name.casefold(), "复审账号名称不一致"
+        assert str(approval.get("submitter_id")) != str(operator_id), "人审不能审核自己提交的借款"
 
 
-def verify_previous_attempt(previous, action, login_name, version):
+
+def verify_previous_attempt(previous, action, login_name, version, approval=None):
     if previous is None:
         return
-    assert (previous.get("status") == "self_approval_rejected"
+    assignment_rejection = (
+        approval and str(approval.get("review_assignment_managed") or "0") == "1"
+        and previous.get("status") == "api_rejected"
+        and str(previous.get("code")) == "500"
+        and previous.get("msg") == "仅订单分配复审人可审批"
+        and str(approval.get("status")) == "0"
+        and approval.get("assigned_reviewer_name") == login_name)
+    assert ((previous.get("status") == "self_approval_rejected" or assignment_rejection)
             and previous.get("attempted_by") != login_name
             and previous.get("action") == action
             and previous.get("approval_version") == version), "此审批已有请求尝试记录，禁止自动重试；请先核对实际状态"

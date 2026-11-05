@@ -149,7 +149,7 @@ class DatabaseChecks(PrealertDatabaseChecks, OverdueDatabaseChecks, CollectionAs
         return self.database.select(f"SELECT id FROM `{self.admin}`.bor_payout_approval WHERE pre_repayment_plan_header_id=%s AND approval_type=1 ORDER BY create_time,id", (header_id,))
 
     def approval_record(self, approval_id):
-        rows = self.database.select(f"SELECT id,pre_repayment_plan_header_id,apply_id,src_chn_type,approval_type,status,contract_amount,expected_amount,approval_reason,reject_reason,auditor_id,audit_time,creator_id,creator_name,version FROM `{self.admin}`.bor_payout_approval WHERE id=%s", (approval_id,))
+        rows = self.database.select(f"SELECT id,pre_repayment_plan_header_id,apply_id,src_chn_type,approval_type,status,contract_amount,expected_amount,approval_reason,reject_reason,auditor_id,audit_time,creator_id,creator_name,version,review_assignment_managed,assigned_reviewer_id,assigned_reviewer_name,submitter_id,submitter_name FROM `{self.admin}`.bor_payout_approval WHERE id=%s", (approval_id,))
         assert len(rows) == 1, "审批记录不存在或不唯一"
         return rows[0]
 

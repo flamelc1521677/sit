@@ -17,7 +17,9 @@ def test_approved_but_not_disbursed(database_checks):
     assert len(matches) == 1, '没有唯一已核验借款'
     loan = matches[0]
     _, contract, bill = checks.payout_context(loan['header_id'])
-    reviewer, _ = approval_credentials(os.environ['SSO_USERNAME'])
+    assigned = checks.approval_candidates(loan['header_id'])
+    assert len(assigned) == 1, '审批关联记录不唯一'
+    reviewer, _ = approval_credentials(os.environ['SSO_USERNAME'], checks.approval_record(assigned[0]['id']))
     actor = checks.login_account(reviewer)
     def verify():
         approvals = checks.approval_candidates(loan['header_id'])

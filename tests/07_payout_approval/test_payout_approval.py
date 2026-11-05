@@ -34,11 +34,12 @@ def test_selected_payout_approval(session, database_checks):
     config = json.loads((ROOT / "config/approval_actions.json").read_text(encoding="utf-8"))
     reason = os.getenv("APPROVAL_REASON", config["reasons"][action]).strip()
     amount = os.getenv("APPROVAL_EXPECTED_AMOUNT", config["expectedAmount"]).strip()
-    login_name, reviewer_password = approval_credentials(os.getenv("SSO_USERNAME"))
+    approval_id = resolve_approval_id(database_checks)
+    assigned = database_checks.pending_approval(approval_id)
+    login_name, reviewer_password = approval_credentials(os.getenv("SSO_USERNAME"), assigned)
     authenticate_admin(session, username=login_name, password=reviewer_password)
     actor = database_checks.login_account(login_name)
     with locked(ROOT / ".state/approval_operation.lock"):
-        approval_id = resolve_approval_id(database_checks)
         state_path = ROOT / ".state/approval_attempts.json"
         attempts = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
         before = database_checks.pending_approval(approval_id)
@@ -49,7 +50,7 @@ def test_selected_payout_approval(session, database_checks):
         before["submitted_by"] = next(iter(submitters), os.getenv("LOAN_REQUESTER_USERNAME"))
         verify_reviewer_context(before, actor["USER_ID"], login_name)
         previous = attempts.get(approval_id)
-        verify_previous_attempt(previous, action, login_name, before["version"])
+        verify_previous_attempt(previous, action, login_name, before["version"], before)
         print(f"[人审 1/4] 审批单 {approval_id}，结果选择：{spec['label']}", flush=True)
         response = session.get(ADMIN_URL + "/borrower/payoutApproval/detail/" + approval_id, timeout=TIMEOUT)
         assert response.status_code == 200, "审批详情读取失败"
