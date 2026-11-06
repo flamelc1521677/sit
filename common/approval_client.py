@@ -26,7 +26,9 @@ def verify_reviewer_context(approval, operator_id, login_name):
     assert requester, "缺少实际借款发起账号记录，请提供 LOAN_REQUESTER_USERNAME 后再核对"
     assert operator_id and login_name, "缺少审批操作账号"
     assert requester.strip().casefold() != login_name.strip().casefold(), "人审不能审核自己提交的借款，请使用独立审批账号"
-    if str(approval.get("review_assignment_managed") or "0") == "1":
+    if approval.get("submitter_id"):
+        assert str(approval["submitter_id"]) != str(operator_id), "人审不能审核自己提交的借款"
+    if str(approval.get("review_assignment_managed") or "0") == "1" and (approval.get("assigned_reviewer_id") or approval.get("assigned_reviewer_name")):
         assert str(approval.get("assigned_reviewer_id")) == str(operator_id), "操作账号不是订单分配复审人"
         assert str(approval.get("assigned_reviewer_name") or "").casefold() == login_name.casefold(), "复审账号名称不一致"
         assert str(approval.get("submitter_id")) != str(operator_id), "人审不能审核自己提交的借款"

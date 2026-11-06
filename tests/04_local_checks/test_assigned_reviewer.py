@@ -22,3 +22,17 @@ def test_only_explicit_assignment_denial_allows_changed_account():
  verify_previous_attempt(prior,'pass','ob1-mx',1,current)
  for altered in ({**prior,'status':'request_sent'},{**prior,'msg':'timeout'},{**prior,'approval_version':2}):
   with pytest.raises(AssertionError):verify_previous_attempt(altered,'pass','ob1-mx',1,current)
+
+
+def test_unassigned_order_uses_independent_default(monkeypatch):
+ monkeypatch.setattr(credentials,'configured_value',{'APPROVER_PASSWORD':'fixture-secret'}.get)
+ a={'review_assignment_managed':1,'assigned_reviewer_id':None,'assigned_reviewer_name':None,'submitted_by':'ob4-mx','submitter_id':'1590'}
+ assert credentials.approval_credentials('ob4-mx',a)==('ob5-mx','fixture-secret')
+ verify_reviewer_context(a,'1591','ob5-mx')
+ with pytest.raises(AssertionError,match='不能审核自己'):
+  verify_reviewer_context(a,'1590','ob5-mx')
+
+def test_partial_assignment_does_not_fall_back(monkeypatch):
+ monkeypatch.setattr(credentials,'configured_value',{'APPROVER_PASSWORD':'fixture-secret'}.get)
+ with pytest.raises(AssertionError,match='缺少'):
+  credentials.approval_credentials('ob4-mx',{'review_assignment_managed':1,'assigned_reviewer_id':'1579','assigned_reviewer_name':None})

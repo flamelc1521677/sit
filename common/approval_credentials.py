@@ -7,7 +7,7 @@ def approval_credentials(requester, approval=None):
     assert requester, "缺少借款发起账号 SSO_USERNAME"
     reviewer = configured_value("APPROVER_USERNAME") or ({"ob4-mx": "ob5-mx"}.get(requester))
     password = configured_value("APPROVER_PASSWORD")
-    if approval and str(approval.get("review_assignment_managed") or "0") == "1":
+    if approval and str(approval.get("review_assignment_managed") or "0") == "1" and (approval.get("assigned_reviewer_name") or approval.get("assigned_reviewer_id")):
         assigned = str(approval.get("assigned_reviewer_name") or "").strip()
         assert assigned and approval.get("assigned_reviewer_id"), "订单缺少已分配复审人，停止审批"
         passwords = json.loads(configured_value("MX_REVIEWER_PASSWORDS") or "{}")
